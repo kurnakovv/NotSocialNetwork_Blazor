@@ -34,7 +34,7 @@ namespace NotSocialNetwork.Application.Services
 
         public PublicationEntity Add(PublicationEntity publication)
         {
-            if (GetAll().Contains(publication))
+            if (GetAll().Any(p => p.Id == publication.Id))
             {
                 throw new ObjectAlreadyExistException($"Publication by Id: {publication.Id} already exists.");
             }

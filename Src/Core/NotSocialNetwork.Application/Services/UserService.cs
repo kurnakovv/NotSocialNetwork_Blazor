@@ -20,7 +20,7 @@ namespace NotSocialNetwork.Application.Services
 
         public UserEntity Add(UserEntity user)
         {
-            if(GetAll().Contains(user))
+            if(GetAll().Any(u => u.Id == user.Id))
             {
                 throw new ObjectAlreadyExistException($"User by Id: {user.Id} already exists.");
             }
