@@ -33,7 +33,7 @@ namespace NotSocialNetwork.Application.Services
 
         public UserEntity Delete(Guid id)
         {
-            var user = _userRepository.Get(id);
+            var user = GetById(id);
             
             _userRepository.Delete(user.Id);
             _userRepository.Commit();
@@ -57,7 +57,7 @@ namespace NotSocialNetwork.Application.Services
 
         public UserEntity Update(UserEntity user)
         {
-            _userRepository.Get(user.Id);
+            GetById(user.Id);
 
             _userRepository.Update(user);
             _userRepository.Commit();

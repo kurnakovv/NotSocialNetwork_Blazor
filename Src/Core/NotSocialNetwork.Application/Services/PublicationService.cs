@@ -47,7 +47,7 @@ namespace NotSocialNetwork.Application.Services
 
         public PublicationEntity Update(PublicationEntity publication)
         {
-            _publicationRepository.Get(publication.Id);
+            GetById(publication.Id);
 
             _publicationRepository.Update(publication);
             _publicationRepository.Commit();
@@ -57,7 +57,7 @@ namespace NotSocialNetwork.Application.Services
 
         public PublicationEntity Delete(Guid id)
         {
-            var publication = _publicationRepository.Get(id);
+            var publication = GetById(id);
 
             _publicationRepository.Delete(publication.Id);
             _publicationRepository.Commit();
