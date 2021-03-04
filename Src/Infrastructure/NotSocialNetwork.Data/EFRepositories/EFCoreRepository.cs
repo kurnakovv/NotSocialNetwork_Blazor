@@ -32,8 +32,9 @@ namespace NotSocialNetwork.Data.EFRepositories
 
         public T Update(T t)
         {
-            _dbSet.Attach(t);
-            _dbSet.Update(t);
+            var oldT = Get(t.Id);
+            _appDbContext.Entry(oldT).CurrentValues.SetValues(t);
+
             return t;
         }
 
