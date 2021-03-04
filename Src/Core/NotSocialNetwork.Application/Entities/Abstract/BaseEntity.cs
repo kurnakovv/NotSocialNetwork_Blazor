@@ -4,8 +4,8 @@ namespace NotSocialNetwork.Application.Entities.Abstract
 {
     public abstract class BaseEntity
     {
-        public Guid Id { get; }
-        public DateTimeOffset DateOfCreate { get; }
+        public Guid Id { get; set; }
+        public DateTimeOffset DateOfCreate { get; set; }
 
         public BaseEntity()
         {
