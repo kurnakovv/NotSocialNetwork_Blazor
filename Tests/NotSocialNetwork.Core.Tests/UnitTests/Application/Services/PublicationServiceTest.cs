@@ -20,7 +20,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
                     DateOfBirth = DateTime.Now,
                     Email = "firstEmail@gmail.com",
                 },
-                Images = new List<string>(){ "img1.jpg", "img2.jpg"},
+                PublicationImages = null,
             },
             new PublicationEntity()
             {
@@ -31,14 +31,14 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
                     DateOfBirth = DateTime.Now,
                     Email = "firstEmail@gmail.com",
                 },
-                Images = new List<string>(){ "img1.jpg", "img2.jpg"},
+                PublicationImages = null,
             }
         };
 
         private readonly PublicationEntity _publication = new PublicationEntity()
         {
             Title = "Title",
-            Images = new List<string>() { "img.jpg", "img.png" },
+            PublicationImages = null,
             Author = new UserEntity() { Name = "Name", DateOfBirth = DateTime.Now, Email = "some@gmail.com" },
         };
 

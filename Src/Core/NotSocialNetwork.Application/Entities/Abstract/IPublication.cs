@@ -5,7 +5,7 @@ namespace NotSocialNetwork.Application.Entities.Abstract
     public interface IPublication
     {
         string Title { get; }
-        ICollection<string> Images { get; }
-        IUser Author { get; }
+        ICollection<ImageEntity> PublicationImages { get; }
+        UserEntity Author { get; }
     }
 }

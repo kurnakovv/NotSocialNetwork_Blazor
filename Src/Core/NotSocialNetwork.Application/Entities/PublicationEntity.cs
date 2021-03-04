@@ -8,8 +8,8 @@ namespace NotSocialNetwork.Application.Entities
     {
         [Required]
         public string Title { get; set; }
-        public ICollection<string> Images { get; set; }
+        public ICollection<ImageEntity> PublicationImages { get; set; }
         [Required]
-        public IUser Author { get; set; }
+        public UserEntity Author { get; set; }
     }
 }
