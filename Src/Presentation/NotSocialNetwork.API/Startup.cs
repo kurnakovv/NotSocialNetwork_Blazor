@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NotSocialNetwork.DI.DIConfig;
+using NotSocialNetwork.DBContexts;
 
 namespace NotSocialNetwork.API
 {
@@ -28,6 +29,9 @@ namespace NotSocialNetwork.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureServices();
+
+            StartupSetup.AddDbContext(services,
+                Configuration.GetConnectionString("NotSocialNetworkDB"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
