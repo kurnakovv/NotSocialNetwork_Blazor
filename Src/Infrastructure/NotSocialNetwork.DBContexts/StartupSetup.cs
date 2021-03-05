@@ -8,5 +8,9 @@ namespace NotSocialNetwork.DBContexts
         public static void AddDbContext(this IServiceCollection services, string connectionString) =>
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+        public static void AddMemoryDbContext(this IServiceCollection services, string databaseName)
+            => services.AddDbContext<AppDbContext>(options
+                => options.UseInMemoryDatabase(databaseName));
     }
 }
