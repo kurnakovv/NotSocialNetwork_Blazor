@@ -1,37 +1,37 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{424F469C-41E4-4BD5-AFAE-E6A40EE883F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8DA61452-ADE2-43D1-8E3A-9264CDD4C7D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Application", "Src\Core\NotSocialNetwork.Application\NotSocialNetwork.Application.csproj", "{CDCD17EE-84F2-4423-A07F-8A0834DB8BB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Application", "Src\Core\NotSocialNetwork.Application\NotSocialNetwork.Application.csproj", "{CDCD17EE-84F2-4423-A07F-8A0834DB8BB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DEDBA328-3A0B-4574-97CC-0685F5CAAABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Data", "Src\Infrastructure\NotSocialNetwork.Data\NotSocialNetwork.Data.csproj", "{182E749F-11C4-4D5F-B1E4-561209BC2A29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Data", "Src\Infrastructure\NotSocialNetwork.Data\NotSocialNetwork.Data.csproj", "{182E749F-11C4-4D5F-B1E4-561209BC2A29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.DBContexts", "Src\Infrastructure\NotSocialNetwork.DBContexts\NotSocialNetwork.DBContexts.csproj", "{7171E7E7-E133-404B-9E64-F6714ACBC92C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.DBContexts", "Src\Infrastructure\NotSocialNetwork.DBContexts\NotSocialNetwork.DBContexts.csproj", "{7171E7E7-E133-404B-9E64-F6714ACBC92C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.DI", "Src\Infrastructure\NotSocialNetwork.DI\NotSocialNetwork.DI.csproj", "{C0838D4C-18E0-4AF5-83F1-1BEBE54C2CA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.DI", "Src\Infrastructure\NotSocialNetwork.DI\NotSocialNetwork.DI.csproj", "{C0838D4C-18E0-4AF5-83F1-1BEBE54C2CA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Services", "Src\Infrastructure\NotSocialNetwork.Services\NotSocialNetwork.Services.csproj", "{156CAE7B-338C-402F-B765-178B26E8279F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Services", "Src\Infrastructure\NotSocialNetwork.Services\NotSocialNetwork.Services.csproj", "{156CAE7B-338C-402F-B765-178B26E8279F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B2E6E490-1848-42B3-B1A7-5037E608C48C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.WebUI", "Src\Presentation\NotSocialNetwork.WebUI\NotSocialNetwork.WebUI.csproj", "{0FAAC4D3-AD96-4FC8-8DF6-C75B0851F50E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.WebUI", "Src\Presentation\NotSocialNetwork.WebUI\NotSocialNetwork.WebUI.csproj", "{0FAAC4D3-AD96-4FC8-8DF6-C75B0851F50E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{304ADBBA-4670-4188-803E-3A25C5F70B2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Core.Tests", "Tests\NotSocialNetwork.Core.Tests\NotSocialNetwork.Core.Tests.csproj", "{5898678E-110E-4C29-AED5-1D46663CB40A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Core.Tests", "Tests\NotSocialNetwork.Core.Tests\NotSocialNetwork.Core.Tests.csproj", "{5898678E-110E-4C29-AED5-1D46663CB40A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Infrastructure.Tests", "Tests\NotSocialNetwork.Infrastructure.Tests\NotSocialNetwork.Infrastructure.Tests.csproj", "{08042928-989C-4299-AF00-B18DE2B0256D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Infrastructure.Tests", "Tests\NotSocialNetwork.Infrastructure.Tests\NotSocialNetwork.Infrastructure.Tests.csproj", "{08042928-989C-4299-AF00-B18DE2B0256D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Presentation.Tests", "Tests\NotSocialNetwork.Presentation.Tests\NotSocialNetwork.Presentation.Tests.csproj", "{DD3AE1DF-0E24-417C-AF81-6329E79E16DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Presentation.Tests", "Tests\NotSocialNetwork.Presentation.Tests\NotSocialNetwork.Presentation.Tests.csproj", "{DD3AE1DF-0E24-417C-AF81-6329E79E16DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.API", "Src\Presentation\NotSocialNetwork.API\NotSocialNetwork.API.csproj", "{37DF9721-5B85-484C-9512-91E98DF3C04F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.API", "Src\Presentation\NotSocialNetwork.API\NotSocialNetwork.API.csproj", "{37DF9721-5B85-484C-9512-91E98DF3C04F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +41,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CDCD17EE-84F2-4423-A07F-8A0834DB8BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -167,6 +164,9 @@ Global
 		{37DF9721-5B85-484C-9512-91E98DF3C04F}.Release|x86.ActiveCfg = Release|Any CPU
 		{37DF9721-5B85-484C-9512-91E98DF3C04F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8DA61452-ADE2-43D1-8E3A-9264CDD4C7D7} = {424F469C-41E4-4BD5-AFAE-E6A40EE883F9}
 		{CDCD17EE-84F2-4423-A07F-8A0834DB8BB8} = {8DA61452-ADE2-43D1-8E3A-9264CDD4C7D7}
@@ -181,5 +181,8 @@ Global
 		{08042928-989C-4299-AF00-B18DE2B0256D} = {304ADBBA-4670-4188-803E-3A25C5F70B2E}
 		{DD3AE1DF-0E24-417C-AF81-6329E79E16DB} = {304ADBBA-4670-4188-803E-3A25C5F70B2E}
 		{37DF9721-5B85-484C-9512-91E98DF3C04F} = {B2E6E490-1848-42B3-B1A7-5037E608C48C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8A93C7C-C93A-4A23-B64F-DE29CA769282}
 	EndGlobalSection
 EndGlobal

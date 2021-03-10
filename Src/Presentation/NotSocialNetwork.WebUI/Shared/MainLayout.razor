@@ -1,18 +1,23 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
+<head>
+    <meta charset="utf-8" />
+    <title>NewsSite</title>
+    <link rel="stylesheet" href="../css/DefaultStyles.css">
+</head>
+
+<main>
+    <header>
         <NavMenu />
-    </div>
+    </header>
+    <SubNavMenu />
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
+    <div class="main-contaner">
+        @Body
     </div>
-</div>
+</main>
+
+<footer>
+    <!--Fix footer-->
+    @*<FooterInfo />*@
+</footer>

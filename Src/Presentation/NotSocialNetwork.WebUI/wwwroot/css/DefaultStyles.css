@@ -92,8 +92,9 @@ body main .main-contaner .main-container-post .post-main .post-main-imageContane
 body main .main-contaner .main-container-post .post-main .post-main-imageContaner img {
   object-fit: contain;
 }
-body footer {
-  background-color: rgba(50, 150, 0, 0.15);
-  font-size: 20px;
-  flex-shrink: 0;
-}
+    body footer {
+        background-color: rgba(50, 150, 0, 0.15);
+        font-size: 20px;
+        flex-shrink: 0;
+        flex-grow: 1;
+    }

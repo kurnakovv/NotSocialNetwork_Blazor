@@ -12,7 +12,7 @@ $DefaultFontFamily: arial;
 body{
 	font-family: $DefaultFontFamily;
 	display: flex;
-  	flex-direction: column;
+	flex-direction: column;
 
 	background: $BackgroundColor;
 
@@ -121,8 +121,8 @@ body{
 					}
 					.post-main-imageContaner{
 						display: flex;
-	  					justify-content: center;
-	  					align-items: center;
+						justify-content: center;
+						align-items: center;
 
 						img{
 							object-fit: contain;
@@ -139,6 +139,7 @@ body{
 		background-color: $BackgroundColor;
 		font-size: 20px;
 		flex-shrink: 0;
+		flex-grow: 1;
 	}
 	min-height: 100vh;
 }

@@ -1,28 +1,21 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">NotSocialNetwork.WebUI</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
+﻿<div class="header-container">
+    <div class="header-container--Logo">
+        <span> Лого </span>
+    </div>
+    <nav class="header-container-navmenu">
+        <div class="navmenu-settings">
+            <!-- Сделать вместо ссылки кнопку. -->
+            <a href="#">
+                <img src="../css/images/settingsIcon.ico" alt="settingsIcon">
+            </a>
+        </div>
+        <div class="navmenu-account">
+            <!-- Сделать картинку фоном. -->
+            <a href="Account.html">
+                <img src="../css/images/DefaultUser.ico" alt="settingsIcon">
+            </a>
+        </div>
+    </nav>
 </div>
 
 @code {
@@ -34,4 +27,5 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
 }
