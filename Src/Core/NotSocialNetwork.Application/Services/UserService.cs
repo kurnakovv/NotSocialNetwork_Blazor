@@ -5,6 +5,7 @@ using NotSocialNetwork.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace NotSocialNetwork.Application.Services
 {
@@ -41,7 +42,10 @@ namespace NotSocialNetwork.Application.Services
             return user;
         }
 
-        public IEnumerable<UserEntity> GetAll() => _userRepository.GetAll();
+        public IEnumerable<UserEntity> GetAll() 
+        {
+            return _userRepository.GetAll().Include(u => u.Image).ToList(); 
+        }
 
         public UserEntity GetById(Guid id)
         {

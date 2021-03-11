@@ -13,5 +13,6 @@ namespace NotSocialNetwork.Application.Entities
         public string Email { get; set; }
         [Required]
         public DateTimeOffset DateOfBirth { get; set; }
+        public ImageEntity Image { get; set; }
     }
 }

@@ -7,5 +7,6 @@ namespace NotSocialNetwork.Application.Entities.Abstract
         string Name { get; }
         string Email { get; }
         DateTimeOffset DateOfBirth { get; }
+        ImageEntity Image { get; }
     }
 }
