@@ -61,6 +61,10 @@ namespace NotSocialNetwork.API.Controllers
 
                 return Ok(user);
             }
+            catch(InvalidFileFormatException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (ObjectAlreadyExistException ex)
             {
                 return BadRequest(ex.Message);
