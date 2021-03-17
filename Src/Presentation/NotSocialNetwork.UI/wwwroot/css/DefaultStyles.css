@@ -64,6 +64,36 @@ body main .main-contaner {
   max-width: 80%;
   margin: 0px auto;
 }
+body main .main-contaner .submitPostBox {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 239, 120, 0.45);
+  padding: 5px;
+  border: 0.5px rgba(0, 0, 0, 0.1) solid;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+}
+body main .main-contaner .submitPostBox span {
+  text-align: center;
+  padding-bottom: 3px;
+  font-size: 20px;
+}
+body main .main-contaner .submitPostBox .submitPostBox-TextBox {
+  display: flex;
+  flex-grow: 1;
+}
+body main .main-contaner .submitPostBox .submitPostBox-TextBox .TextBox--inputText {
+  flex-grow: 1;
+  padding-bottom: 25px;
+  font-size: 20px;
+}
+body main .main-contaner .submitPostBox .submitButton {
+  background-color: #ffef78;
+  font-size: 17px;
+}
+body main .main-contaner .submitPostBox .submitButton :hover {
+  background-color: #aafa64;
+}
 body main .main-contaner .main-container-post {
   display: flex;
   flex-direction: column;
@@ -90,11 +120,13 @@ body main .main-contaner .main-container-post .post-main .post-main-imageContane
   align-items: center;
 }
 body main .main-contaner .main-container-post .post-main .post-main-imageContaner img {
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
 }
-    body footer {
-        background-color: rgba(50, 150, 0, 0.15);
-        font-size: 20px;
-        flex-shrink: 0;
-        flex-grow: 1;
-    }
+body footer {
+  background-color: rgba(50, 150, 0, 0.15);
+  font-size: 20px;
+  flex-shrink: 0;
+  flex-grow: 1;
+}

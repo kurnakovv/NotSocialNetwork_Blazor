@@ -3,6 +3,7 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using System.Linq;
 
 namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
 {
@@ -22,7 +23,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
             },
         };
 
-        private readonly MockObject _object = new MockObject()
+        private readonly MockObject _object = new()
         {
             Id = Guid.NewGuid(),
             Name = "Name",
@@ -35,7 +36,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
             var repository = new Mock<IRepository<MockObject>>();
 
             // Act
-            var result = repository.Setup(r => r.GetAll()).Returns(_objects);
+            var result = repository.Setup(r => r.GetAll()).Returns((IQueryable<MockObject>)_objects);
 
             // Assert
             Assert.Equal(_objects, repository.Object.GetAll());
