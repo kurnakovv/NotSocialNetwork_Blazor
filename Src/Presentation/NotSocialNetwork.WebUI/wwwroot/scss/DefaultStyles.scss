@@ -7,7 +7,6 @@ $BorderColor: rgba(100, 170, 100, 0.5);
 $WindowColor: rgba(255,239,120, 0.45);
 $ActiveWindowColor: rgba(170,250,100, 1);
 
-$DefaultFontSize: 20px;
 $DefaultFontFamily: arial;
 
 body{
@@ -71,7 +70,7 @@ body{
 				}
 			.navmenu-reference{
 				font-family: $DefaultFontFamily;
-				font-size: $DefaultFontSize + 5px;
+				font-size: 25px;
 				font-weight: 500;
 				text-align: center;
 
@@ -92,44 +91,6 @@ body{
 				max-width: 80%;
 				margin: 0px auto;
 
-				.submitPostBox{
-					display: flex;
-					flex-direction: column;
-
-					background-color: $WindowColor;
-
-					padding: 5px;
-
-					border: 0.5px $ShadowColor solid;
-					border-radius: 10px;
-					box-shadow: 0 0 10px 1px $ShadowColor;
-
-					span{
-						text-align: center;
-						padding-bottom: 3px;
-						font-size: $DefaultFontSize;
-					}
-					.submitPostBox-TextBox{
-						display: flex;
-
-						flex-grow: 1;
-
-						.TextBox--inputText{
-							flex-grow: 1;
-
-							padding-bottom: 25px;
-							font-size: $DefaultFontSize;
-						}
-					}
-					.submitButton{
-						background-color: #ffef78;
-						font-size: $DefaultFontSize -3px;
-
-						:hover{
-							background-color: rgba(170,250,100, 1);
-						}
-					}
-				}
 			.main-container-post{
 				display: flex;
 				flex-direction: column;
@@ -164,8 +125,6 @@ body{
 						align-items: center;
 
 						img{
-							max-width:100%; 
-							height: auto;
 							object-fit: contain;
 						}
 					}

@@ -25,4 +25,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Presentation\NotSocialNetwork.WebUI\NotSocialNetwork.WebUI.csproj" />
+  </ItemGroup>
+
 </Project>
