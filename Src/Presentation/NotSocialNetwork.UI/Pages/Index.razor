@@ -6,4 +6,11 @@
 <Post />
 
 @code{
+
+    private UserEntity[] users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var v = await Http.GetFromJsonAsync<UserEntity[]>("https://localhost:44374//api//UserController");
+    }
 }
