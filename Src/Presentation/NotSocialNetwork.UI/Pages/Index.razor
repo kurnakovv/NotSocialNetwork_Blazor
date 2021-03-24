@@ -5,12 +5,21 @@
 
 <Post />
 
+        @if(users == null)
+        {
+            <h1>Doesnt works</h1>
+        }
+        else
+        {
+            <h1>It works!</h1>
+        }
+
 @code{
 
     private UserEntity[] users;
 
     protected override async Task OnInitializedAsync()
     {
-        var v = await Http.GetFromJsonAsync<UserEntity[]>("https://localhost:44374//api//UserController");
+        users = await Http.GetFromJsonAsync<UserEntity[]>("https://localhost:44353/api/User");
     }
 }
