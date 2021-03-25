@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NotSocialNetwork.UI.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,6 @@ namespace NotSocialNetwork.UI
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient();
         }
 

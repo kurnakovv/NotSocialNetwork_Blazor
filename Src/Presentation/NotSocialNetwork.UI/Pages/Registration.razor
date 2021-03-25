@@ -1,4 +1,7 @@
-﻿@page "/Registration"
+﻿@inject HttpClient Http
+@page "/Registration"
+@using System.IO
+@using System.Net.Mime
 
 <link href="/css/RegistrationStyles.css" rel="stylesheet">
 
@@ -8,19 +11,63 @@
     </span>
 </div>
 <!--Enter action and model reference here-->
-<form action="#" class="main-container-form">
+<EditForm Model="user" OnValidSubmit="@SendNewUser"
+          action="#" class="main-container-form">
     <div class="form-container">
-        <input type="text" class="form-container--input" placeholder="Никнейм">
+        <InputText @bind-Value="user.Name" 
+                   class="form-container--input" placeholder="Никнейм" />
     </div>
     <div class="form-container">
-        <input type="Email" class="form-container--input" placeholder="Email">
+        <InputText @bind-Value="user.Email" 
+                   type="Email" class="form-container--input" placeholder="Email" />
     </div>
     <div class="form-container">
-        <input type="number" class="form-container--input" placeholder="Возраст">
+        <InputDate TValue="DateTimeOffset" @bind-Value="user.DateOfBirth"
+               placeholder="Ваш день рождения"
+               class="form-container--input" />
     </div>
     <div class="form-container">
         <button type="submit" class="form-container--submitButton">
             Зарегистрироваться
         </button>
     </div>
-</form>
+    <div class="form-container">
+        <InputFile OnChange="AddFIle"
+                   class="form-container--file" accept=".png, .jpeg, .jpg" />
+    </div>
+</EditForm>
+
+@code{
+    UserEntity user = new();
+
+    async Task SendNewUser()
+    {
+        if (user.Image is null)
+        {
+            return;
+        }
+        //user.Image.ImageFromForm и Title не доходят до API.
+        await Http.PostAsJsonAsync<UserEntity>("https://localhost:44353/api/User", user);
+    }
+    void AddFIle(InputFileChangeEventArgs input)
+    {
+        IBrowserFile file = input.File;
+        try
+        {
+            //TODO: contentDisposition and contentType don't creating.
+            FormFile formFile = new(file.OpenReadStream(), 0,
+                                    file.Size,
+                                    file.ContentType,
+                                    file.Name);
+            user.Image = new ImageEntity()
+            {
+                Title = formFile.FileName,
+                ImageFromForm = formFile
+            };
+        }
+        catch (Exception)
+        {
+            //TODO: add message
+        }
+    }
+}

@@ -52,12 +52,17 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<UserEntity> Add([FromForm] UserEntity user)
+        public ActionResult<UserEntity> Add(UserEntity user, IFormFile imageFromForm)
         {
+            // TODO: IFormFile и Title, находящиеся в user.Image не могут быть доставлены.
+            user.Image.ImageFromForm = imageFromForm;
+            user.Image.Title = imageFromForm.FileName;
             try
             {
                 _imageFileManager.Save(user.Image, user.Image.ImageFromForm, _hostEnvironment.ContentRootPath);
                 _userService.Add(user);
+                //_imageFileManager.Save(user.Image, user.Image, _hostEnvironment.ContentRootPath);
+                //_userService.Add(user);
 
                 return Ok(user);
             }

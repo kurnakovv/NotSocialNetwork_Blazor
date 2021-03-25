@@ -1,4 +1,7 @@
 @import "../css/DefaultStyles.css";
+.main-container {
+  display: flex;
+}
 .main-container .TitleContainer {
   display: flex;
   justify-content: center;
