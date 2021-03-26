@@ -71,7 +71,7 @@ namespace NotSocialNetwork.API.Controllers
                     user.DateOfBirth = registrationUserDTO.DateOfBirth;
                     user.Image = image;
 
-                    _imageFileManager.Save(user.Image, user.Image.ImageFromForm, _hostEnvironment.ContentRootPath);
+                    _imageFileManager.Save(user.Image, _hostEnvironment.ContentRootPath);
                 }
                 else
                 {
