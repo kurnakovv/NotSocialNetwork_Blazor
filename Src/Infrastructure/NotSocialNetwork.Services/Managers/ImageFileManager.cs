@@ -28,10 +28,10 @@ namespace NotSocialNetwork.Services.Managers
             throw new NotImplementedException();
         }
 
-        public Guid Save(ImageEntity file, IFormFile fileFromForm, string pathToSave)
+        public Guid Save(ImageEntity file, string pathToSave)
         {
-            file.Title = fileFromForm.FileName;
-            SaveFileToFolder(file, fileFromForm, pathToSave);
+            file.Title = file.ImageFromForm.FileName;
+            SaveFileToFolder(file, pathToSave);
 
             SaveFilePath(file);
 
@@ -43,7 +43,7 @@ namespace NotSocialNetwork.Services.Managers
             throw new NotImplementedException();
         }
 
-        public Guid Update(ImageEntity file, IFormFile fileFromForm)
+        public Guid Update(ImageEntity file)
         {
             throw new NotImplementedException();
         }
@@ -73,13 +73,13 @@ namespace NotSocialNetwork.Services.Managers
             _imageRepository.Commit();
         }
 
-        private void SaveFileToFolder(ImageEntity file, IFormFile fileFromForm, string pathToSave)
+        private void SaveFileToFolder(ImageEntity file, string pathToSave)
         {
             var newFileTitle = string.Empty;
             var fileExtension = Path.GetExtension(file.Title);
             var uniqueFileName = Convert.ToString(Guid.NewGuid());
 
-            file.Title = ContentDispositionHeaderValue.Parse(fileFromForm.ContentDisposition).FileName.Trim('"');
+            file.Title = ContentDispositionHeaderValue.Parse(file.ImageFromForm.ContentDisposition).FileName.Trim('"');
 
             if (IsImageConteinFormat(file.Title) == false)
             {
@@ -92,7 +92,7 @@ namespace NotSocialNetwork.Services.Managers
 
             using (FileStream fs = File.Create(file.Title))
             {
-                fileFromForm.CopyTo(fs);
+                file.ImageFromForm.CopyTo(fs);
                 fs.Flush();
             }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Entities.Abstract;
 using NotSocialNetwork.Application.Exceptions;
@@ -52,21 +53,39 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<UserEntity> Add(UserEntity user, IFormFile imageFromForm)
+        public ActionResult<UserEntity> Add([FromForm] RegistrationUserDTO registrationUserDTO)
         {
-            // TODO: IFormFile и Title, находящиеся в user.Image не могут быть доставлены.
-            user.Image.ImageFromForm = imageFromForm;
-            user.Image.Title = imageFromForm.FileName;
             try
             {
-                _imageFileManager.Save(user.Image, user.Image.ImageFromForm, _hostEnvironment.ContentRootPath);
+                // TODO: Add mapping.
+                var image = new ImageEntity();
+                var user = new UserEntity();
+
+                if (registrationUserDTO.Files != null)
+                {
+                    image.ImageFromForm = registrationUserDTO.Files;
+                    image.Title = registrationUserDTO.Files.FileName;
+
+                    user.Name = registrationUserDTO.Name;
+                    user.Email = registrationUserDTO.Email;
+                    user.DateOfBirth = registrationUserDTO.DateOfBirth;
+                    user.Image = image;
+
+                    _imageFileManager.Save(user.Image, _hostEnvironment.ContentRootPath);
+                }
+                else
+                {
+                    user.Name = registrationUserDTO.Name;
+                    user.Email = registrationUserDTO.Email;
+                    user.DateOfBirth = registrationUserDTO.DateOfBirth;
+                    user.Image = null;
+                }
+
                 _userService.Add(user);
-                //_imageFileManager.Save(user.Image, user.Image, _hostEnvironment.ContentRootPath);
-                //_userService.Add(user);
 
                 return Ok(user);
             }
-            catch(InvalidFileFormatException ex)
+            catch (InvalidFileFormatException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -85,7 +104,7 @@ namespace NotSocialNetwork.API.Controllers
 
                 return Ok(user);
             }
-            catch(ObjectNotFoundException ex)
+            catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -100,7 +119,7 @@ namespace NotSocialNetwork.API.Controllers
 
                 return Ok(user);
             }
-            catch(ObjectNotFoundException ex)
+            catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
