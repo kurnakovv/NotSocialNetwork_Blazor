@@ -31,10 +31,6 @@
             Зарегистрироваться
         </button>
     </div>
-    <div class="form-container">
-        <InputFile OnChange="AddFIle"
-                   class="form-container--file" accept=".png, .jpeg, .jpg" />
-    </div>
 </EditForm>
 
 @code{
@@ -42,32 +38,6 @@
 
     async Task SendNewUser()
     {
-        if (user.Image is null)
-        {
-            return;
-        }
-        //user.Image.ImageFromForm и Title не доходят до API.
         await Http.PostAsJsonAsync<UserEntity>("https://localhost:44353/api/User", user);
-    }
-    void AddFIle(InputFileChangeEventArgs input)
-    {
-        IBrowserFile file = input.File;
-        try
-        {
-            //TODO: contentDisposition and contentType don't creating.
-            FormFile formFile = new(file.OpenReadStream(), 0,
-                                    file.Size,
-                                    file.ContentType,
-                                    file.Name);
-            user.Image = new ImageEntity()
-            {
-                Title = formFile.FileName,
-                ImageFromForm = formFile
-            };
-        }
-        catch (Exception)
-        {
-            //TODO: add message
-        }
     }
 }
