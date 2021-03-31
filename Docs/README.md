@@ -35,7 +35,7 @@
 * In the main root of the project open properties
 * Choose Multiple startup projects
 * Choose NotSocialNetwork.API (start) and NotSocialNetwork.UI (start), as shown in the screenshot:
-![MultipleStartupProjects](Docs/ImgForReadme/StartProject/MultipleStartupProjects.png)
+![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
 
 ### Database:
@@ -69,7 +69,7 @@ CreateHostBuilder(args).Build().Run();
 ```
 dotnet ef
 ```
-![DotnetEf](Docs/ImgForReadme/StartProject/DotnetEf.png)
+![DotnetEf](ImgForReadme/StartProject/DotnetEf.png)
 
 > if something went wrong, read https://docs.microsoft.com/en-us/ef/core/cli/dotnet and return to the previous point
 
