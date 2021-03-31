@@ -53,7 +53,7 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<UserEntity> Add([FromForm] RegistrationUserDTO registrationUserDTO)
+        public ActionResult<RegistrationUserDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
             {
