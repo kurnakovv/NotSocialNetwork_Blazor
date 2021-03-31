@@ -129,4 +129,12 @@ body footer {
   font-size: 20px;
   flex-shrink: 0;
   flex-grow: 1;
+  padding-left: 15px;
+}
+body footer .ReferenceContainer {
+  display: flex;
+}
+body footer .ReferenceContainer .ReferenceContainer--Reference {
+  color: #8080b3;
+  margin-left: 10px;
 }

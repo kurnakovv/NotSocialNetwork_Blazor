@@ -18,6 +18,20 @@
 </main>
 
 <footer>
-    <!--Fix footer-->
-    @*<FooterInfo />*@
+    <div>
+        <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
+    </div>
+    <RefContainer ReferencesData="@ReferenceData"/>
 </footer>
+
+@code{
+    Dictionary<string, string> ReferenceData = new();
+
+    protected override void OnInitialized()
+    {
+        ReferenceData.Add("https://github.com/Ulyanov-programmer", "Ulyanov GitHub,");
+        ReferenceData.Add("https://vk.com/h.wilson", "Ulyanov VK");
+        ReferenceData.Add("https://github.com/KurnakovMaksim", "Kurnakov GitHub,");
+        ReferenceData.Add("https://vk.com/makskurnakov2003", "Kurnakov VK");
+    }
+}

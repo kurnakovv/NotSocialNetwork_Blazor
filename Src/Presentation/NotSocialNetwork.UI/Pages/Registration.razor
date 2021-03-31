@@ -1,30 +1,28 @@
 ﻿@inject HttpClient Http
 @page "/Registration"
-@using System.IO
-@using System.Net.Mime
 
 <link href="/css/RegistrationStyles.css" rel="stylesheet">
 
 <div class="TitleContainer">
     <span>
-        Регистрация
+        @message
     </span>
 </div>
 <!--Enter action and model reference here-->
-<EditForm Model="user" OnValidSubmit="@SendNewUser"
+<EditForm Model="newUserDTO" OnValidSubmit="@SendNewUser"
           action="#" class="main-container-form">
     <div class="form-container">
-        <InputText @bind-Value="user.Name" 
+        <InputText @bind-Value="newUserDTO.Name"
                    class="form-container--input" placeholder="Никнейм" />
     </div>
     <div class="form-container">
-        <InputText @bind-Value="user.Email" 
+        <InputText @bind-Value="newUserDTO.Email"
                    type="Email" class="form-container--input" placeholder="Email" />
     </div>
     <div class="form-container">
-        <InputDate TValue="DateTimeOffset" @bind-Value="user.DateOfBirth"
-               placeholder="Ваш день рождения"
-               class="form-container--input" />
+        <InputDate TValue="DateTimeOffset" @bind-Value="newUserDTO.DateOfBirth"
+                   placeholder="Ваш день рождения"
+                   class="form-container--input" />
     </div>
     <div class="form-container">
         <button type="submit" class="form-container--submitButton">
@@ -34,10 +32,18 @@
 </EditForm>
 
 @code{
-    UserEntity user = new();
+    string message = "Регистрация";
+
+    RegistrationUserDTO newUserDTO = new();
 
     async Task SendNewUser()
     {
-        await Http.PostAsJsonAsync<UserEntity>("https://localhost:44353/api/User", user);
+        var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                           ("https://localhost:44353/api/User", newUserDTO);
+
+        if (result.IsSuccessStatusCode)
+            message = "Вы были успешно зарегистрированы!";
+        else
+            message = "Произошла ошибка при попытке регистрации. :с";
     }
 }
