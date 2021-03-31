@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Moq;
 using NotSocialNetwork.API.Controllers;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
@@ -29,6 +30,12 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             {
                 Title = "Title.jpg",
             },
+        };
+        private readonly RegistrationUserDTO _userDTO = new()
+        {
+            Name = "Maksim",
+            DateOfBirth = DateTime.Now,
+            Email = "maksim@gmail.com",
         };
 
         [Fact]
@@ -82,7 +89,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             hostEnvironment.Setup(h => h.EnvironmentName)
                 .Returns("Hosting:UnitTestEnvironment");
 
-            imageFileManager.Setup(i => i.Save(_user.Image, _user.Image.ImageFromForm, "pathToSave"))
+            imageFileManager.Setup(i => i.Save(_user.Image, "pathToSave"))
                 .Returns(_user.Id);
 
             var userController = new UserController(
@@ -91,7 +98,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
                                     hostEnvironment.Object);
 
             // Act
-            var result = userController.Add(_user);
+            var result = userController.Add(_userDTO);
 
             // Assert
             Assert.NotNull(userController);

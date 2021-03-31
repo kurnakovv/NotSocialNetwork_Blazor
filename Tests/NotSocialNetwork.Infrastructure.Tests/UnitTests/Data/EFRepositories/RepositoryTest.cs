@@ -36,7 +36,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
             var repository = new Mock<IRepository<MockObject>>();
 
             // Act
-            var result = repository.Setup(r => r.GetAll()).Returns((IQueryable<MockObject>)_objects);
+            var result = repository.Setup(r => r.GetAll()).Returns((MockObject)_objects.ToList());
 
             // Assert
             Assert.Equal(_objects, repository.Object.GetAll());

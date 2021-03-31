@@ -26,7 +26,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             },
         };
 
-        private readonly UserEntity _user = new UserEntity()
+        private readonly UserEntity _user = new()
         {
             Name = "Name",
             DateOfBirth = DateTime.Now,
