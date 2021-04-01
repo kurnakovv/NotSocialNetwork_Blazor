@@ -1,8 +1,7 @@
 @import "../css/NullStyle.css";
 
 $ShadowColor: rgb(0 0 0 / 10%);
-$HeadColor: rgba(200, 250, 150, 1);
-$BackgroundColor: rgba(50, 150, 0, 0.15);
+$BackgroundColor: rgb(224, 239, 217);
 $BorderColor: rgba(100, 170, 100, 0.5);
 $WindowColor: rgba(255,239,120, 0.45);
 $ActiveWindowColor: rgba(170,250,100, 1);
@@ -27,24 +26,22 @@ body{
 			display: flex;
 			justify-content: space-between;
 
+			.header-container-Logo{
+				margin: 17px 20px 0px;
+			}
 			.header-container-navmenu{
 				display: flex;
-
-				.header-container--Logo{
-				}
 				.navmenu-settings{
-					img{
-						display: block;
-						width: 60px; 
-						height: 60px;
-					}
+					margin: 7px;
+					padding: 25px;
+					background: url("../css/images/Icons_Settings.png") 0-0 no-repeat;
+					background-size: 100% 100%;
 				}
 				.navmenu-account{
-					img{
-						display: block;
-						width: 60px; 
-						height: 60px;
-					}
+					margin: 7px;
+					padding: 25px;
+					background: url("../css/images/Icons_User.png") 0-0 no-repeat;
+					background-size: 100% 100%;
 				}
 			}
 		}
@@ -146,6 +143,7 @@ body{
 				.post-header{
 					.post-header--AuthorIcon{
 						margin-left: 15px;
+						margin-top: 5px;
 					}
 					.post-header--AuthorName{
 						font-size: 30px;
@@ -156,7 +154,7 @@ body{
 					.post-main-textContainer{
 						font-family: $DefaultFontFamily;
 						font-size: 20px;
-						margin-left: 15px;
+						margin-left: 100px;
 					}
 					.post-main-imageContaner{
 						display: flex;
@@ -177,18 +175,21 @@ body{
 	}
 
 	footer{
-		background-color: $BackgroundColor;
+		background-color: rgba(100, 250, 100, 0.2);
 		font-size: 20px;
 		flex-shrink: 0;
 		flex-grow: 1;
 
 		padding-left: 15px;
+		padding-top: 8px;
 
 		.ReferenceContainer{
 			display: flex;
+
 			.ReferenceContainer--Reference{
 				color: rgb(50%, 50%, 70%);
-				margin-left: 10px;
+				margin-right: 10px;
+				margin-top: 2px;
 			}
 		}
 	}
