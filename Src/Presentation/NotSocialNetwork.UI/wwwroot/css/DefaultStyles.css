@@ -3,7 +3,7 @@ body {
   font-family: arial;
   display: flex;
   flex-direction: column;
-  background: rgba(50, 150, 0, 0.15);
+  background: #e0efd9;
   font-size: 50px;
   min-height: 100vh;
 }
@@ -15,18 +15,23 @@ body header .header-container {
   display: flex;
   justify-content: space-between;
 }
+body header .header-container .header-container-Logo {
+  margin: 17px 20px 0px;
+}
 body header .header-container .header-container-navmenu {
   display: flex;
 }
-body header .header-container .header-container-navmenu .navmenu-settings img {
-  display: block;
-  width: 60px;
-  height: 60px;
+body header .header-container .header-container-navmenu .navmenu-settings {
+  margin: 7px;
+  padding: 25px;
+  background: url("../css/images/Icons_Settings.png") 0 no-repeat;
+  background-size: 100% 100%;
 }
-body header .header-container .header-container-navmenu .navmenu-account img {
-  display: block;
-  width: 60px;
-  height: 60px;
+body header .header-container .header-container-navmenu .navmenu-account {
+  margin: 7px;
+  padding: 25px;
+  background: url("../css/images/Icons_User.png") 0 no-repeat;
+  background-size: 100% 100%;
 }
 body main {
   flex-grow: 1;
@@ -105,6 +110,7 @@ body main .main-contaner .main-container-post {
 }
 body main .main-contaner .main-container-post .post-header .post-header--AuthorIcon {
   margin-left: 15px;
+  margin-top: 5px;
 }
 body main .main-contaner .main-container-post .post-header .post-header--AuthorName {
   font-size: 30px;
@@ -112,7 +118,7 @@ body main .main-contaner .main-container-post .post-header .post-header--AuthorN
 body main .main-contaner .main-container-post .post-main .post-main-textContainer {
   font-family: arial;
   font-size: 20px;
-  margin-left: 15px;
+  margin-left: 100px;
 }
 body main .main-contaner .main-container-post .post-main .post-main-imageContaner {
   display: flex;
@@ -125,16 +131,18 @@ body main .main-contaner .main-container-post .post-main .post-main-imageContane
   object-fit: contain;
 }
 body footer {
-  background-color: rgba(50, 150, 0, 0.15);
+  background-color: rgba(100, 250, 100, 0.2);
   font-size: 20px;
   flex-shrink: 0;
   flex-grow: 1;
   padding-left: 15px;
+  padding-top: 8px;
 }
 body footer .ReferenceContainer {
   display: flex;
 }
 body footer .ReferenceContainer .ReferenceContainer--Reference {
   color: #8080b3;
-  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 2px;
 }
