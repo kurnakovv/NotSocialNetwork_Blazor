@@ -1,8 +1,10 @@
 ﻿using Moq;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Repositories;
+using NotSocialNetwork.Application.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
@@ -37,70 +39,98 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         public void GetAll_GetAllUsers_Users()
         {
             // Arrange
-            var userService = new Mock<IUserService>();
-            
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
+
             // Act
-            var result = userService.Setup(u => u.GetAll()).Returns(_users);
+            var result = userService.GetAll();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_users, userService.Object.GetAll());
+            Assert.Equal(_users, result);
+            Assert.Equal("Name1", result.ElementAt(0).Name);
+            Assert.Equal("Name2", result.ElementAt(1).Name);
         }
 
         [Fact]
         public void Add_AddUser_User()
         {
             // Arrange
-            var userService = new Mock<IUserService>();
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
 
             // Act
-            var result = userService.Setup(u => u.Add(_user)).Returns(_user);
+            var result = userService.Add(_user);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, userService.Object.Add(_user));
+            Assert.Equal(_user, result);
+            Assert.Equal(_user.Id, result.Id);
+            Assert.Equal("Name", result.Name);
         }
 
         [Fact]
         public void Delete_DeleteUser_User()
         {
             // Arrange
-            var userService = new Mock<IUserService>();
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.Get(_user.Id))
+                                               .Returns(_user);
 
             // Act
-            var result = userService.Setup(u => u.Delete(_user.Id)).Returns(_user);
+            var result = userService.Delete(_user.Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, userService.Object.Delete(_user.Id));
+            Assert.Equal(_user, result);
+            Assert.Equal(_user.Id, result.Id);
+            Assert.DoesNotContain(_user, userService.GetAll());
         }
 
         [Fact]
         public void Get_GetUser_User()
         {
             // Arrange
-            var userService = new Mock<IUserService>();
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.Get(_user.Id))
+                                               .Returns(_user);
 
             // Act
-            var result = userService.Setup(u => u.GetById(_user.Id)).Returns(_user);
+            var result = userService.GetById(_user.Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, userService.Object.GetById(_user.Id));
+            Assert.Equal(_user, result);
+            Assert.Equal(_user.Id, result.Id);
+            Assert.Equal(_user.Name, result.Name);
         }
 
         [Fact]
         public void Update_UpdateUser_User()
         {
             // Arrange
-            var userService = new Mock<IUserService>();
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.Get(_user.Id))
+                                               .Returns(_user);
+            _user.Name = "TestName";
 
             // Act
-            var result = userService.Setup(u => u.Update(_user)).Returns(_user);
+            var result = userService.Update(_user);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, userService.Object.Update(_user));
+            Assert.Equal(_user, result);
+            Assert.Equal(_user.Id, result.Id);
+            Assert.Equal(_user.Name, result.Name);
         }
     }
 }
