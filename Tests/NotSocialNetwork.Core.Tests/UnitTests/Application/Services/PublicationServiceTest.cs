@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NotSocialNetwork.Application.Entities;
+using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Services;
 using System;
@@ -82,6 +83,23 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void Add_AddIvnalidPublication_ObjectAlreadyExistException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object);
+
+            publicationRepositoryMock.Setup(r => r.Add(_publication))
+                                        .Throws(new ObjectAlreadyExistException($"Publication by Id: {_publication.Id} already exists."));
+
+            // Act
+            Action act = () => publicationService.Add(_publication);
+
+            // Assert
+            Assert.Throws<ObjectAlreadyExistException>(act);
+        }
+
+        [Fact]
         public void Delete_DeletePublication_Publication()
         {
             // Arrange
@@ -99,6 +117,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.Equal(_publication, result);
             Assert.Equal(_publication.Id, result.Id);
             Assert.DoesNotContain(_publication, publicationService.GetAll());
+        }
+
+        [Fact]
+        public void Delete_DeleteInvalidPublication_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object);
+
+            // Act
+            Action act = () => publicationService.Delete(_publication.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
 
         [Fact]
@@ -122,6 +154,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void Get_GetInvalidPublication_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object);
+
+            // Act
+            Action act = () => publicationService.GetById(_publication.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
         public void Update_UpdatePublication_Publication()
         {
             // Arrange
@@ -141,6 +187,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.Equal(_publication, result);
             Assert.Equal(_publication.Id, result.Id);
             Assert.Equal(_publication.Title, result.Title);
+        }
+
+        [Fact]
+        public void Update_UpdateInvalidPublication_Publication()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object);
+
+            // Act
+            Action act = () => publicationService.Update(_publication);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
     }
 }

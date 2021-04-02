@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NotSocialNetwork.Application.Entities;
+using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Services;
 using System;
@@ -73,6 +74,23 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void Add_AddInvalidUser_ObjectAlreadyExistException()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.Add(_user))
+                                .Throws(new ObjectAlreadyExistException($"User by Id: {_user.Id} already exists."));
+
+            // Act
+            Action act = () => userService.Add(_user);
+
+            // Assert
+            Assert.Throws<ObjectAlreadyExistException>(act);
+        }
+
+        [Fact]
         public void Delete_DeleteUser_User()
         {
             // Arrange
@@ -90,6 +108,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.Equal(_user, result);
             Assert.Equal(_user.Id, result.Id);
             Assert.DoesNotContain(_user, userService.GetAll());
+        }
+
+        [Fact]
+        public void Delete_DeleteInvalidUser_User()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            // Act
+            Action act = () => userService.Delete(_user.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
 
         [Fact]
@@ -113,6 +145,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void Get_GetInvalidUser_User()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            // Act
+            Action act = () => userService.GetById(_user.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
         public void Update_UpdateUser_User()
         {
             // Arrange
@@ -131,6 +177,21 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.Equal(_user, result);
             Assert.Equal(_user.Id, result.Id);
             Assert.Equal(_user.Name, result.Name);
+        }
+
+        [Fact]
+        public void Update_UpdateInvalidUser_User()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+            _user.Name = "TestName";
+
+            // Act
+            Action act = () => userService.Update(_user);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
     }
 }
