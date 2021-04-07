@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject ILocalStorageService localStorage
 
 <head>
     <meta charset="utf-8" />
@@ -6,25 +7,49 @@
     <link rel="stylesheet" href="../css/DefaultStyles.css">
 </head>
 
-<main>
+<main style="background-color: @_main_BackColor; color: @_main_Color;">
     <header>
-        <NavMenu />
+        <div class="header-container">
+            <div class="header-container-Logo">
+                <a href="/"><img src="@_TitleRef" alt="Logo" height="50px" width="170px"> </a>
+            </div>
+            <nav class="header-container-navmenu">
+                <button class="navmenu-settings" @onclick="@OpenInputContainer"></button>
+                <div style="display: @_viewOfNavmenuButtons" class="inputContainer">
+                    <button @onclick="@EditNightThemeCookies" class="inputContainer--button">Переключить ночную тему </button>
+                </div>
+            </nav>
+        </div>
     </header>
-    <SubNavMenu />
+    <SubNavMenu IsNightTheme="true" />
 
     <div class="main-contaner">
         @Body
     </div>
 </main>
 
-<footer>
+<footer style="background-color: @_footer_BackColor; color: @_footer_Color;">
     <div>
         <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
     </div>
-    <RefContainer ReferencesData="@ReferenceData"/>
+    <RefContainer ReferencesData="ReferenceData" />
 </footer>
 
 @code{
+    bool _visibleNavmenuButtons = false;
+    string _viewOfNavmenuButtons = "none";
+
+    #region DarkThemeStyles
+
+    string _main_BackColor;
+    string _main_Color;
+    string _footer_BackColor;
+    string _footer_Color;
+
+    string _TitleRef = "../css/images/TitleIconBlack.png";
+
+    #endregion
+
     Dictionary<string, string> ReferenceData = new();
 
     protected override void OnInitialized()
@@ -33,5 +58,55 @@
         ReferenceData.Add("https://vk.com/h.wilson", "Ulyanov VK");
         ReferenceData.Add("https://github.com/KurnakovMaksim", "Kurnakov GitHub,");
         ReferenceData.Add("https://vk.com/makskurnakov2003", "Kurnakov VK");
+    }
+
+    void SetStylesOfNightTheme(bool cookieOfNightThemeValue)
+    {
+        if (cookieOfNightThemeValue)
+        {
+            _main_BackColor = "#325032";
+            _main_Color = "#ebffe1";
+            _footer_BackColor = "#3c5a3c";
+            _footer_Color = "#ebffe1";
+
+            _TitleRef = "../css/images/TitleIconWhite.png";
+        }
+        else
+        {
+            _main_BackColor = string.Empty;
+            _main_Color = string.Empty;
+            _footer_BackColor = string.Empty;
+            _footer_Color = string.Empty;
+
+            _TitleRef = "../css/images/TitleIconBlack.png";
+        }
+        StateHasChanged();
+    }
+    void OpenInputContainer()
+    {
+        if (_visibleNavmenuButtons)
+        {
+            _viewOfNavmenuButtons = "none";
+        }
+        else
+        {
+            _viewOfNavmenuButtons = "flex";
+        }
+
+        _visibleNavmenuButtons = !_visibleNavmenuButtons;
+    }
+
+    async Task EditNightThemeCookies()
+    {
+        if (await localStorage.GetItemAsync<bool>("nightTheme"))
+        {
+            await localStorage.SetItemAsync("nightTheme", false);
+            SetStylesOfNightTheme(false);
+        }
+        else
+        {
+            await localStorage.SetItemAsync("nightTheme", true);
+            SetStylesOfNightTheme(true);
+        }
     }
 }

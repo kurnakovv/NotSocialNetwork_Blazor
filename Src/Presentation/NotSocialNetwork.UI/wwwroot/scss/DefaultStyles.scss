@@ -3,50 +3,67 @@
 $ShadowColor: rgb(0 0 0 / 10%);
 $BackgroundColor: rgb(224, 239, 217);
 $BorderColor: rgba(100, 170, 100, 0.5);
+$FooterColor: #c8dcaa;
 $WindowColor: rgba(255,239,120, 0.45);
 $ActiveWindowColor: rgba(170,250,100, 1);
+
+$InputContainerIsDisplay: none;
 
 $DefaultFontSize: 20px;
 $DefaultFontFamily: arial;
 
-body{
+body {
 	font-family: $DefaultFontFamily;
 	display: flex;
 	flex-direction: column;
-
 	background: $BackgroundColor;
-
 	font-size: 50px;
+	min-height: 100vh;
 
-	header{
+	header {
 		display: flex;
 		flex-direction: column;
 
-		.header-container{
+		.header-container {
 			display: flex;
 			justify-content: space-between;
 
-			.header-container-Logo{
-				margin: 17px 20px 0px;
+			.header-container-Logo {
+				margin: 10px;
 			}
-			.header-container-navmenu{
+
+			.header-container-navmenu {
 				display: flex;
-				.navmenu-settings{
-					margin: 7px;
+
+				.navmenu-settings {
+					margin: 11px;
 					padding: 25px;
-					background: url("../css/images/Icons_Settings.png") 0-0 no-repeat;
+					background: url("../css/images/SettingsIcon.png") no-repeat;
 					background-size: 100% 100%;
+					cursor: pointer;
 				}
-				.navmenu-account{
-					margin: 7px;
-					padding: 25px;
-					background: url("../css/images/Icons_User.png") 0-0 no-repeat;
-					background-size: 100% 100%;
+				/* Что бы скрыть или показать этот блок, измените свойство display на none или flex. */
+				.inputContainer{
+					display: none;
+					flex-grow: 1;
+
+					position: absolute;
+					top: 10.5%;
+					right: 1%;
+
+					z-index: 1;
+
+					.inputContainer--button{
+						background-color: #64aa64;
+						font-size: $DefaultFontSize;
+
+						padding: 7px;
+					}
 				}
 			}
 		}
-
 	}
+}
 	main{
 		.header-container-SubNavmenu{
 			display: flex;
@@ -56,12 +73,11 @@ body{
 			border-bottom: 1px solid $BorderColor;
 
 			margin-bottom: 20px;
-
-			background-color: rgba(255,239,120, 0.8);
+			background-color: #3c8c3c;
 			position: sticky;
 
 			top: 0;
-			box-shadow: 0px 10px 15px 0.2px rgb(0 0 0 / 10%);;
+			box-shadow: 0px 10px 15px 0.2px rgb(0 0 0 / 10%);
 			
 				:hover{
 					background-color: $ActiveWindowColor;
@@ -72,11 +88,13 @@ body{
 				font-weight: 500;
 				text-align: center;
 
+				padding-bottom: 3px;
+
 				flex-grow: 1;
 
 				a{
 					display: block;
-					color: black;
+					color: #e0efd9;
 					flex-grow: 1;
 				}
 			}
@@ -84,7 +102,6 @@ body{
 		.main-contaner{
 				display: flex;
 				flex-direction: column;
-				justify-content: center;
 
 				max-width: 80%;
 				margin: 0px auto;
@@ -155,6 +172,7 @@ body{
 						font-family: $DefaultFontFamily;
 						font-size: 20px;
 						margin-left: 100px;
+						margin-bottom: 10px;
 					}
 					.post-main-imageContaner{
 						display: flex;
@@ -175,7 +193,7 @@ body{
 	}
 
 	footer{
-		background-color: rgba(100, 250, 100, 0.2);
+		background-color: $FooterColor;
 		font-size: 20px;
 		flex-shrink: 0;
 		flex-grow: 1;
@@ -193,5 +211,3 @@ body{
 			}
 		}
 	}
-	min-height: 100vh;
-}

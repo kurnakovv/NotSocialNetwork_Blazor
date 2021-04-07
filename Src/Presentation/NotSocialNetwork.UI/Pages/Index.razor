@@ -2,15 +2,7 @@
 @page "/"
 
 <SubmitPostBox />
-
 <Post />
 
 @code{
-
-    private UserEntity[] users;
-
-    protected override async Task OnInitializedAsync()
-    {
-        users = await Http.GetFromJsonAsync<UserEntity[]>("https://localhost:44353/api/User");
-    }
 }
