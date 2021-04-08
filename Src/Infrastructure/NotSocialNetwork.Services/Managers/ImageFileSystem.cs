@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
@@ -57,9 +58,12 @@ namespace NotSocialNetwork.Services.Managers
             return file.Id;
         }
 
-        public Guid Update(ImageEntity file)
+        public Guid Update(UpdateFileDTO updateFile)
         {
-            throw new NotImplementedException();
+            Delete(updateFile.OldFile.Id, updateFile.FilePath);
+            Save((ImageEntity)updateFile.NewFile, updateFile.FilePath);
+
+            return updateFile.NewFile.Id;
         }
 
         private bool IsImageConteinFormat(string title)
