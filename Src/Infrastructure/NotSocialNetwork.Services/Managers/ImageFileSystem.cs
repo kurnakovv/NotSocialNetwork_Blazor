@@ -11,9 +11,9 @@ using System.Net.Http.Headers;
 
 namespace NotSocialNetwork.Services.Managers
 {
-    public class ImageFileManager : IFileManager<ImageEntity>
+    public class ImageFileSystem : IFileSystem<ImageEntity>
     {
-        public ImageFileManager(
+        public ImageFileSystem(
             IRepository<ImageEntity> imageRepository)
         {
             _imageRepository = imageRepository;

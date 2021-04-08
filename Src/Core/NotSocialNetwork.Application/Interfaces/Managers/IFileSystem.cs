@@ -3,7 +3,7 @@ using System;
 
 namespace NotSocialNetwork.Application.Interfaces.Managers
 {
-    public interface IFileManager<TFile> where TFile: BaseEntity
+    public interface IFileSystem<TFile> where TFile: BaseEntity
     {
         Guid Save(TFile file, string pathToSave);
         TFile Get(Guid id);

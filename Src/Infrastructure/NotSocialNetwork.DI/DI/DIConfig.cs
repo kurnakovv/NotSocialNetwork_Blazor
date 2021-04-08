@@ -18,7 +18,7 @@ namespace NotSocialNetwork.DI.DIConfig
 
             services.AddTransient<IUserService, UserService>();
 
-            services.AddTransient<IFileManager<ImageEntity>, ImageFileManager>();
+            services.AddTransient<IFileSystem<ImageEntity>, ImageFileSystem>();
         }
     }
 }
