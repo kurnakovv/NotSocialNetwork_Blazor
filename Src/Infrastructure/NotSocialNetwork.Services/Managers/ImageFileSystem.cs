@@ -25,7 +25,14 @@ namespace NotSocialNetwork.Services.Managers
 
         public ImageEntity Get(Guid id)
         {
-            throw new NotImplementedException();
+            var image = _imageRepository.Get(id);
+
+            if (image == null)
+            {
+                throw new ObjectNotFoundException($"Image by id: {id} not found!");
+            }
+
+            return image;
         }
 
         public Guid Save(ImageEntity file, string pathToSave)
