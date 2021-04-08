@@ -24,7 +24,7 @@ namespace NotSocialNetwork.DBContexts.Migrations
                 column: "ImageId",
                 principalTable: "Images",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.SetNull);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

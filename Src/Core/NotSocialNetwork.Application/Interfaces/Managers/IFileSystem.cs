@@ -8,6 +8,6 @@ namespace NotSocialNetwork.Application.Interfaces.Managers
         Guid Save(TFile file, string pathToSave);
         TFile Get(Guid id);
         Guid Update(TFile file);
-        Guid Delete(Guid id);
+        Guid Delete(Guid id, string filePath);
     }
 }

@@ -45,9 +45,16 @@ namespace NotSocialNetwork.Services.Managers
             return file.Id;
         }
         
-        public Guid Delete(Guid id)
+        public Guid Delete(Guid id, string filePath)
         {
-            throw new NotImplementedException();
+            var file = Get(id);
+
+            DeleteFilePath(id);
+            DeleteFileFromFolder(file.Title, filePath);
+
+            _imageRepository.Commit();
+
+            return file.Id;
         }
 
         public Guid Update(ImageEntity file)
@@ -104,6 +111,22 @@ namespace NotSocialNetwork.Services.Managers
             }
 
             file.Title = newFileTitle;
+        }
+
+        private void DeleteFilePath(Guid id)
+        {
+            _imageRepository.Delete(id);
+        }
+
+        private void DeleteFileFromFolder(string title, string filePath)
+        {
+            var fullPathToFile = filePath + "\\wwwroot\\userImages" + $@"\{title}";
+            if (File.Exists(fullPathToFile) == false)
+            {
+                throw new ObjectNotFoundException($"Image by title {title} not found.");
+            }
+
+            File.Delete(fullPathToFile);
         }
     }
 }
