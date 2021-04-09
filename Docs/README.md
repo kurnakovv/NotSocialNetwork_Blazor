@@ -79,9 +79,10 @@ dotnet ef
 ```
 dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -s .\Src\Presentation\NotSocialNetwork.API\
 ```
-</details>
 
 * Start project
+
+</details>
 
 
 ## Team
@@ -90,7 +91,7 @@ dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -
 [Ulyanov-programmer](https://github.com/Ulyanov-programmer) | [KurnakovMaksim](https://github.com/KurnakovMaksim)
 
 ## Status
-
+We are actively developing this project. We still have many tasks and bugs that we solve together!
 
 ## Contacts
 
