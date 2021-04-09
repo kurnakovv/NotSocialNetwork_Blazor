@@ -25,7 +25,14 @@
 
 
 ## Technologies
-
+* C# - v9.0
+* .Net - v5.0
+* EntityFrameworkCore - v5.0
+* Web API - v5.0
+* Blazor Server - v5.0
+* Swagger - v5.6.3
+* xUnit - v2.4.1
+* Moq - v4.16.1
 
 ## Versions
 
@@ -94,6 +101,6 @@ dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -
 We are actively developing this project. We still have many tasks and bugs that we solve together!
 
 ## Contacts
-You can write to us if you have any questions or ideas
-ccoldatheinrich@yandex.ru - frontend
-maxmamamama2003@gmail.com - backend
+You can write to us if you have any questions or ideas:
+* ccoldatheinrich@yandex.ru - frontend
+* maxmamamama2003@gmail.com - backend
