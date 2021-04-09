@@ -38,7 +38,9 @@
 ![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
 
-### Database:
+<details>
+    <summary>Database connection.</summary>
+    
 You can run the project without a database, as we initially use InMemoryDatabase, but if you need a database, follow the instructions:
 * Src / Presentation / NotSocialNetwork.API / Startup.cs change in the ConfigureServices method:
 ``` csharp
@@ -77,6 +79,8 @@ dotnet ef
 ```
 dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -s .\Src\Presentation\NotSocialNetwork.API\
 ```
+</details>
+
 * Start project
 
 
