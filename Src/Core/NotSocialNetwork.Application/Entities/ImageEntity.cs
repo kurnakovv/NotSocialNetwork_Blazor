@@ -7,7 +7,6 @@ namespace NotSocialNetwork.Application.Entities
 {
     public class ImageEntity : BaseEntity
     {
-        [JsonIgnore]
         public string Title { get; set; }
         [NotMapped]
         [JsonIgnore]

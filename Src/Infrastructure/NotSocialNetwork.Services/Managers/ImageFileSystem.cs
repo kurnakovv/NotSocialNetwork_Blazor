@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
@@ -11,9 +12,9 @@ using System.Net.Http.Headers;
 
 namespace NotSocialNetwork.Services.Managers
 {
-    public class ImageFileManager : IFileManager<ImageEntity>
+    public class ImageFileSystem : IFileSystem<ImageEntity>
     {
-        public ImageFileManager(
+        public ImageFileSystem(
             IRepository<ImageEntity> imageRepository)
         {
             _imageRepository = imageRepository;
@@ -25,7 +26,14 @@ namespace NotSocialNetwork.Services.Managers
 
         public ImageEntity Get(Guid id)
         {
-            throw new NotImplementedException();
+            var image = _imageRepository.Get(id);
+
+            if (image == null)
+            {
+                throw new ObjectNotFoundException($"Image by id: {id} not found!");
+            }
+
+            return image;
         }
 
         public Guid Save(ImageEntity file, string pathToSave)
@@ -38,14 +46,24 @@ namespace NotSocialNetwork.Services.Managers
             return file.Id;
         }
         
-        public Guid Delete(Guid id)
+        public Guid Delete(Guid id, string filePath)
         {
-            throw new NotImplementedException();
+            var file = Get(id);
+
+            DeleteFilePath(id);
+            DeleteFileFromFolder(file.Title, filePath);
+
+            _imageRepository.Commit();
+
+            return file.Id;
         }
 
-        public Guid Update(ImageEntity file)
+        public Guid Update(UpdateFileDTO updateFile)
         {
-            throw new NotImplementedException();
+            Delete(updateFile.OldFile.Id, updateFile.FilePath);
+            Save((ImageEntity)updateFile.NewFile, updateFile.FilePath);
+
+            return updateFile.NewFile.Id;
         }
 
         private bool IsImageConteinFormat(string title)
@@ -97,6 +115,22 @@ namespace NotSocialNetwork.Services.Managers
             }
 
             file.Title = newFileTitle;
+        }
+
+        private void DeleteFilePath(Guid id)
+        {
+            _imageRepository.Delete(id);
+        }
+
+        private void DeleteFileFromFolder(string title, string filePath)
+        {
+            var fullPathToFile = filePath + "\\wwwroot\\userImages" + $@"\{title}";
+            if (File.Exists(fullPathToFile) == false)
+            {
+                throw new ObjectNotFoundException($"Image by title {title} not found.");
+            }
+
+            File.Delete(fullPathToFile);
         }
     }
 }

@@ -14,11 +14,13 @@ namespace NotSocialNetwork.DI.DIConfig
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddTransient<IRepository<UserEntity>, EFCoreRepository<UserEntity>>();
+            services.AddTransient<IRepository<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
             services.AddTransient<IRepository<ImageEntity>, EFCoreRepository<ImageEntity>>();
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPublicationService, PublicationService>();
 
-            services.AddTransient<IFileManager<ImageEntity>, ImageFileManager>();
+            services.AddTransient<IFileSystem<ImageEntity>, ImageFileSystem>();
         }
     }
 }

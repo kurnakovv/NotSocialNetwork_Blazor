@@ -81,7 +81,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Arrange
             var userService = new Mock<IUserService>();
             var hostEnvironment = new Mock<IHostEnvironment>();
-            var imageFileManager = new Mock<IFileManager<ImageEntity>>();
+            var imageFileSystem = new Mock<IFileSystem<ImageEntity>>();
 
             userService.Setup(u => u.Add(_user))
                 .Returns(_user);
@@ -89,12 +89,12 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             hostEnvironment.Setup(h => h.EnvironmentName)
                 .Returns("Hosting:UnitTestEnvironment");
 
-            imageFileManager.Setup(i => i.Save(_user.Image, "pathToSave"))
+            imageFileSystem.Setup(i => i.Save(_user.Image, "pathToSave"))
                 .Returns(_user.Id);
 
             var userController = new UserController(
                                     userService.Object,
-                                    imageFileManager.Object,
+                                    imageFileSystem.Object,
                                     hostEnvironment.Object);
 
             // Act

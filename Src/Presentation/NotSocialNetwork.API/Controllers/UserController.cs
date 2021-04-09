@@ -21,16 +21,16 @@ namespace NotSocialNetwork.API.Controllers
     {
         public UserController(
             IUserService userService,
-            IFileManager<ImageEntity> imageFileManager,
+            IFileSystem<ImageEntity> imageFileSystem,
             IHostEnvironment hostEnvironment)
         {
             _userService = userService;
-            _imageFileManager = imageFileManager;
+            _imageFileSystem = imageFileSystem;
             _hostEnvironment = hostEnvironment;
         }
 
         private readonly IUserService _userService;
-        private readonly IFileManager<ImageEntity> _imageFileManager;
+        private readonly IFileSystem<ImageEntity> _imageFileSystem;
         private readonly IHostEnvironment _hostEnvironment;
 
         [HttpGet]
@@ -71,7 +71,7 @@ namespace NotSocialNetwork.API.Controllers
                     user.DateOfBirth = registrationUserDTO.DateOfBirth;
                     user.Image = image;
 
-                    _imageFileManager.Save(user.Image, _hostEnvironment.ContentRootPath);
+                    _imageFileSystem.Save(user.Image, _hostEnvironment.ContentRootPath);
                 }
                 else
                 {
