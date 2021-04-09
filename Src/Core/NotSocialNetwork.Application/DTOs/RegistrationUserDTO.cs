@@ -12,7 +12,7 @@ namespace NotSocialNetwork.Application.DTOs
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        public DateTimeOffset DateOfBirth { get; set; }
+        public DateTimeOffset DateOfBirth = new(DateTime.Now);
         public IFormFile Files { get; set; }
     }
 }

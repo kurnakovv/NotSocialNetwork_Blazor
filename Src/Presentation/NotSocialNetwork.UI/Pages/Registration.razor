@@ -3,35 +3,42 @@
 
 <link href="/css/RegistrationStyles.css" rel="stylesheet">
 
-<div class="TitleContainer">
+<div class="TitleContainer" style="@TitleStyles">
     <span>
         @message
     </span>
 </div>
-<!--Enter action and model reference here-->
 <EditForm Model="newUserDTO" OnValidSubmit="@SendNewUser"
           action="#" class="main-container-form">
-    <div class="form-container">
+    <div class="form-container" style="@FormContainerStyles">
         <InputText @bind-Value="newUserDTO.Name"
-                   class="form-container--input" placeholder="Никнейм" />
+                   class="form-container--input" placeholder="Никнейм"
+                   style="@FormContainerStyles_Input"/>
     </div>
-    <div class="form-container">
+    <div class="form-container" style="@FormContainerStyles">
         <InputText @bind-Value="newUserDTO.Email"
-                   type="Email" class="form-container--input" placeholder="Email" />
+                   type="Email" class="form-container--input" placeholder="Email" 
+                   style="@FormContainerStyles_Input"/>
     </div>
-    <div class="form-container">
+    <div class="form-container" style="@FormContainerStyles">
         <InputDate TValue="DateTimeOffset" @bind-Value="newUserDTO.DateOfBirth"
                    placeholder="Ваш день рождения"
-                   class="form-container--input" />
+                   class="form-container--input"
+                   style="@FormContainerStyles_Input"/>
     </div>
     <div class="form-container">
-        <button type="submit" class="form-container--submitButton">
+        <button type="submit" class="form-container--submitButton" style="@FormContainerStyles_Submit">
             Зарегистрироваться
         </button>
     </div>
 </EditForm>
 
 @code{
+    const string TitleStyles = "display: flex; justify-content: center; font-size: 35px";
+    const string FormContainerStyles = "display: flex; justify-content: left; margin: 15px 10px 10px 23px;";
+    const string FormContainerStyles_Input = "font-size: 30px; padding: 20px; background-color: #fff8c2;";
+    const string FormContainerStyles_Submit = "font-size: 30px; padding: 20px; background-color: #ffef78; margin: 15px 10px 10px 23px;";
+
     string message = "Регистрация";
 
     RegistrationUserDTO newUserDTO = new();
