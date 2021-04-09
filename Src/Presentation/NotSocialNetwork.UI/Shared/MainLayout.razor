@@ -10,10 +10,8 @@
 <main style="background-color: @_main_BackColor; color: @_main_Color;">
     <header>
         <div class="header-container">
-            <!-- Переместить с сохранением функционала в компонент,
-                 изменить эффект при наведении. -->
             <div class="header-container-Logo">
-                <a href="/"><img src="@_TitleRef" alt="Logo" height="50px" width="170px"> </a>
+                <a href="/"><img src="@TitleReference" alt="Logo" height="50px" width="170px"> </a>
             </div>
             <nav class="header-container-navmenu">
                 <button class="navmenu-settings" @onclick="@OpenInputContainer"></button>
@@ -34,28 +32,30 @@
     <div>
         <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
     </div>
-    <RefContainer ReferencesData="ReferenceData" />
+    <RefContainer ReferenceColor="@_refColor" ReferencesData="ReferenceData" />
 </footer>
 
 @code{
-    bool _visibleNavmenuButtons = false;
     string _viewOfNavmenuButtons = "none";
 
-    #region DarkThemeStyles
+    #region styleOfVariablesAndReferences
 
     string _main_BackColor;
     string _main_Color;
     string _footer_BackColor;
     string _footer_Color;
+    string _refColor;
 
-    string _TitleRef;
+    string TitleReference;
 
-    const string TitleBlackRef = "../css/images/TitleIconBlack.png";
-    const string TitleWhiteRef = "../css/images/TitleIconWhite.png";
+    private const string TitleBlackRef = "../css/images/TitleIconBlack.png";
+    private const string TitleWhiteRef = "../css/images/TitleIconWhite.png";
 
     #endregion
 
     Dictionary<string, string> ReferenceData = new();
+
+    #region RenderingMethods
 
     protected override void OnInitialized()
     {
@@ -74,6 +74,9 @@
         }
     }
 
+    #endregion
+
+
     void SetStylesOfNightTheme(bool cookieOfNightThemeValue)
     {
         if (cookieOfNightThemeValue)
@@ -82,22 +85,24 @@
             _main_Color = "#ebffe1";
             _footer_BackColor = "#3c5a3c";
             _footer_Color = "#ebffe1";
+            _refColor = "red";
 
-            _TitleRef = TitleWhiteRef;
+            TitleReference = TitleWhiteRef;
         }
         else
         {
             _main_BackColor = ""; _main_Color = "";
             _footer_BackColor = ""; _footer_Color = "";
+            _refColor = "";
 
-            _TitleRef = TitleBlackRef;
+            TitleReference = TitleBlackRef;
         }
         StateHasChanged();
     }
 
     void OpenInputContainer()
     {
-        if (_visibleNavmenuButtons)
+        if (_viewOfNavmenuButtons == "flex")
         {
             _viewOfNavmenuButtons = "none";
         }
@@ -105,8 +110,6 @@
         {
             _viewOfNavmenuButtons = "flex";
         }
-
-        _visibleNavmenuButtons = !_visibleNavmenuButtons;
     }
 
     async Task EditNightThemeCookies()

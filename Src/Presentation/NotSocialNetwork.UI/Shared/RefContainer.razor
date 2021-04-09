@@ -1,7 +1,7 @@
 ﻿<div class="ReferenceContainer">
     @foreach (var hrefData in ReferencesData)
     {
-        <a href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
+        <a style="color: @ReferenceColor" href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
     }
 </div>
 
@@ -10,4 +10,5 @@
     /// Хранит данные ссылкок, значение Key - сама ссылка, значвние Value - её текст.
     /// </summary>
     [Parameter] public Dictionary<string, string> ReferencesData { get; set; }
+    [Parameter] public string ReferenceColor { get; set; }
 }

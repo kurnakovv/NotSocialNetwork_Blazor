@@ -5,7 +5,9 @@ $BackgroundColor: rgb(224, 239, 217);
 $BorderColor: rgba(100, 170, 100, 0.5);
 $FooterColor: #c8dcaa;
 $WindowColor: rgba(255,239,120, 0.45);
-$ActiveWindowColor: rgba(170,250,100, 1);
+
+$ActiveButtonColor: #64aa64;
+$ButtonColor: #3c8c3c;
 
 $InputContainerIsDisplay: none;
 
@@ -54,7 +56,7 @@ body {
 					z-index: 1;
 
 					.inputContainer--button{
-						background-color: #64aa64;
+						background-color: $ButtonColor;
 						font-size: $DefaultFontSize;
 
 						padding: 7px;
@@ -73,14 +75,14 @@ body {
 			border-bottom: 1px solid $BorderColor;
 
 			margin-bottom: 20px;
-			background-color: #3c8c3c;
+			background-color: $ButtonColor;
 			position: sticky;
 
 			top: 0;
 			box-shadow: 0px 10px 15px 0.2px rgb(0 0 0 / 10%);
 			
 				:hover{
-					background-color: $ActiveWindowColor;
+					background-color: $ActiveButtonColor;
 				}
 			.navmenu-reference{
 				font-family: $DefaultFontFamily;
@@ -91,7 +93,6 @@ body {
 				padding-bottom: 3px;
 
 				flex-grow: 1;
-
 				a{
 					display: block;
 					color: #e0efd9;
@@ -110,7 +111,8 @@ body {
 					display: flex;
 					flex-direction: column;
 
-					background-color: $WindowColor;
+					background-color: $ButtonColor;
+					color: #ebffe1;
 
 					padding: 5px;
 
@@ -136,12 +138,9 @@ body {
 						}
 					}
 					.submitButton{
-						background-color: #ffef78;
-						font-size: 17px;
-
-						:hover{
-							background-color: rgba(170,250,100, 1);
-						}
+						background-color: #327832;
+						color: #ebffe1;
+						font-size: 20px;
 					}
 				}
 			.main-container-post{
@@ -194,7 +193,7 @@ body {
 
 	footer{
 		background-color: $FooterColor;
-		font-size: 20px;
+		font-size: 17px;
 		flex-shrink: 0;
 		flex-grow: 1;
 

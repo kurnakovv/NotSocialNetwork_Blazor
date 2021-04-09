@@ -39,7 +39,7 @@ body header .header-container .header-container-navmenu .inputContainer {
   z-index: 1;
 }
 body header .header-container .header-container-navmenu .inputContainer .inputContainer--button {
-  background-color: #64aa64;
+  background-color: #3c8c3c;
   font-size: 20px;
   padding: 7px;
 }
@@ -59,7 +59,7 @@ main .header-container-SubNavmenu {
   box-shadow: 0px 10px 15px 0.2px rgba(0, 0, 0, 0.1);
 }
 main .header-container-SubNavmenu :hover {
-  background-color: #aafa64;
+  background-color: #64aa64;
 }
 main .header-container-SubNavmenu .navmenu-reference {
   font-family: arial;
@@ -83,7 +83,8 @@ main .main-contaner {
 main .main-contaner .submitPostBox {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 239, 120, 0.45);
+  background-color: #3c8c3c;
+  color: #ebffe1;
   padding: 5px;
   border: 0.5px rgba(0, 0, 0, 0.1) solid;
   border-radius: 10px;
@@ -104,11 +105,9 @@ main .main-contaner .submitPostBox .submitPostBox-TextBox .TextBox--inputText {
   font-size: 20px;
 }
 main .main-contaner .submitPostBox .submitButton {
-  background-color: #ffef78;
-  font-size: 17px;
-}
-main .main-contaner .submitPostBox .submitButton :hover {
-  background-color: #aafa64;
+  background-color: #327832;
+  color: #ebffe1;
+  font-size: 20px;
 }
 main .main-contaner .main-container-post {
   display: flex;
@@ -145,7 +144,7 @@ main .main-contaner .main-container-post .post-main .post-main-imageContaner img
 
 footer {
   background-color: #c8dcaa;
-  font-size: 20px;
+  font-size: 17px;
   flex-shrink: 0;
   flex-grow: 1;
   padding-left: 15px;
