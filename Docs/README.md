@@ -94,4 +94,6 @@ dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -
 We are actively developing this project. We still have many tasks and bugs that we solve together!
 
 ## Contacts
-
+You can write to us if you have any questions or ideas
+ccoldatheinrich@yandex.ru - frontend
+maxmamamama2003@gmail.com - backend
