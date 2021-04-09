@@ -10,9 +10,9 @@
 <main style="background-color: @_main_BackColor; color: @_main_Color;">
     <header>
         <div class="header-container">
-            <div class="header-container-Logo">
-                <a href="/"><img src="@TitleReference" alt="Logo" height="50px" width="170px"> </a>
-            </div>
+            <a href="/">
+                <div style="background: url(@TitleReference) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" class="header-container-Logo"></div>
+            </a>
             <nav class="header-container-navmenu">
                 <button class="navmenu-settings" @onclick="@OpenInputContainer"></button>
                 <div style="display: @_viewOfNavmenuButtons" class="inputContainer">

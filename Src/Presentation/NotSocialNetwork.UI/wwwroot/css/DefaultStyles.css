@@ -18,6 +18,11 @@ body header .header-container {
 }
 body header .header-container .header-container-Logo {
   margin: 10px;
+  background: url("../css/images/TitleIconBlack.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  height: 50px;
+  width: 170px;
 }
 body header .header-container .header-container-navmenu {
   display: flex;
