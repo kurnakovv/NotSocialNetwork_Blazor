@@ -36,17 +36,18 @@ body header .header-container .header-container-navmenu .navmenu-settings {
   cursor: pointer;
 }
 body header .header-container .header-container-navmenu .inputContainer {
-  display: none;
+  visibility: hidden;
   flex-grow: 1;
   position: absolute;
-  top: 10.5%;
-  right: 1%;
+  top: 7.5%;
+  right: 0%;
   z-index: 1;
 }
 body header .header-container .header-container-navmenu .inputContainer .inputContainer--button {
   background-color: #3c8c3c;
   font-size: 20px;
-  padding: 7px;
+  color: white;
+  padding: 2%;
 }
 
 main {
@@ -68,15 +69,15 @@ main .header-container-SubNavmenu :hover {
 }
 main .header-container-SubNavmenu .navmenu-reference {
   font-family: arial;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   text-align: center;
-  padding-bottom: 3px;
+  padding: 4px;
   flex-grow: 1;
 }
 main .header-container-SubNavmenu .navmenu-reference a {
   display: block;
-  color: #e0efd9;
+  color: white;
   flex-grow: 1;
 }
 main .main-contaner {
@@ -117,15 +118,15 @@ main .main-contaner .submitPostBox .submitButton {
 main .main-contaner .main-container-post {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 239, 120, 0.45);
+  background-color: rgba(255, 239, 120, 0.75);
   margin: 15px 0px;
   border: 0.5px rgba(0, 0, 0, 0.1) solid;
   border-radius: 10px;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
 main .main-contaner .main-container-post .post-header .post-header--AuthorIcon {
-  margin-left: 15px;
-  margin-top: 5px;
+  margin-left: 2%;
+  margin-top: 2%;
 }
 main .main-contaner .main-container-post .post-header .post-header--AuthorName {
   font-size: 30px;
@@ -133,8 +134,7 @@ main .main-contaner .main-container-post .post-header .post-header--AuthorName {
 main .main-contaner .main-container-post .post-main .post-main-textContainer {
   font-family: arial;
   font-size: 20px;
-  margin-left: 100px;
-  margin-bottom: 10px;
+  margin: 3% 10%;
 }
 main .main-contaner .main-container-post .post-main .post-main-imageContaner {
   display: flex;

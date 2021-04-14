@@ -4,7 +4,7 @@ $ShadowColor: rgb(0 0 0 / 10%);
 $BackgroundColor: rgb(224, 239, 217);
 $BorderColor: rgba(100, 170, 100, 0.5);
 $FooterColor: #c8dcaa;
-$WindowColor: rgba(255,239,120, 0.45);
+$WindowColor: rgba(255,239,120, 0.75);
 
 $ActiveButtonColor: #64aa64;
 $ButtonColor: #3c8c3c;
@@ -51,12 +51,12 @@ body {
 				}
 				/* Что бы скрыть или показать этот блок, измените свойство display на none или flex. */
 				.inputContainer{
-					display: none;
+					visibility: hidden;
 					flex-grow: 1;
 
 					position: absolute;
-					top: 10.5%;
-					right: 1%;
+					top: 7.5%;
+					right: 0%;
 
 					z-index: 1;
 
@@ -64,7 +64,8 @@ body {
 						background-color: $ButtonColor;
 						font-size: $DefaultFontSize;
 
-						padding: 7px;
+						color: white;
+						padding: 2%;
 					}
 				}
 			}
@@ -91,16 +92,16 @@ body {
 				}
 			.navmenu-reference{
 				font-family: $DefaultFontFamily;
-				font-size: $DefaultFontSize + 5px;
+				font-size: 20px;
 				font-weight: 500;
 				text-align: center;
 
-				padding-bottom: 3px;
+				padding: 4px;
 
 				flex-grow: 1;
 				a{
 					display: block;
-					color: #e0efd9;
+					color: white;
 					flex-grow: 1;
 				}
 			}
@@ -163,8 +164,8 @@ body {
 
 				.post-header{
 					.post-header--AuthorIcon{
-						margin-left: 15px;
-						margin-top: 5px;
+						margin-left: 2%;
+						margin-top: 2%;
 					}
 					.post-header--AuthorName{
 						font-size: 30px;
@@ -175,8 +176,7 @@ body {
 					.post-main-textContainer{
 						font-family: $DefaultFontFamily;
 						font-size: 20px;
-						margin-left: 100px;
-						margin-bottom: 10px;
+						margin: 3% 10%;
 					}
 					.post-main-imageContaner{
 						display: flex;

@@ -15,7 +15,7 @@
             </a>
             <nav class="header-container-navmenu">
                 <button class="navmenu-settings" @onclick="@OpenInputContainer"></button>
-                <div style="display: @_viewOfNavmenuButtons" class="inputContainer">
+                <div style="visibility: @_viewOfNavmenuButtons" class="inputContainer">
                     <button @onclick="@EditNightThemeCookies" class="inputContainer--button">Переключить ночную тему </button>
                 </div>
             </nav>
@@ -82,7 +82,7 @@
         if (cookieOfNightThemeValue)
         {
             _main_BackColor = "#325032";
-            _main_Color = "#ebffe1";
+            _main_Color = "black";
             _footer_BackColor = "#3c5a3c";
             _footer_Color = "#ebffe1";
             _refColor = "red";
@@ -102,13 +102,13 @@
 
     void OpenInputContainer()
     {
-        if (_viewOfNavmenuButtons == "flex")
+        if (_viewOfNavmenuButtons == "visible")
         {
-            _viewOfNavmenuButtons = "none";
+            _viewOfNavmenuButtons = "hidden";
         }
         else
         {
-            _viewOfNavmenuButtons = "flex";
+            _viewOfNavmenuButtons = "visible";
         }
     }
 
