@@ -1,0 +1,51 @@
+﻿@inject HttpClient Http
+@inject ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+@page "/Login"
+
+<link href="/css/RegistrationStyles.css" rel="stylesheet">
+
+<div class="TitleContainer">
+    <span>
+        @message
+    </span>
+</div>
+<EditForm Model="userDTO" OnValidSubmit="@SendUserForAuthentication"
+          action="#" class="main-container-form">
+    <div class="form-container">
+        <InputText @bind-Value="userDTO.Name"
+                   class="form-container--input" placeholder="Никнейм" />
+    </div>
+    <div class="form-container">
+        <InputText @bind-Value="userDTO.Email"
+                   type="Email" class="form-container--input" placeholder="Email" />
+    </div>
+    <div class="form-container">
+        <button type="submit" class="form-container--submitButton">
+            Войти
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    string message;
+    RegistrationUserDTO userDTO = new();
+
+    async Task SendUserForAuthentication()
+    {
+        var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                    ("https://localhost:44353/api/User/CheckUser", userDTO);
+
+        if (result.IsSuccessStatusCode)
+        {
+            message = "Аутентификация прошла успешно!";
+            //TODO: Сделать перевод на главную.
+        }
+        else
+        {
+
+            message = "Пользователь с такими данными не найден или произошла ошибка!";
+        }
+    }
+}
