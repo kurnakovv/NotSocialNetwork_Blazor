@@ -1,16 +1,34 @@
-﻿<div class="main-container-post">
-    <div class="post-header">
-        <img class="post-header--AuthorIcon" src="../css/images/Icons_User.png" width="70" height="70" alt="AuthorIcon">
-        <span class="post-header--AuthorName"> ИмяАвтора </span>
-    </div>
-    <div class="post-main">
-        <div class="post-main-textContainer">
-            <p>
-                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-            </p>
+﻿@foreach (var post in Posts)
+{
+    if (post.PublicationImages != null)
+    {
+        /* TODO: Когда будет готов PublicationDTO с ссылкой на аватары и картинки, 
+        поместить ниже установку ссылки в imageUrl. */
+        imageUrl.Clear();
+        imageUrl.Append("URL");
+    }
+    <div class="main-container-post">
+        <div class="post-header">
+            <img class="post-header--AuthorIcon" src="@imageUrl" width="70" height="70" alt="AuthorIcon">
+            <span class="post-header--AuthorName"> @post.Title </span>
+        </div>
+        <div class="post-main">
+            <div class="post-main-textContainer">
+                <p>
+                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+                </p>
+            </div>
         </div>
     </div>
-</div>
+}
+
 
 @code {
+    [Parameter] public List<PublicationEntity> Posts { get; set; }
+
+    StringBuilder imageUrl = new("../css/images/Icons_User.png");
+
+    //protected async override Task OnInitializedAsync()
+    //{
+    //}
 }
