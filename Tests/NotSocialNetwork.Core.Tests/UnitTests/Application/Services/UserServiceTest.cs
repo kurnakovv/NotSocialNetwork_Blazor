@@ -125,7 +125,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
-        public void Get_GetUser_User()
+        public void GetById_GetUser_User()
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
@@ -145,7 +145,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
-        public void Get_GetInvalidUser_User()
+        public void GetById_GetInvalidUser_User()
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
@@ -153,6 +153,38 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
 
             // Act
             Action act = () => userService.GetById(_user.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
+        public void GetByEmail_GetUser_User()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
+
+            // Act
+            var result = userService.GetByEmail(_users.ElementAt(0).Email);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(_users.ElementAt(0).Email, result.Email);
+        }
+
+        [Fact]
+        public void GetByEmail_GetInvalidUser_ObjectNotFoundException()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            // Act
+            Action act = () => userService.GetByEmail(_user.Email);
 
             // Assert
             Assert.Throws<ObjectNotFoundException>(act);

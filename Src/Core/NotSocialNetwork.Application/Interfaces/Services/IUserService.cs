@@ -8,6 +8,7 @@ namespace NotSocialNetwork.Application.Interfaces.Services
     {
         IEnumerable<UserEntity> GetAll();
         UserEntity GetById(Guid id);
+        UserEntity GetByEmail(string email);
         UserEntity Add(UserEntity user);
         UserEntity Update(UserEntity user);
         UserEntity Delete(Guid id);

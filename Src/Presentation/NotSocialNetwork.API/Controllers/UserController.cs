@@ -39,30 +39,6 @@ namespace NotSocialNetwork.API.Controllers
             return _userService.GetAll();
         }
 
-        /// <summary>Checks if there is a user in the database with the appropriate parameters.</summary>
-        /// <param name="userDTO">DTO of the user with data about him for authentication.</param>
-        /// <returns>If the user was found - true, if he was not found or an error occurred while sending the request - false.</returns>
-        [HttpPost("CheckUser")]
-        public ActionResult<RegistrationUserDTO> GetByEmail(RegistrationUserDTO userDTO)
-        {
-            try
-            {
-                var usersFromDb = _userService.GetAll();
-
-                var foundedUser = usersFromDb.FirstOrDefault(user => user.Email == userDTO.Email);
-
-                if (foundedUser != default)
-                {
-                    return Ok(foundedUser.Id);
-                }
-                throw new ObjectNotFoundException("user didn't found");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpGet("{id}")]
         public ActionResult<UserEntity> Get(Guid id)
         {

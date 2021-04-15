@@ -59,6 +59,19 @@ namespace NotSocialNetwork.Application.Services
             return user;
         }
 
+        public UserEntity GetByEmail(string email)
+        {
+            var user = _userRepository.GetAll()
+                            .FirstOrDefault(u => u.Email == email);
+
+            if(user == null)
+            {
+                throw new ObjectNotFoundException($"User by email: {email} not found.");
+            }
+
+            return user;
+        }
+
         public UserEntity Update(UserEntity user)
         {
             GetById(user.Id);
