@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Entities.Abstract;
@@ -17,6 +18,7 @@ namespace NotSocialNetwork.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtAuthorize]
     public class UserController : ControllerBase
     {
         public UserController(

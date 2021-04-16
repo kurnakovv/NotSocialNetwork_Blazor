@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NotSocialNetwork.Application.DTOs;
+using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Services;
@@ -10,6 +10,7 @@ namespace NotSocialNetwork.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtAuthorize]
     public class PublicationController : ControllerBase
     {
         public PublicationController(

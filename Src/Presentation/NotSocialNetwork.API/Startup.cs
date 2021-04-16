@@ -68,6 +68,8 @@ namespace NotSocialNetwork.API
 
             app.UseAuthorization();
 
+            app.UseMiddleware<JwtAuthenticationMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

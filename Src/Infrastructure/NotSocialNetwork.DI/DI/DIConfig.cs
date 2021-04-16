@@ -21,6 +21,7 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IPublicationService, PublicationService>();
 
             services.AddTransient<IFileSystem<ImageEntity>, ImageFileSystem>();
+            services.AddTransient<IJwtSystem, JwtSystem>();
         }
     }
 }
