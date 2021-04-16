@@ -2,7 +2,32 @@
 @page "/"
 
 <SubmitPostBox />
-<Post />
+
+@if (posts.Any())
+{
+    <Post Posts="posts.ToList()" />
+}
+else
+{
+    <span>Упс, пока что постов нет...</span>
+}
 
 @code{
+    List<PublicationEntity> posts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        // Do not change the ad logic for the posts variable.
+        // otherwise, when the page is rendered, it will be reset to zero. 
+        posts = new List<PublicationEntity>();
+
+        GetPostsAsync();
+    }
+
+    async void GetPostsAsync()
+    {
+        posts = Http.GetFromJsonAsync<IEnumerable<PublicationEntity>>
+                ("https://localhost:44353/api/Publication")
+                .Result.ToList();
+    }
 }

@@ -14,8 +14,9 @@
                 <div style="background: url(@TitleReference) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" class="header-container-Logo"></div>
             </a>
             <nav class="header-container-navmenu">
-                <button class="navmenu-settings" @onclick="@OpenInputContainer"></button>
-                <div style="visibility: @_viewOfNavmenuButtons" class="inputContainer">
+                <button class="navmenu-settings" @onclick="@OpenSettingsContainer">
+                </button>
+                <div style="visibility: @_visibilityOfNavmenuButtons" class="inputContainer">
                     <button @onclick="@EditNightThemeCookies" class="inputContainer--button">Переключить ночную тему </button>
                 </div>
             </nav>
@@ -36,9 +37,10 @@
 </footer>
 
 @code{
-    string _viewOfNavmenuButtons = "none";
+    string _visibilityOfNavmenuButtons = "none";
+    Dictionary<string, string> ReferenceData = new();
 
-    #region styleOfVariablesAndReferences
+    #region HtmlStylesAndRefs
 
     string _main_BackColor;
     string _main_Color;
@@ -53,7 +55,6 @@
 
     #endregion
 
-    Dictionary<string, string> ReferenceData = new();
 
     #region RenderingMethods
 
@@ -70,14 +71,13 @@
         if (firstRender)
         {
             var cookieResult = await localStorage.GetItemAsync<bool>("nightTheme");
-            SetStylesOfNightTheme(cookieResult);
+            SetHtmlStyles(cookieResult);
         }
     }
 
     #endregion
 
-
-    void SetStylesOfNightTheme(bool cookieOfNightThemeValue)
+    void SetHtmlStyles(bool cookieOfNightThemeValue)
     {
         if (cookieOfNightThemeValue)
         {
@@ -100,15 +100,15 @@
         StateHasChanged();
     }
 
-    void OpenInputContainer()
+    void OpenSettingsContainer()
     {
-        if (_viewOfNavmenuButtons == "visible")
+        if (_visibilityOfNavmenuButtons is "visible")
         {
-            _viewOfNavmenuButtons = "hidden";
+            _visibilityOfNavmenuButtons = "hidden";
         }
         else
         {
-            _viewOfNavmenuButtons = "visible";
+            _visibilityOfNavmenuButtons = "visible";
         }
     }
 
@@ -117,12 +117,12 @@
         if (await localStorage.GetItemAsync<bool>("nightTheme"))
         {
             await localStorage.SetItemAsync("nightTheme", false);
-            SetStylesOfNightTheme(false);
+            SetHtmlStyles(false);
         }
         else
         {
             await localStorage.SetItemAsync("nightTheme", true);
-            SetStylesOfNightTheme(true);
+            SetHtmlStyles(true);
         }
     }
 }
