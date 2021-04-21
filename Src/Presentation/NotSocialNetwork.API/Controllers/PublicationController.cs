@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NotSocialNetwork.API.Attributes;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Services;
@@ -14,25 +16,38 @@ namespace NotSocialNetwork.API.Controllers
     public class PublicationController : ControllerBase
     {
         public PublicationController(
-            IPublicationService publicationService)
+            IPublicationService publicationService,
+            IMapper mapper)
         {
             _publicationService = publicationService;
+            _mapper = mapper;
         }
 
         private readonly IPublicationService _publicationService;
+        private readonly IMapper _mapper;
 
         [HttpGet]
-        public IEnumerable<PublicationEntity> Get()
+        public IEnumerable<PublicationDTO> Get()
         {
-            return _publicationService.GetAll();
+            var publicationsEntitie = _publicationService.GetAll();
+
+            var publicationsDTO =
+                _mapper.Map<IEnumerable<PublicationDTO>>(publicationsEntitie);
+
+            return publicationsDTO;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<PublicationEntity> Get(Guid id)
+        public ActionResult<PublicationDTO> Get(Guid id)
         {
             try
             {
-                return _publicationService.GetById(id);
+                var publicationEntity = _publicationService.GetById(id);
+                
+                var publicationDTO = 
+                    _mapper.Map<PublicationDTO>(publicationEntity);
+
+                return publicationDTO;
             }
             catch (ObjectNotFoundException ex)
             {
@@ -41,12 +56,14 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PublicationEntity> Add(PublicationEntity publication)
+        public ActionResult<AddPublicationDTO> Add(AddPublicationDTO publication)
         {
             try
             {
-                // TODO: Convert PublicationEntity -> AddPublicationDTO.
-                _publicationService.Add(publication);
+                var publicationEntity =
+                    _mapper.Map<PublicationEntity>(publication);
+
+                _publicationService.Add(publicationEntity);
 
                 return Ok(publication);
             }
@@ -57,12 +74,19 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPut]
-        public ActionResult<PublicationEntity> Update(PublicationEntity publication)
+        public ActionResult<PublicationDTO> Update(UpdatePublicationDTO publication)
         {
             try
             {
-                // TODO: Convert PublicationEntity -> UpdatePublicationDTO.
-                _publicationService.Update(publication);
+                // TODO: Add automapper for update.
+
+                //var publicationEntity =
+                //    _mapper.Map<PublicationEntity>(publication);
+
+                var publicationEntity = _publicationService.GetById(publication.Id);
+                publicationEntity.Text = publication.Text;
+
+                _publicationService.Update(publicationEntity);
 
                 return Ok(publication);
             }
@@ -73,7 +97,7 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<UserEntity> Delete(Guid id)
+        public ActionResult<PublicationDTO> Delete(Guid id)
         {
             try
             {
