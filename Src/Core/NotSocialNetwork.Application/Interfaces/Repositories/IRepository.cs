@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace NotSocialNetwork.Application.Interfaces.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T> : IDisposable
     {
         IQueryable<T> GetAll();
         T Get(Guid id);

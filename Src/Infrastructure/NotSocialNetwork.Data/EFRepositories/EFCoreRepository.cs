@@ -3,7 +3,6 @@ using NotSocialNetwork.Application.Entities.Abstract;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.DBContexts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NotSocialNetwork.Data.EFRepositories
@@ -60,6 +59,11 @@ namespace NotSocialNetwork.Data.EFRepositories
         public void Commit()
         {
             _appDbContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _appDbContext.Dispose();
         }
     }
 }
