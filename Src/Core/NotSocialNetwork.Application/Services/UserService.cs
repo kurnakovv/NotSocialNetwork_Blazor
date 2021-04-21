@@ -49,7 +49,7 @@ namespace NotSocialNetwork.Application.Services
 
         public UserEntity GetById(Guid id)
         {
-            var user = _userRepository.Get(id);
+            var user = GetAll().FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {

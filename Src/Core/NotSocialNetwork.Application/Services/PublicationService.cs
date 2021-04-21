@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
@@ -18,13 +19,18 @@ namespace NotSocialNetwork.Application.Services
 
         private readonly IRepository<PublicationEntity> _publicationRepository;
 
-        public IEnumerable<PublicationEntity> GetAll() => _publicationRepository.GetAll();
+        public IEnumerable<PublicationEntity> GetAll()
+        {
+            return _publicationRepository.GetAll()
+                       .Include(p => p.Author)
+                       .Include(p => p.PublicationImages);
+        }
 
         public PublicationEntity GetById(Guid id)
         {
-            var publication = _publicationRepository.Get(id);
+            var publication = GetAll().FirstOrDefault(p => p.Id == id);
 
-            if(publication == null)
+            if (publication == null)
             {
                 throw new ObjectNotFoundException($"Publication by Id: {id} not found.");
             }
