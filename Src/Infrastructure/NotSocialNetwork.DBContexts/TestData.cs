@@ -56,8 +56,8 @@ namespace NotSocialNetwork.DBContexts
         {
             var publications = new List<PublicationEntity>()
             {
-                new PublicationEntity() { Title = "Some title1", Author = _userEntity1, PublicationImages = new List<ImageEntity>() { _imageEntity1, _imageEntity2 } },
-                new PublicationEntity() { Title = "Some title2", Author = _userEntity2, PublicationImages = new List<ImageEntity>() { _imageEntity3 }, }
+                new PublicationEntity() { Title = "Some title1", Author = _userEntity1, PublicationImages = new List<ImageEntity>() { _imageEntity1, _imageEntity2 }, Text = "Some text 1", },
+                new PublicationEntity() { Title = "Some title2", Author = _userEntity2, PublicationImages = new List<ImageEntity>() { _imageEntity3 }, Text = "Some text 2" }
             };
             return publications;
         }

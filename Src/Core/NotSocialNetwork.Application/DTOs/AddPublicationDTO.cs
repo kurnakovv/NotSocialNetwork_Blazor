@@ -6,6 +6,6 @@ namespace NotSocialNetwork.Application.DTOs
     {
         public string Title { get; set; }
         public Guid AuthorId { get; set; }
-        // TODO: Add Text and Images.
+        public string Text { get; set; } // Convert from string to file.
     }
 }
