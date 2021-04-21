@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NotSocialNetwork.DI.DIConfig;
 using NotSocialNetwork.DBContexts;
+using NotSocialNetwork.Mapping.AutoMapper;
+using AutoMapper;
 
 namespace NotSocialNetwork.API
 {
@@ -35,6 +37,17 @@ namespace NotSocialNetwork.API
             StartupSetup.AddDbContext(services, Configuration.GetConnectionString("NotSocialNetworkDB"));
         }
 
+        private void ConnectMapping(IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperConfig());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -44,6 +57,8 @@ namespace NotSocialNetwork.API
             ConfigureInMemoryDatabase(services);
             // Real database.
             //ConfigureProductionServices(services);
+
+            ConnectMapping(services);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
