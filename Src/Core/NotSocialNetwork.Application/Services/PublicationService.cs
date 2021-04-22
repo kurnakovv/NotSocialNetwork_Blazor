@@ -12,12 +12,15 @@ namespace NotSocialNetwork.Application.Services
     public class PublicationService : IPublicationService
     {
         public PublicationService(
-            IRepository<PublicationEntity> publicationRepository)
+            IRepository<PublicationEntity> publicationRepository,
+            IUserService userService)
         {
             _publicationRepository = publicationRepository;
+            _userService = userService;
         }
 
         private readonly IRepository<PublicationEntity> _publicationRepository;
+        private readonly IUserService _userService;
 
         public IEnumerable<PublicationEntity> GetAll()
         {
@@ -45,6 +48,8 @@ namespace NotSocialNetwork.Application.Services
                 throw new ObjectAlreadyExistException($"Publication by Id: {publication.Id} already exists.");
             }
 
+            IsAuthorFound(publication.AuthorId);
+            
             _publicationRepository.Add(publication);
             _publicationRepository.Commit();
 
@@ -69,6 +74,11 @@ namespace NotSocialNetwork.Application.Services
             _publicationRepository.Commit();
 
             return publication;
+        }
+
+        private void IsAuthorFound(Guid id)
+        {
+            _userService.GetById(id);
         }
     }
 }

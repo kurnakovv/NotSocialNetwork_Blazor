@@ -71,6 +71,10 @@ namespace NotSocialNetwork.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPut]
