@@ -97,17 +97,16 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
             var userService = new UserService(userRepositoryMock.Object);
 
-            userRepositoryMock.Setup(r => r.Get(_user.Id))
-                                               .Returns(_user);
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
 
             // Act
-            var result = userService.Delete(_user.Id);
+            var result = userService.Delete(_users.ElementAt(0).Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, result);
-            Assert.Equal(_user.Id, result.Id);
-            Assert.DoesNotContain(_user, userService.GetAll());
+            Assert.Equal(_users.ElementAt(0), result);
+            Assert.Equal(_users.ElementAt(0).Id, result.Id);
         }
 
         [Fact]
@@ -131,17 +130,17 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
             var userService = new UserService(userRepositoryMock.Object);
 
-            userRepositoryMock.Setup(r => r.Get(_user.Id))
-                                               .Returns(_user);
+            userRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_users.AsQueryable());
 
             // Act
-            var result = userService.GetById(_user.Id);
+            var result = userService.GetById(_users.ElementAt(0).Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, result);
-            Assert.Equal(_user.Id, result.Id);
-            Assert.Equal(_user.Name, result.Name);
+            Assert.Equal(_users.ElementAt(0), result);
+            Assert.Equal(_users.ElementAt(0).Id, result.Id);
+            Assert.Equal(_users.ElementAt(0).Name, result.Name);
         }
 
         [Fact]
@@ -197,18 +196,18 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
             var userService = new UserService(userRepositoryMock.Object);
 
-            userRepositoryMock.Setup(r => r.Get(_user.Id))
-                                               .Returns(_user);
-            _user.Name = "TestName";
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
+            _users.ElementAt(0).Name = "TestName";
 
             // Act
-            var result = userService.Update(_user);
+            var result = userService.Update(_users.ElementAt(0));
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_user, result);
-            Assert.Equal(_user.Id, result.Id);
-            Assert.Equal(_user.Name, result.Name);
+            Assert.Equal(_users.ElementAt(0), result);
+            Assert.Equal(_users.ElementAt(0).Id, result.Id);
+            Assert.Equal(_users.ElementAt(0).Name, result.Name);
         }
 
         [Fact]

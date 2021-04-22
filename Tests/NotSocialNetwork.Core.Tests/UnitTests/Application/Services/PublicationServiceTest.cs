@@ -106,17 +106,16 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object);
 
-            publicationRepositoryMock.Setup(r => r.Get(_publication.Id))
-                                        .Returns(_publication);
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
 
             // Act
-            var result = publicationService.Delete(_publication.Id);
+            var result = publicationService.Delete(_publications.ElementAt(0).Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_publication, result);
-            Assert.Equal(_publication.Id, result.Id);
-            Assert.DoesNotContain(_publication, publicationService.GetAll());
+            Assert.Equal(_publications.ElementAt(0), result);
+            Assert.Equal(_publications.ElementAt(0).Id, result.Id);
         }
 
         [Fact]
@@ -140,17 +139,17 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object);
 
-            publicationRepositoryMock.Setup(r => r.Get(_publication.Id))
-                                        .Returns(_publication);
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
 
             // Act
-            var result = publicationService.GetById(_publication.Id);
+            var result = publicationService.GetById(_publications.ElementAt(0).Id);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_publication, result);
-            Assert.Equal(_publication.Id, result.Id);
-            Assert.Equal(_publication.Title, result.Title);
+            Assert.Equal(_publications.ElementAt(0), result);
+            Assert.Equal(_publications.ElementAt(0).Id, result.Id);
+            Assert.Equal(_publications.ElementAt(0).Title, result.Title);
         }
 
         [Fact]
@@ -174,19 +173,19 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object);
 
-            publicationRepositoryMock.Setup(r => r.Get(_publication.Id))
-                                        .Returns(_publication);
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
 
-            _publication.Title = "TestTitle";
+            _publications.ElementAt(0).Title = "TestTitle";
 
             // Act
-            var result = publicationService.Update(_publication);
+            var result = publicationService.Update(_publications.ElementAt(0));
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_publication, result);
-            Assert.Equal(_publication.Id, result.Id);
-            Assert.Equal(_publication.Title, result.Title);
+            Assert.Equal(_publications.ElementAt(0), result);
+            Assert.Equal(_publications.ElementAt(0).Id, result.Id);
+            Assert.Equal(_publications.ElementAt(0).Title, result.Title);
         }
 
         [Fact]
