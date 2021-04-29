@@ -13,20 +13,23 @@ namespace NotSocialNetwork.Application.Services
     {
         public PublicationService(
             IRepository<PublicationEntity> publicationRepository,
+            IRepository<PublicationImageEntity> publicationImageEntity,
             IUserService userService)
         {
             _publicationRepository = publicationRepository;
+            _publicationImageEntity = publicationImageEntity;
             _userService = userService;
         }
 
         private readonly IRepository<PublicationEntity> _publicationRepository;
+        private readonly IRepository<PublicationImageEntity> _publicationImageEntity;
         private readonly IUserService _userService;
 
         public IEnumerable<PublicationEntity> GetAll()
         {
             return _publicationRepository.GetAll()
-                       .Include(p => p.Author)
-                       .Include(p => p.PublicationImages);
+                       .Include(p => p.Author);
+                       //.Include(p => p.PublicationImages);
         }
 
         public PublicationEntity GetById(Guid id)
@@ -49,6 +52,14 @@ namespace NotSocialNetwork.Application.Services
             }
 
             IsAuthorFound(publication.AuthorId);
+
+            if(publication.PublicationImages != null)
+            {
+                foreach (var publicationImage in publication.PublicationImages) 
+                {
+                    _publicationImageEntity.Add(publicationImage);
+                }
+            }
             
             _publicationRepository.Add(publication);
             _publicationRepository.Commit();

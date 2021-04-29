@@ -4,11 +4,13 @@ using Moq;
 using NotSocialNetwork.API.Controllers;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
+using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Microsoft.Extensions.Hosting;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 {
@@ -73,7 +75,9 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var publicationController = new PublicationController(
                                             publicationService.Object,
-                                            mapper.Object);
+                                            mapper.Object,
+                                            null,
+                                            null);
 
             // Act
             var results = publicationController.Get();
@@ -98,7 +102,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
                 .Returns(_publicationsDTO.ElementAt(0));
 
-            var publicationController = new PublicationController(publicationService.Object, mapper.Object);
+            var publicationController = new PublicationController(
+                                                publicationService.Object,
+                                                mapper.Object,
+                                                null,
+                                                null);
 
             // Act
             var result = publicationController.Get(_publicationEntities.ElementAt(0).Id);
@@ -115,11 +123,17 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Arrange
             var publicationService = new Mock<IPublicationService>();
             var mapper = new Mock<IMapper>();
+            var imageSystem = new Mock<IFileSystem<ImageEntity>>();
+            var hostEnviroment = new Mock<IHostEnvironment>();
 
             mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
                 .Returns(_publicationsDTO.ElementAt(0));
 
-            var publicationController = new PublicationController(publicationService.Object, mapper.Object);
+            var publicationController = new PublicationController(
+                                                publicationService.Object,
+                                                mapper.Object,
+                                                imageSystem.Object,
+                                                hostEnviroment.Object);
 
             // Act
             var result = publicationController.Add(_appPublicationDTO);
@@ -140,7 +154,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             publicationService.Setup(p => p.GetById(_publicationEntities.ElementAt(0).Id))
                 .Returns(_publicationEntities.ElementAt(0));
 
-            var publicationController = new PublicationController(publicationService.Object, mapper.Object);
+            var publicationController = new PublicationController(
+                                                publicationService.Object,
+                                                mapper.Object,
+                                                null,
+                                                null);
 
             // Act
             var result = publicationController.Update(_updatePublicationDTO);
@@ -161,7 +179,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             publicationService.Setup(p => p.Delete(_publicationEntities.ElementAt(0).Id))
                 .Returns(_publicationEntities.ElementAt(0));
 
-            var publicationController = new PublicationController(publicationService.Object, mapper.Object);
+            var publicationController = new PublicationController(
+                                                publicationService.Object,
+                                                mapper.Object,
+                                                null,
+                                                null);
 
             // Act
             var result = publicationController.Delete(_publicationEntities.ElementAt(0).Id);

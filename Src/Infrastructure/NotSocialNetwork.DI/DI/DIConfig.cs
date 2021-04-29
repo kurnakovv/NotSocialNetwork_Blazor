@@ -16,6 +16,7 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IRepository<UserEntity>, EFCoreRepository<UserEntity>>();
             services.AddTransient<IRepository<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
             services.AddTransient<IRepository<ImageEntity>, EFCoreRepository<ImageEntity>>();
+            services.AddTransient<IRepository<PublicationImageEntity>, EFCoreRepository<PublicationImageEntity>>();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPublicationService, PublicationService>();

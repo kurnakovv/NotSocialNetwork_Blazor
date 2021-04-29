@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
+using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.DBContexts;
 using System;
 using System.Collections.Generic;
 
@@ -17,14 +21,20 @@ namespace NotSocialNetwork.API.Controllers
     {
         public PublicationController(
             IPublicationService publicationService,
-            IMapper mapper)
+            IMapper mapper,
+            IFileSystem<ImageEntity> imageSystem,
+            IHostEnvironment hostEnvironment)
         {
             _publicationService = publicationService;
             _mapper = mapper;
+            _imageSystem = imageSystem;
+            _hostEnvironment = hostEnvironment;
         }
 
         private readonly IPublicationService _publicationService;
         private readonly IMapper _mapper;
+        private readonly IFileSystem<ImageEntity> _imageSystem;
+        private readonly IHostEnvironment _hostEnvironment;
 
         [HttpGet]
         public IEnumerable<PublicationDTO> Get()
@@ -56,14 +66,18 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AddPublicationDTO> Add(AddPublicationDTO publication)
+        public ActionResult<AddPublicationDTO> Add(/*[FromForm]*/AddPublicationDTO publication)
         {
             try
             {
                 var publicationEntity =
                     _mapper.Map<PublicationEntity>(publication);
 
-                _publicationService.Add(publicationEntity);
+                 //var publicationEntityWithImages = AddImages(publication, publicationEntity);
+
+                 //_publicationService.Add(publicationEntityWithImages);
+                 
+                 _publicationService.Add(publicationEntity);
 
                 return Ok(publication);
             }
@@ -90,6 +104,8 @@ namespace NotSocialNetwork.API.Controllers
                 var publicationEntity = _publicationService.GetById(publication.Id);
                 publicationEntity.Text = publication.Text;
 
+
+
                 _publicationService.Update(publicationEntity);
 
                 return Ok(publication);
@@ -113,6 +129,30 @@ namespace NotSocialNetwork.API.Controllers
             {
                 return NotFound(ex.Message);
             }
+        }
+
+        // TODO: Transfer this logic in PublicationService.
+        private PublicationEntity AddImages(AddPublicationDTO publication, PublicationEntity publicationEntity)
+        {
+            foreach(IFormFile file in publication.Images)
+            {
+                var image = new ImageEntity()
+                {
+                    ImageFromForm = file,
+                };
+
+                var publicationImage = new PublicationImageEntity()
+                {
+                    Image = image,
+                    Publication = publicationEntity,
+                };
+
+                publicationEntity.PublicationImages.Add(publicationImage);
+
+                _imageSystem.Save(image, _hostEnvironment.ContentRootPath);
+            }
+
+            return publicationEntity;
         }
     }
 }
