@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NotSocialNetwork.Application.Entities
 {
@@ -10,13 +9,12 @@ namespace NotSocialNetwork.Application.Entities
     {
         public PublicationEntity()
         {
-            PublicationImages = new List<PublicationImageEntity>();    
+            Images = new List<ImageEntity>();
         }
 
         [Required]
         public string Title { get; set; }
-        [NotMapped]
-        public ICollection<PublicationImageEntity> PublicationImages { get; set; }
+        public ICollection<ImageEntity> Images { get; set; }
         [Required]
         public UserEntity Author { get; set; }
         public Guid AuthorId { get; set; }

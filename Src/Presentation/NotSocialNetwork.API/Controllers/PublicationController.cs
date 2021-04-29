@@ -8,7 +8,6 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
-using NotSocialNetwork.DBContexts;
 using System;
 using System.Collections.Generic;
 
@@ -141,15 +140,11 @@ namespace NotSocialNetwork.API.Controllers
                     ImageFromForm = file,
                 };
 
-                var publicationImage = new PublicationImageEntity()
-                {
-                    Image = image,
-                    Publication = publicationEntity,
-                };
+                var imageId = _imageSystem.Save(image, _hostEnvironment.ContentRootPath);
 
-                publicationEntity.PublicationImages.Add(publicationImage);
+                var newImage = _imageSystem.Get(imageId);
 
-                _imageSystem.Save(image, _hostEnvironment.ContentRootPath);
+                publicationEntity.Images.Add(newImage);
             }
 
             return publicationEntity;

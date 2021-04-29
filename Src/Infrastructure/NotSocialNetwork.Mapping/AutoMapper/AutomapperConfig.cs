@@ -25,10 +25,14 @@ namespace NotSocialNetwork.Mapping.AutoMapper
         {
             CreateMap<PublicationEntity, PublicationDTO>()
                 .ForMember(p => p.ImagePaths,
-                           opt => opt.MapFrom(src => src.PublicationImages.Select(i => i.Image.Title)))
+                           opt => opt.MapFrom(src => src.Images.Select(i => i.Title)))
                 .ReverseMap();
 
-            CreateMap<PublicationEntity, AddPublicationDTO>().ReverseMap();
+            CreateMap<PublicationEntity, AddPublicationDTO>()
+                .ForMember(apd => apd.Images, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(p => p.Images, opt => opt.Ignore());
+                
             CreateMap<PublicationEntity, UpdatePublicationDTO>().ReverseMap();
         }
 
