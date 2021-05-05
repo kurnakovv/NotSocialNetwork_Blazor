@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 
@@ -37,6 +38,10 @@ namespace NotSocialNetwork.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
+        [SwaggerOperation(
+            Summary = "Get all.",
+            Description = "Get all publications."
+        )]
         public ActionResult<IEnumerable<PublicationDTO>> Get()
         {
             var publicationsEntitie = _publicationService.GetAll();
@@ -50,6 +55,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Get by id.",
+            Description = "Get publication by id."
+        )]
         public ActionResult<PublicationDTO> Get(Guid id)
         {
             try
@@ -71,6 +80,10 @@ namespace NotSocialNetwork.API.Controllers
         [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Add.",
+            Description = "Add publication."
+        )]
         public ActionResult<AddPublicationDTO> Add(/*[FromForm]*/AddPublicationDTO publication)
         {
             try
@@ -99,6 +112,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Update.",
+            Description = "Update publication."
+        )]
         public ActionResult<PublicationDTO> Update(UpdatePublicationDTO publication)
         {
             try
@@ -126,6 +143,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Delete by id.",
+            Description = "Delete publication by id."
+        )]
         public ActionResult<PublicationDTO> Delete(Guid id)
         {
             try

@@ -4,10 +4,7 @@ using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace NotSocialNetwork.API.Controllers
 {
@@ -29,6 +26,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Login.",
+            Description = "Login in system."
+        )]
         public ActionResult<string> Login(LoginDTO login)
         {
             try

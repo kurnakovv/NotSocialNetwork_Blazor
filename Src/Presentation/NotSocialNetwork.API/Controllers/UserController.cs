@@ -4,15 +4,12 @@ using Microsoft.Extensions.Hosting;
 using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Entities.Abstract;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Controllers
 {
@@ -37,6 +34,10 @@ namespace NotSocialNetwork.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UserEntity>), StatusCodes.Status200OK)]
+        [SwaggerOperation(
+            Summary = "Get all.",
+            Description = "Get all users."
+        )]
         public ActionResult<IEnumerable<UserEntity>> Get()
         {
             return Ok(_userService.GetAll());
@@ -45,6 +46,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Get by id.",
+            Description = "Get user by id."
+        )]
         public ActionResult<UserEntity> Get(Guid id)
         {
             try
@@ -61,6 +66,10 @@ namespace NotSocialNetwork.API.Controllers
         [ProducesResponseType(typeof(RegistrationUserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Add.",
+            Description = "Add user."
+        )]
         public ActionResult<RegistrationUserDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
@@ -106,6 +115,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Update.",
+            Description = "Update user."
+        )]
         public ActionResult<UserEntity> Update(UserEntity user)
         {
             try
@@ -123,6 +136,10 @@ namespace NotSocialNetwork.API.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Delete by id.",
+            Description = "Delete user by id."
+        )]
         public ActionResult<UserEntity> Delete(Guid id)
         {
             try
