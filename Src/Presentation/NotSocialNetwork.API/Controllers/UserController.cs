@@ -18,7 +18,6 @@ namespace NotSocialNetwork.API.Controllers
     /// </summary>
     [Route("api/user")]
     [ApiController]
-    [JwtAuthorize]
     public class UserController : ControllerBase
     {
         public UserController(
@@ -45,6 +44,7 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Get all.",
             Description = "Get all users."
         )]
+        [JwtAuthorize]
         public ActionResult<IEnumerable<UserEntity>> Get()
         {
             return Ok(_userService.GetAll());
@@ -141,6 +141,7 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Update.",
             Description = "Update user."
         )]
+        [JwtAuthorize]
         public ActionResult<UserEntity> Update(UserEntity user)
         {
             try
@@ -167,6 +168,7 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Delete by id.",
             Description = "Delete user by id."
         )]
+        [JwtAuthorize]
         public ActionResult<UserEntity> Delete(Guid id)
         {
             try

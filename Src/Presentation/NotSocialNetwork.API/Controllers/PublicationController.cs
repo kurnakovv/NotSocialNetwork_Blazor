@@ -19,7 +19,6 @@ namespace NotSocialNetwork.API.Controllers
     /// </summary>
     [Route("api/publication")]
     [ApiController]
-    [JwtAuthorize]
     public class PublicationController : ControllerBase
     {
         public PublicationController(
@@ -126,6 +125,7 @@ namespace NotSocialNetwork.API.Controllers
         [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        //TODO: later be [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Add.",
             Description = "Add publication."
@@ -163,6 +163,7 @@ namespace NotSocialNetwork.API.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Update.",
             Description = "Update publication."
@@ -199,6 +200,7 @@ namespace NotSocialNetwork.API.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Delete by id.",
             Description = "Delete publication by id."
