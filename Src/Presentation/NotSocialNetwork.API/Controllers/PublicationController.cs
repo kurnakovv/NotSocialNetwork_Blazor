@@ -89,6 +89,35 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         /// <summary>
+        /// Get all publications by author id.
+        /// </summary>
+        /// <param name="authorId">Author id</param>
+        /// <returns>Publications</returns>
+        [HttpGet("author={authorId}")]
+        [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Get all by author id.",
+            Description = "Get all publications by author id."
+        )]
+        public ActionResult<IEnumerable<PublicationDTO>> GetAllByAuthor(Guid authorId)
+        {
+            try
+            {
+                var publicationsEntity = _publicationService.GetAllByAuthorId(authorId);
+
+                var publicationsDTO =
+                    _mapper.Map<IEnumerable<PublicationDTO>>(publicationsEntity);
+
+                return Ok(publicationsDTO);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Add publication.
         /// </summary>
         /// <param name="publication">Publication parameters.</param>

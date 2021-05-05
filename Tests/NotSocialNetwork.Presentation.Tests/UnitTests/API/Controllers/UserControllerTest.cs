@@ -53,8 +53,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(userController);
             Assert.NotNull(results);
-            Assert.Equal("Maksim", results.ElementAt(0).Name);
-            Assert.Equal("Ivan", results.ElementAt(1).Name);
+            Assert.Equal("Maksim", results.Value.ElementAt(0).Name);
+            Assert.Equal("Ivan", results.Value.ElementAt(1).Name);
         }
 
         [Fact]

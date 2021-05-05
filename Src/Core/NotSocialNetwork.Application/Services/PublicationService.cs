@@ -41,6 +41,20 @@ namespace NotSocialNetwork.Application.Services
             return publication;
         }
 
+        public IEnumerable<PublicationEntity> GetAllByAuthorId(Guid authorId)
+        {
+            IsAuthorFound(authorId);
+
+            var publications = GetAll().Where(a => a.Author.Id == authorId);
+
+            if(publications.Count() == 0)
+            {
+                throw new ObjectNotFoundException($"User by id: {authorId} don't have a publications.");
+            }
+
+            return publications;
+        }
+
         public PublicationEntity Add(PublicationEntity publication)
         {
             if (GetAll().Any(p => p.Id == publication.Id))

@@ -85,8 +85,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(publicationController);
             Assert.NotNull(results);
-            Assert.Equal("Some text1", results.ElementAt(0).Text);
-            Assert.Equal("Some text2", results.ElementAt(1).Text);
+            Assert.Equal("Some text1", results.Value.ElementAt(0).Text);
+            Assert.Equal("Some text2", results.Value.ElementAt(1).Text);
         }
 
         [Fact]

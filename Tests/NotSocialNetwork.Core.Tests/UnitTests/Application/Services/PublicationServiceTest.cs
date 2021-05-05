@@ -46,6 +46,13 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Author = new UserEntity() { Name = "Name", DateOfBirth = DateTime.Now, Email = "some@gmail.com" },
         };
 
+        private readonly UserEntity _authorWithoutPublications = new UserEntity()
+        {
+            Name = "Name",
+            DateOfBirth = DateTime.Now,
+            Email = "some@gmail.com",
+        };
+
         [Fact]
         public void GetAll_GetAllPublications_Publications()
         {
@@ -158,6 +165,60 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.Equal(_publications.ElementAt(0), result);
             Assert.Equal(_publications.ElementAt(0).Id, result.Id);
             Assert.Equal(_publications.ElementAt(0).Title, result.Title);
+        }
+
+        [Fact]
+        public void GetAllByAuthorId_GetPublications_Publications()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
+
+            // Act
+            var result = publicationService.GetAllByAuthorId(_publications.ElementAt(0).Author.Id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotEqual(_publications, result);
+            Assert.Equal(_publications.ElementAt(0), result.ElementAt(0));
+            Assert.Equal(_publications.ElementAt(0).Title, result.ElementAt(0).Title);
+        }
+
+        [Fact]
+        public void GetAllByAuthorId_GetPublicationsByInvalidAuthorId_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+
+            // Act
+            Action act = () => publicationService.GetAllByAuthorId(_publication.Author.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
+        public void GetAllByAuthorId_GetPublicationsIfAuthorHaveNotPublications_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+
+            // Act
+            Action act = () => publicationService.GetAllByAuthorId(_authorWithoutPublications.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
 
         [Fact]

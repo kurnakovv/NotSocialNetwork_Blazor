@@ -8,6 +8,7 @@ namespace NotSocialNetwork.Application.Interfaces.Services
     {
         IEnumerable<PublicationEntity> GetAll();
         PublicationEntity GetById(Guid id);
+        IEnumerable<PublicationEntity> GetAllByAuthorId(Guid authorId);
         PublicationEntity Add(PublicationEntity publication);
         PublicationEntity Update(PublicationEntity publication);
         PublicationEntity Delete(Guid id);
