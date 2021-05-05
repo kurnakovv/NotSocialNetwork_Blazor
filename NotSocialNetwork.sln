@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.API", "Src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.UI", "Src\Presentation\NotSocialNetwork.UI\NotSocialNetwork.UI.csproj", "{6F750F12-9384-4D0A-BC8D-D8D6F9F387B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.Mapping", "Src\Infrastructure\NotSocialNetwork.Mapping\NotSocialNetwork.Mapping.csproj", "{CDF4A4FB-B49A-4AF3-8C0C-AAE780865C4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Mapping", "Src\Infrastructure\NotSocialNetwork.Mapping\NotSocialNetwork.Mapping.csproj", "{CDF4A4FB-B49A-4AF3-8C0C-AAE780865C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
