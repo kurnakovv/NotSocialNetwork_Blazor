@@ -13,6 +13,9 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.API.Controllers
 {
+    /// <summary>
+    /// User.
+    /// </summary>
     [Route("api/user")]
     [ApiController]
     [JwtAuthorize]
@@ -32,6 +35,10 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IFileSystem<ImageEntity> _imageFileSystem;
         private readonly IHostEnvironment _hostEnvironment;
 
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <returns>Users.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UserEntity>), StatusCodes.Status200OK)]
         [SwaggerOperation(
@@ -43,6 +50,11 @@ namespace NotSocialNetwork.API.Controllers
             return Ok(_userService.GetAll());
         }
 
+        /// <summary>
+        /// Get user by id.
+        /// </summary>
+        /// <param name="id">User id.</param>
+        /// <returns>User.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -62,6 +74,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Add user.
+        /// </summary>
+        /// <param name="registrationUserDTO">User parameters.</param>
+        /// <returns>User.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(RegistrationUserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -112,6 +129,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="user">User parameters.</param>
+        /// <returns>User.</returns>
         [HttpPut]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -133,6 +155,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete user by id.
+        /// </summary>
+        /// <param name="id">User id.</param>
+        /// <returns>User.</returns>
         [HttpDelete]
         [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

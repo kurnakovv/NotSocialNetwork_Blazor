@@ -8,6 +8,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace NotSocialNetwork.API.Controllers
 {
+    /// <summary>
+    /// Authentication.
+    /// </summary>
     [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
@@ -23,12 +26,17 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IUserService _userService;
         private readonly IJwtSystem _jwtSystem;
 
+        /// <summary>
+        /// Login to the system.
+        /// </summary>
+        /// <param name="login">Login parameters.</param>
+        /// <returns>Token.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
             Summary = "Login.",
-            Description = "Login in system."
+            Description = "Login to the system."
         )]
         public ActionResult<string> Login(LoginDTO login)
         {

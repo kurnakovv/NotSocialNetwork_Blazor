@@ -14,6 +14,9 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.API.Controllers
 {
+    /// <summary>
+    /// Publication.
+    /// </summary>
     [Route("api/publication")]
     [ApiController]
     [JwtAuthorize]
@@ -36,6 +39,10 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IFileSystem<ImageEntity> _imageSystem;
         private readonly IHostEnvironment _hostEnvironment;
 
+        /// <summary>
+        /// Get all publications.
+        /// </summary>
+        /// <returns>Publications.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
         [SwaggerOperation(
@@ -52,6 +59,11 @@ namespace NotSocialNetwork.API.Controllers
             return Ok(publicationsDTO);
         }
 
+        /// <summary>
+        /// Get publication by id.
+        /// </summary>
+        /// <param name="id">Publication id.</param>
+        /// <returns>Publication.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -76,6 +88,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Add publication.
+        /// </summary>
+        /// <param name="publication">Publication parameters.</param>
+        /// <returns>Publication.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -109,6 +126,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update publication.
+        /// </summary>
+        /// <param name="publication">Publication parameters.</param>
+        /// <returns>Publication.</returns>
         [HttpPut]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -140,6 +162,11 @@ namespace NotSocialNetwork.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete publication by id.
+        /// </summary>
+        /// <param name="id">Publication id.</param>
+        /// <returns>Publication.</returns>
         [HttpDelete]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
