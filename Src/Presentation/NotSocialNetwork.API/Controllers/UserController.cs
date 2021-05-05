@@ -36,17 +36,20 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IHostEnvironment _hostEnvironment;
 
         [HttpGet]
-        public IEnumerable<UserEntity> Get()
+        [ProducesResponseType(typeof(IEnumerable<UserEntity>), StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<UserEntity>> Get()
         {
-            return _userService.GetAll();
+            return Ok(_userService.GetAll());
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<UserEntity> Get(Guid id)
         {
             try
             {
-                return _userService.GetById(id);
+                return Ok(_userService.GetById(id));
             }
             catch (ObjectNotFoundException ex)
             {
@@ -55,6 +58,9 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(RegistrationUserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public ActionResult<RegistrationUserDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
@@ -85,7 +91,7 @@ namespace NotSocialNetwork.API.Controllers
 
                 _userService.Add(user);
 
-                return Ok(user);
+                return Ok(registrationUserDTO);
             }
             catch (InvalidFileFormatException ex)
             {
@@ -98,6 +104,8 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<UserEntity> Update(UserEntity user)
         {
             try
@@ -113,6 +121,8 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<UserEntity> Delete(Guid id)
         {
             try

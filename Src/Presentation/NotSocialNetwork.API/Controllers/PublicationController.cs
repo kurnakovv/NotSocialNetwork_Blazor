@@ -36,17 +36,20 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IHostEnvironment _hostEnvironment;
 
         [HttpGet]
-        public IEnumerable<PublicationDTO> Get()
+        [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<PublicationDTO>> Get()
         {
             var publicationsEntitie = _publicationService.GetAll();
 
             var publicationsDTO =
                 _mapper.Map<IEnumerable<PublicationDTO>>(publicationsEntitie);
 
-            return publicationsDTO;
+            return Ok(publicationsDTO);
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<PublicationDTO> Get(Guid id)
         {
             try
@@ -65,6 +68,9 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<AddPublicationDTO> Add(/*[FromForm]*/AddPublicationDTO publication)
         {
             try
@@ -91,6 +97,8 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<PublicationDTO> Update(UpdatePublicationDTO publication)
         {
             try
@@ -116,6 +124,8 @@ namespace NotSocialNetwork.API.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<PublicationDTO> Delete(Guid id)
         {
             try
