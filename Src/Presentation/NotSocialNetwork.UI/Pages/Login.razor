@@ -35,7 +35,7 @@
     async Task SendUserForAuthentication()
     {
         var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                    ("https://localhost:44353/api/User/CheckUser", userDTO);
+                    ("https://localhost:44353/api/user/CheckUser", userDTO);
 
         if (result.IsSuccessStatusCode)
         {

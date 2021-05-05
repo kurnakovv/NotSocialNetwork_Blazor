@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/publication")]
     [ApiController]
     [JwtAuthorize]
     public class PublicationController : ControllerBase

@@ -27,7 +27,7 @@ else
     async void GetPostsAsync()
     {
         posts = Http.GetFromJsonAsync<IEnumerable<PublicationEntity>>
-                ("https://localhost:44353/api/Publication")
+                ("https://localhost:44353/api/publication")
                 .Result.ToList();
     }
 }

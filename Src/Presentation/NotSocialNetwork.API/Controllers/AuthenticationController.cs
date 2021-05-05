@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -27,6 +27,8 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IJwtSystem _jwtSystem;
 
         [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<string> Login(LoginDTO login)
         {
             try

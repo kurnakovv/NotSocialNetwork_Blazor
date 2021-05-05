@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     [JwtAuthorize]
     public class UserController : ControllerBase
