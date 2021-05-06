@@ -12,8 +12,6 @@ namespace NotSocialNetwork.Application.Entities
             Images = new List<ImageEntity>();
         }
 
-        [Required]
-        public string Title { get; set; }
         public ICollection<ImageEntity> Images { get; set; }
         [Required]
         public UserEntity Author { get; set; }

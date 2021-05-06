@@ -52,7 +52,6 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         { 
             Text = "Some text",
             AuthorId = _author.Id,
-            Title = "Some title",
         };
         private static UpdatePublicationDTO _updatePublicationDTO = new UpdatePublicationDTO() 
         {

@@ -17,7 +17,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             new PublicationEntity()
             {
-                Title = "Title1",
                 Author = new UserEntity()
                 {
                     Name = "Name1",
@@ -28,7 +27,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             },
             new PublicationEntity()
             {
-                Title = "Title2",
                 Author = new UserEntity()
                 {
                     Name = "Name1",
@@ -41,7 +39,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
 
         private readonly PublicationEntity _publication = new PublicationEntity()
         {
-            Title = "Title",
             Images = null,
             Author = new UserEntity() { Name = "Name", DateOfBirth = DateTime.Now, Email = "some@gmail.com" },
         };
@@ -69,8 +66,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(_publications, result);
-            Assert.Equal("Title1", result.ElementAt(0).Title);
-            Assert.Equal("Title2", result.ElementAt(1).Title);
         }
 
         [Fact]
@@ -90,7 +85,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.NotNull(result);
             Assert.Equal(_publication, result);
             Assert.Equal(_publication.Id, result.Id);
-            Assert.Equal(_publication.Title, result.Title);
         }
 
         [Fact]
@@ -164,7 +158,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.NotNull(result);
             Assert.Equal(_publications.ElementAt(0), result);
             Assert.Equal(_publications.ElementAt(0).Id, result.Id);
-            Assert.Equal(_publications.ElementAt(0).Title, result.Title);
         }
 
         [Fact]
@@ -186,7 +179,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.NotNull(result);
             Assert.NotEqual(_publications, result);
             Assert.Equal(_publications.ElementAt(0), result.ElementAt(0));
-            Assert.Equal(_publications.ElementAt(0).Title, result.ElementAt(0).Title);
         }
 
         [Fact]
@@ -245,7 +237,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
 
-            _publications.ElementAt(0).Title = "TestTitle";
 
             // Act
             var result = publicationService.Update(_publications.ElementAt(0));
@@ -254,7 +245,6 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Assert.NotNull(result);
             Assert.Equal(_publications.ElementAt(0), result);
             Assert.Equal(_publications.ElementAt(0).Id, result.Id);
-            Assert.Equal(_publications.ElementAt(0).Title, result.Title);
         }
 
         [Fact]
