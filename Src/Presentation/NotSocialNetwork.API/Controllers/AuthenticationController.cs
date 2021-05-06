@@ -30,15 +30,15 @@ namespace NotSocialNetwork.API.Controllers
         /// Login to the system.
         /// </summary>
         /// <param name="login">Login parameters.</param>
-        /// <returns>Token.</returns>
+        /// <returns>Login result.</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LoginResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
             Summary = "Login.",
             Description = "Login to the system."
         )]
-        public ActionResult<string> Login(LoginDTO login)
+        public ActionResult<LoginResult> Login(LoginDTO login)
         {
             try
             {
@@ -51,7 +51,13 @@ namespace NotSocialNetwork.API.Controllers
                 
                 var token = _jwtSystem.GenerateToken(user);
 
-                return Ok(token);
+                var result = new LoginResult()
+                {
+                    Token = token,
+                    UserId = user.Id,
+                };
+
+                return Ok(result);
             }
             catch(ObjectNotFoundException ex)
             {
