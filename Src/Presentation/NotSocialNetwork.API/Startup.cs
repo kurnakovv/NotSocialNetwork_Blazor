@@ -26,10 +26,22 @@ namespace NotSocialNetwork.API
         }
 
         public IConfiguration Configuration { get; }
+        private const string CONFIG_NAME = "_myAllowSpecificOriginss";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CONFIG_NAME,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("https://localhost:5001");
+                                      builder.AllowAnyMethod();
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyOrigin();
+                                  });
+            });
             services.ConfigureServices();
             services.AddControllers();
 
@@ -55,6 +67,8 @@ namespace NotSocialNetwork.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(CONFIG_NAME);
 
             app.UseAuthorization();
 
