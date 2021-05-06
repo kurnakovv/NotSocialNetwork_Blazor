@@ -1,12 +1,36 @@
-﻿<div class="submitPostBox">
-	<span>Что нового?</span>
-	<div class="submitPostBox-TextBox">
-		<textarea class="TextBox--inputText">
-		</textarea>
-	</div>
-	<input class="submitButton" type="submit" value="Отправить">
+﻿
+<div class="submitPostBox">
+    <div class="submitPostBox-main">
+        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="main-form">
+            <textarea @bind="newPost.Text"
+                      class="form--text"
+                      rows="4" placeholder="Есть новости?" id="text"></textarea>
+            <button class="form--submitButton" type="submit">Отправить!</button>
+        </EditForm>
+    </div>
 </div>
 
 @code {
-	StringBuilder text = new();
+    [Parameter] public HttpClient Http { get; set; }
+    AddPublicationDTO newPost = new();
+
+    async Task SubmitNewPost()
+    {
+        /*
+            This is the first user ID in the database.
+            When the authentication logic is ready, insert the data
+            from the authentication cookies here.
+        */
+        newPost.AuthorId = new Guid("22db8d01-06e0-45af-8543-45b3a514c55e");
+
+        if (newPost != null)
+        {
+            if (string.IsNullOrWhiteSpace(newPost.Text) is false)
+            {
+                //TODO: We need TryCatch!
+                //var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
+                //("https://localhost:44353/api/publication", newPost);
+            }
+        }
+    }
 }

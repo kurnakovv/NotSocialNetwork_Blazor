@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 @page "/"
 
-<SubmitPostBox />
+<SubmitPostBox Http="Http" />
 
 @if (posts.Any())
 {

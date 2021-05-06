@@ -2,7 +2,7 @@
 {
     if (post.Images != null)
     {
-        /* TODO: Когда будет готов PublicationDTO с ссылкой на аватары и картинки, 
+        /* TODO: Когда будет готов PublicationEntity с ссылкой на аватары и картинки, 
         поместить ниже установку ссылки в imageUrl. */
         imageUrl.Clear();
         imageUrl.Append("URL");
@@ -15,7 +15,7 @@
         <div class="post-main">
             <div class="post-main-textContainer">
                 <p>
-                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+                    @post.Text
                 </p>
             </div>
         </div>

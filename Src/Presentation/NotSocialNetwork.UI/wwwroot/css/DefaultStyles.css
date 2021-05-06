@@ -50,9 +50,6 @@ body header .header-container .header-container-navmenu .inputContainer .inputCo
   padding: 2%;
 }
 
-main {
-  flex-grow: 1;
-}
 main .header-container-SubNavmenu {
   display: flex;
   justify-content: space-around;
@@ -83,36 +80,37 @@ main .header-container-SubNavmenu .navmenu-reference a {
 main .main-contaner {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   max-width: 80%;
   margin: 0px auto;
 }
 main .main-contaner .submitPostBox {
+  padding: 10px;
+  background-color: rgba(255, 239, 120, 0.75);
+}
+main .main-contaner .submitPostBox .submitPostBox-header {
   display: flex;
-  flex-direction: column;
-  background-color: #3c8c3c;
-  color: #ebffe1;
+  justify-content: center;
+}
+main .main-contaner .submitPostBox .submitPostBox-main {
+  display: flex;
+  justify-content: center;
+}
+main .main-contaner .submitPostBox .submitPostBox-main .main-form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+main .main-contaner .submitPostBox .submitPostBox-main .main-form .form--text {
+  resize: none;
+  padding: 8px;
+  font-size: 15px;
+  background-color: #fff;
+}
+main .main-contaner .submitPostBox .submitPostBox-main .main-form .form--submitButton {
   padding: 5px;
-  border: 0.5px rgba(0, 0, 0, 0.1) solid;
-  border-radius: 10px;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
-}
-main .main-contaner .submitPostBox span {
-  text-align: center;
-  padding-bottom: 3px;
-  font-size: 20px;
-}
-main .main-contaner .submitPostBox .submitPostBox-TextBox {
-  display: flex;
-  flex-grow: 1;
-}
-main .main-contaner .submitPostBox .submitPostBox-TextBox .TextBox--inputText {
-  flex-grow: 1;
-  padding-bottom: 25px;
-  font-size: 20px;
-}
-main .main-contaner .submitPostBox .submitButton {
-  background-color: #327832;
-  color: #ebffe1;
+  background-color: #3c8c3c;
+  color: white;
   font-size: 20px;
 }
 main .main-contaner .main-container-post {
@@ -144,7 +142,8 @@ main .main-contaner .main-container-post .post-main .post-main-imageContaner {
 main .main-contaner .main-container-post .post-main .post-main-imageContaner img {
   max-width: 100%;
   height: auto;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 footer {

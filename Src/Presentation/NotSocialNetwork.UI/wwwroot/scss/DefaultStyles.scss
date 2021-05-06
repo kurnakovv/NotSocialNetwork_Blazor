@@ -109,44 +109,44 @@ body {
 		.main-contaner{
 				display: flex;
 				flex-direction: column;
+				flex-grow: 1;
 
 				max-width: 80%;
 				margin: 0px auto;
 
 				.submitPostBox{
-					display: flex;
-					flex-direction: column;
+					padding: 10px;
+					background-color: $WindowColor;
 
-					background-color: $ButtonColor;
-					color: #ebffe1;
-
-					padding: 5px;
-
-					border: 0.5px $ShadowColor solid;
-					border-radius: 10px;
-					box-shadow: 0 0 10px 1px $ShadowColor;
-
-					span{
-						text-align: center;
-						padding-bottom: 3px;
-						font-size: $DefaultFontSize;
-					}
-					.submitPostBox-TextBox{
+					.submitPostBox-header{
 						display: flex;
-
-						flex-grow: 1;
-
-						.TextBox--inputText{
-							flex-grow: 1;
-
-							padding-bottom: 25px;
-							font-size: $DefaultFontSize;
-						}
+						justify-content: center;
 					}
-					.submitButton{
-						background-color: #327832;
-						color: #ebffe1;
-						font-size: 20px;
+					.submitPostBox-main{
+						display: flex;
+						justify-content: center;
+
+						.main-form{
+							display: flex;
+							flex-flow: column nowrap;
+							width: 100%;
+							
+							.form--text{
+								resize: none;
+
+								padding: 8px;
+								font-size: 15px;
+								background-color: #fff;
+							}
+
+							.form--submitButton{
+								padding: 5px;
+								background-color: $ButtonColor;
+
+								color: white;
+								font-size: 20px;
+							}
+						}
 					}
 				}
 			.main-container-post{
@@ -193,7 +193,6 @@ body {
 				
 			}
 		}
-		flex-grow: 1;
 	}
 
 	footer{

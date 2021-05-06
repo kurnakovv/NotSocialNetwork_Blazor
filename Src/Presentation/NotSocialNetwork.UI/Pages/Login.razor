@@ -12,7 +12,7 @@
     </span>
 </div>
 <EditForm Model="loginDTO" OnValidSubmit="@SendUserForAuthentication"
-          action="#" class="main-container-form">
+          class="main-container-form">
     <div class="form-container">
         <InputText @bind-Value="loginDTO.Email"
                    type="Email" class="form-container--input" placeholder="Email" />
@@ -32,19 +32,20 @@
     {
         var result = await Http.PostAsJsonAsync
                     ("https://localhost:44353/api/authentication", loginDTO);
-
+        
+        //TODO: We need TryCatch!
         if (result.IsSuccessStatusCode)
         {
             string token = result.Content.ReadAsStringAsync().Result;
 
             await WriteTokenAsCookies(token);
+
+            message = "Вы аутентифицированы!";
         }
         else
         {
             message = "Пользователь с такими данными не найден или произошла ошибка!";
         }
-
-        string v = await localStorage.GetItemAsync<string>("token");
     }
 
     async Task WriteTokenAsCookies(string token)
