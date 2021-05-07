@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NotSocialNetwork.DBContexts
 {
-    public static class TestData
+    public static class TestDataInit
     {
         private static readonly UserEntity _userEntity1 = new UserEntity() { Name = "Maksim", Email = "maksim@gmail.com", DateOfBirth = DateTime.Now };
         private static readonly UserEntity _userEntity2 = new UserEntity() { Name = "Ivan", Email = "ivan@gmail.com", DateOfBirth = DateTime.Now };
