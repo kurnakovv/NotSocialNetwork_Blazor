@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace NotSocialNetwork.DBContexts
 {
-    public static class StartupSetup
+    public static class SetupDbContextInStartup
     {
         public static void AddDbContext(this IServiceCollection services, string connectionString) =>
             services.AddDbContext<AppDbContext>(options =>
