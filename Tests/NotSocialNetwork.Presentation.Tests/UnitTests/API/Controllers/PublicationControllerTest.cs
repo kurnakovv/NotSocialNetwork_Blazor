@@ -60,7 +60,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         };
 
         [Fact]
-        public void Get_GetAllPublications_Publications()
+        public void Get_GetAllPublications_OkObjectResult()
         {
             // Arrange
             var publicationService = new Mock<IPublicationService>();
@@ -84,12 +84,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(publicationController);
             Assert.NotNull(results);
-            Assert.Equal("Some text1", results.Value.ElementAt(0).Text);
-            Assert.Equal("Some text2", results.Value.ElementAt(1).Text);
+            Assert.IsType<OkObjectResult>(results.Result);
         }
 
         [Fact]
-        public void Get_GetPublicationById_Publication()
+        public void Get_GetPublicationById_OkObjectResult()
         {
             // Arrange
             var publicationService = new Mock<IPublicationService>();
@@ -113,7 +112,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(publicationController);
             Assert.NotNull(result);
-            Assert.Equal("Some text1", result.Value.Text);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]

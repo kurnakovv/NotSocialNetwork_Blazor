@@ -39,7 +39,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         };
 
         [Fact]
-        public void Get_GetAllUsers_Users()
+        public void Get_GetAllUsers_OkObjectResult()
         {
             // Arrange
             var userService = new Mock<IUserService>();
@@ -53,12 +53,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(userController);
             Assert.NotNull(results);
-            Assert.Equal("Maksim", results.Value.ElementAt(0).Name);
-            Assert.Equal("Ivan", results.Value.ElementAt(1).Name);
+            Assert.IsType<OkObjectResult>(results.Result);
         }
 
         [Fact]
-        public void Get_GetUserById_User()
+        public void Get_GetUserById_OkObjectResult()
         {
             // Arrange
             var userService = new Mock<IUserService>();
@@ -72,7 +71,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Assert
             Assert.NotNull(userController);
             Assert.NotNull(result);
-            Assert.Equal("Maksim", result.Value.Name);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]

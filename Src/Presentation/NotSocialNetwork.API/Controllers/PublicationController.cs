@@ -79,7 +79,7 @@ namespace NotSocialNetwork.API.Controllers
                 var publicationDTO = 
                     _mapper.Map<PublicationDTO>(publicationEntity);
 
-                return publicationDTO;
+                return Ok(publicationDTO);
             }
             catch (ObjectNotFoundException ex)
             {
