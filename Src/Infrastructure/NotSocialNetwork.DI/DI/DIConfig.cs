@@ -11,15 +11,28 @@ namespace NotSocialNetwork.DI.DIConfig
 {
     public static class DIConfig
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void ConfigureDI(this IServiceCollection services)
+        {
+            ConfigureRepositories(services);
+            ConfigureServices(services);
+            ConfigureSystems(services);
+        }
+
+        private static void ConfigureRepositories(IServiceCollection services)
         {
             services.AddTransient<IRepository<UserEntity>, EFCoreRepository<UserEntity>>();
             services.AddTransient<IRepository<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
             services.AddTransient<IRepository<ImageEntity>, EFCoreRepository<ImageEntity>>();
+        }
 
+        private static void ConfigureServices(IServiceCollection services)
+        {
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPublicationService, PublicationService>();
+        }
 
+        private static void ConfigureSystems(IServiceCollection services)
+        {
             services.AddTransient<IFileSystem<ImageEntity>, ImageFileSystem>();
             services.AddTransient<IJwtSystem, JwtSystem>();
         }

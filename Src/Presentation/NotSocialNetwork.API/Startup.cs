@@ -30,7 +30,7 @@ namespace NotSocialNetwork.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureServices();
+            services.ConfigureDI();
             services.AddControllers();
 
             // In-memory database.
@@ -68,12 +68,12 @@ namespace NotSocialNetwork.API
 
         private void ConfigureInMemoryDatabase(IServiceCollection services)
         {
-            StartupSetup.AddMemoryDbContext(services, "MemoryDatabase");
+            SetupDbContextInStartup.AddMemoryDbContext(services, "MemoryDatabase");
         }
 
         private void ConfigureProductionServices(IServiceCollection services)
         {
-            StartupSetup.AddDbContext(services, Configuration.GetConnectionString("NotSocialNetworkDB"));
+            SetupDbContextInStartup.AddDbContext(services, Configuration.GetConnectionString("NotSocialNetworkDB"));
         }
 
         private void ConnectMapping(IServiceCollection services)
