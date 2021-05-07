@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
@@ -50,6 +51,27 @@ namespace NotSocialNetwork.Application.Services
             if(publications.Count() == 0)
             {
                 throw new ObjectNotFoundException($"User by id: {authorId} don't have a publications.");
+            }
+
+            return publications;
+        }
+
+        public IEnumerable<PublicationEntity> GetByPagination(int index)
+        {
+            if (index < 0)
+            {
+                throw new InvalidOperationException("Index cannot be less than 0.");
+            }
+
+            var countOfSkipItems = index * PaginationConfig.MAX_ITEMS;
+
+            var publications = GetAll()
+                                   .Skip(countOfSkipItems)
+                                   .Take(PaginationConfig.MAX_ITEMS);
+
+            if (publications.Count() == 0)
+            {
+                throw new ObjectNotFoundException("No more publications.");
             }
 
             return publications;

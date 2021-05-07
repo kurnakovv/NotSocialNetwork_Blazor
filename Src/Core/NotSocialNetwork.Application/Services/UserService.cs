@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.Application.Services
 {
@@ -70,6 +71,27 @@ namespace NotSocialNetwork.Application.Services
             }
 
             return user;
+        }
+
+        public IEnumerable<UserEntity> GetByPagination(int index)
+        {
+            if(index < 0)
+            {
+                throw new InvalidOperationException("Index cannot be less than 0.");
+            }
+
+            var countOfSkipItems = index * PaginationConfig.MAX_ITEMS;
+
+            var users = GetAll()
+                            .Skip(countOfSkipItems)
+                            .Take(PaginationConfig.MAX_ITEMS);
+
+            if(users.Count() == 0)
+            {
+                throw new ObjectNotFoundException("No more users.");
+            }
+
+            return users;
         }
 
         public UserEntity Update(UserEntity user)

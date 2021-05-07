@@ -161,6 +161,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void Get_GetInvalidPublication_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+
+            // Act
+            Action act = () => publicationService.GetById(_publication.Id);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
         public void GetAllByAuthorId_GetPublications_Publications()
         {
             // Arrange
@@ -214,14 +228,57 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
-        public void Get_GetInvalidPublication_ObjectNotFoundException()
+        public void GetByPagination_GetPubilcations_Pubilcations()
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
 
             // Act
-            Action act = () => publicationService.GetById(_publication.Id);
+            var result = publicationService.GetByPagination(0);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(_publications, result);
+        }
+
+        [Fact]
+        public void GetByPagination_GetPublicationsIfIndexLessZero_InvalidOperationException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+            int invalidIndex = -1;
+
+            // Act
+            Action act = () => publicationService.GetByPagination(invalidIndex);
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(act);
+        }
+
+        [Fact]
+        public void GetByPagination_GetPublicationsIfPublicationsEnded_ObjectNotFoundException()
+        {
+            // Arrange
+            var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
+            var userService = new Mock<IUserService>();
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            userService.Object);
+            int bigIndex = 10;
+
+            publicationRepositoryMock.Setup(r => r.GetAll())
+                                        .Returns(_publications.AsQueryable());
+
+            // Act
+            Action act = () => publicationService.GetByPagination(bigIndex);
 
             // Assert
             Assert.Throws<ObjectNotFoundException>(act);

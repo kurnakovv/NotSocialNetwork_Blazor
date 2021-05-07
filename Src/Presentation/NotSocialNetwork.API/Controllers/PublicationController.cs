@@ -39,23 +39,36 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IHostEnvironment _hostEnvironment;
 
         /// <summary>
-        /// Get all publications.
+        /// Get all publications by pagination.
         /// </summary>
         /// <returns>Publications.</returns>
-        [HttpGet]
+        [HttpGet("index={index}")]
         [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(
-            Summary = "Get all.",
-            Description = "Get all publications."
+            Summary = "Get all by pagination.",
+            Description = "Get all publications by pagination."
         )]
-        public ActionResult<IEnumerable<PublicationDTO>> Get()
+        public ActionResult<IEnumerable<PublicationDTO>> Get(int index = 0)
         {
-            var publicationsEntitie = _publicationService.GetAll();
+            try
+            {
+                var publicationsEntity = _publicationService.GetByPagination(index);
 
-            var publicationsDTO =
-                _mapper.Map<IEnumerable<PublicationDTO>>(publicationsEntitie);
+                var publicationsDTO =
+                    _mapper.Map<IEnumerable<PublicationDTO>>(publicationsEntity);
 
-            return Ok(publicationsDTO);
+                return Ok(publicationsDTO);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>

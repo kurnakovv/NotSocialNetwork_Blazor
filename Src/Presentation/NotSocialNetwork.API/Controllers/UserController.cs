@@ -35,19 +35,34 @@ namespace NotSocialNetwork.API.Controllers
         private readonly IHostEnvironment _hostEnvironment;
 
         /// <summary>
-        /// Get all users.
+        /// Get all users by pagination.
         /// </summary>
         /// <returns>Users.</returns>
-        [HttpGet]
+        [HttpGet("index={index}")]
         [ProducesResponseType(typeof(IEnumerable<UserEntity>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(
-            Summary = "Get all.",
-            Description = "Get all users."
+            Summary = "Get all by pagination.",
+            Description = "Get all users by pagination."
         )]
         [JwtAuthorize]
-        public ActionResult<IEnumerable<UserEntity>> Get()
+        public ActionResult<IEnumerable<UserEntity>> Get(int index = 0)
         {
-            return Ok(_userService.GetAll());
+            try
+            {
+                var users = _userService.GetByPagination(index);
+
+                return Ok(users);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -62,6 +77,7 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Get by id.",
             Description = "Get user by id."
         )]
+        [JwtAuthorize]
         public ActionResult<UserEntity> Get(Guid id)
         {
             try

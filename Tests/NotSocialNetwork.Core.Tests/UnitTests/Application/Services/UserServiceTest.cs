@@ -190,6 +190,57 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         }
 
         [Fact]
+        public void GetByPagination_GetUsers_Users()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
+
+            // Act
+            var result = userService.GetByPagination(0);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(_users, result);
+        }
+
+        [Fact]
+        public void GetByPagination_GetUsersIfIndexLessZero_InvalidOperationException()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+            int invalidIndex = -1;
+
+            // Act
+            Action act = () => userService.GetByPagination(invalidIndex);
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(act);
+        }
+
+        [Fact]
+        public void GetByPagination_GetUsersIfUsersEnded_ObjectNotFoundException()
+        {
+            // Arrange
+            var userRepositoryMock = new Mock<IRepository<UserEntity>>();
+            var userService = new UserService(userRepositoryMock.Object);
+            int bigIndex = 10;
+
+            userRepositoryMock.Setup(r => r.GetAll())
+                                               .Returns(_users.AsQueryable());
+
+            // Act
+            Action act = () => userService.GetByPagination(bigIndex);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
+        }
+
+        [Fact]
         public void Update_UpdateUser_User()
         {
             // Arrange
