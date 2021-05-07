@@ -31,7 +31,7 @@
     async Task SendUserForAuthentication()
     {
         var result = await Http.PostAsJsonAsync
-                    ("https://localhost:44353/api/authentication", loginDTO);
+                    ("https://localhost:5001/api/authentication", loginDTO);
         
         //TODO: We need TryCatch!
         if (result.IsSuccessStatusCode)
