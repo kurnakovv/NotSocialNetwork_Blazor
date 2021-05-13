@@ -38,12 +38,44 @@
 
 
 ## How to start
-### Required before the start:
+
+
+<details>
+    <summary>Docker.</summary>
+
+### Create certificate:
+* Create certificate (Edit "YourPassword" to your password)
+```
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\NotSocialNetwork.API.pfx -p YourPassword!
+```
+* Set your certificate in secrets
+```
+dotnet user-secrets set "Kestrel:Certificates:Development:Password" "YourPassword"
+```
+
+### Run docker:
+```
+docker-compose build
+docker-compose up
+```
+
+| Application 	    | URL |
+|------------------ | -------------------------------------- |
+| NotSocialNetwork.API  | https://localhost:5001/swagger/index.html |
+| NotSocialNetwork.API  | http://localhost:5000/swagger/index.html |
+
+</details>
+
+<details>
+    <summary>Visual studio.</summary>
+
 * In the main root of the project open properties
 * Choose Multiple startup projects
 * Choose NotSocialNetwork.API (start) and NotSocialNetwork.UI (start), as shown in the screenshot:
 ![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
+
+</details>
 
 <details>
     <summary>Database connection.</summary>
