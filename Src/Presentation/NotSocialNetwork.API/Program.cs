@@ -24,7 +24,7 @@ namespace NotSocialNetwork.API
             //{
             //    var services = scope.ServiceProvider;
             //    var appDbContext = services.GetRequiredService<AppDbContext>();
-            //    TestData.AddTestData(appDbContext);
+            //    TestDataInit.AddTestData(appDbContext);
             //}
 
             //host.Run();

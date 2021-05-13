@@ -1,0 +1,17 @@
+version: '3'
+
+services: 
+  notsocialnetwork_api:
+    build: 
+      context: .
+      dockerfile: Src/Presentation/NotSocialNetwork.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_HTTPS_PORT=5001
+    volumes:
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
+    ports:
+      - "5000:80"
+      - "5001:443"

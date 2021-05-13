@@ -35,6 +35,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.UI", "Src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.Mapping", "Src\Infrastructure\NotSocialNetwork.Mapping\NotSocialNetwork.Mapping.csproj", "{CDF4A4FB-B49A-4AF3-8C0C-AAE780865C4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ACB100BE-4E5C-4D96-8D9D-94931E7E3F6B}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
