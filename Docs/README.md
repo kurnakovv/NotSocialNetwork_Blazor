@@ -46,11 +46,11 @@
 ### Create certificate:
 * Create certificate (Edit "YourPassword" to your password)
 ```
-dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\NotSocialNetwork.API.pfx -p YourPassword!
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\NotSocialNetwork.API.pfx -p YourPassword
 ```
 * Set your certificate in secrets
 ```
-dotnet user-secrets set "Kestrel:Certificates:Development:Password" "YourPassword"
+dotnet user-secrets set "Kestrel:Certificates:Development:Password" "YourPassword" -p Src/Presentation/NotSocialNetwork.API/
 ```
 
 ### Run docker:
