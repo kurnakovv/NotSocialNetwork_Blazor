@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 @page "/Account"
 
-<link href="/css/AccountStyles.css" rel="stylesheet">
+<link href="/css/Account.css" rel="stylesheet">
 
 <div class="main-contaner-UserInfo">
     <div class="UserInfo-container">
@@ -17,25 +17,25 @@
     </div>
 </div>
 
-<Post Posts="posts" />
+<Post Posts="posts.ToList()" />
 
 @code{
-    List<PublicationEntity> posts;
+    IEnumerable<PublicationDTO> posts;
 
     protected async override Task OnInitializedAsync()
     {
         // Do not change the ad logic for the posts variable.
         // otherwise, when the page is rendered, it will be reset to zero.
-        posts = new List<PublicationEntity>();
+        posts = new List<PublicationDTO>();
 
         GetPostsAsync();
     }
 
     async void GetPostsAsync()
     {
-        posts = Http.GetFromJsonAsync<IEnumerable<PublicationEntity>>
-                ("https://localhost:5001/api/publication")
-                .Result.ToList();
+        //posts = Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+        //        ("https://localhost:5001/api/publication")
+        //        .Result;
     }
 }
 

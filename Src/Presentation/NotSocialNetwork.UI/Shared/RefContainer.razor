@@ -1,7 +1,7 @@
-﻿<div class="ReferenceContainer">
+﻿<div class="footer__refcontainer">
     @foreach (var hrefData in ReferencesData)
     {
-        <a style="color: @ReferenceColor" href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
+        <a href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
     }
 </div>
 

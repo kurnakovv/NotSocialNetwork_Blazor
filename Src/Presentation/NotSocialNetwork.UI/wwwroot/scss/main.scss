@@ -1,0 +1,129 @@
+@import "../css/NullStyle.css";
+@import "../scss/header";
+@import "../scss/footer";
+@import "../scss/form";
+
+$ShadowColor: rgb(0 0 0 / 10%);
+
+$BorderColor: rgba(100, 170, 100, 0.5);
+$WindowColor: #f1ffea;
+
+$ActiveButtonColor: #64aa64;
+$ButtonColor: #3c8c3c;
+
+$DefaultFontSize: 20px;
+$DefaultFontFamily: arial;
+
+body {
+	font-family: $DefaultFontFamily;
+	display: flex;
+	flex-direction: column;
+	background-color: #e3f0e3;
+	font-size: 50px;
+	min-height: 100vh;
+}
+
+.main {
+	flex-grow: 1;
+
+	&__body {
+		display: flex;
+	}
+
+	&__content {
+		padding: 0 50px;
+		width: 100%;
+	}
+}
+
+.navmenu {
+	height: max-content;
+	background-color: $WindowColor;
+
+	&__header {
+		display: flex;
+		justify-content: center;
+		padding: 10px;
+	}
+
+	&__body {
+		// To hide or show the navigation menu, set Display to None or Flex.
+		display: flex;
+		flex-flow: column nowrap;
+
+		padding: 15px 0;
+
+		text-align: center;
+
+		:hover {
+			background-color: $ButtonColor;
+			color: white;
+		}
+	}
+}
+
+.nav-reference {
+	padding: 10px 15px;
+	margin: 0 0 7px 0;
+
+	font-size: $DefaultFontSize;
+	color: black;
+}
+
+.button {
+	padding: 10px 15px;
+
+	font-size: $DefaultFontSize;
+	background-color: $WindowColor;
+}
+
+.open-button {
+	background-color: transparent;
+}
+
+.submitpostbox {
+
+	&__body {
+		padding: 10px;
+		background-color: $WindowColor;
+	}
+
+	&__form {
+		display: flex;
+		flex-flow: column nowrap;
+		width: 100%;
+	}
+}
+
+.post {
+	background-color: $WindowColor;
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		margin: 25px 0px;
+		padding: 15px;
+
+		box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
+	}
+
+	&__header {
+		font-size: 25px;
+		font-weight: 600;
+
+		.authoricon {
+			margin: 0 10px 15px 0;
+		}
+
+		.authorname {
+			text-align: center;
+
+		}
+	}
+
+	// &__main {}
+
+	&__textcontainer {
+		font-size: $DefaultFontSize;
+	}
+}

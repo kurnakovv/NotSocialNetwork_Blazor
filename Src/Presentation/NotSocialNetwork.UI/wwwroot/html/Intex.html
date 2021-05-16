@@ -7,137 +7,189 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS  -->
-	<link rel="stylesheet" href="../css/DefaultStyles.css">
+	<link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
 	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
 	<header>
-		<!--NavMenu-->
-		<div class="header-container">
-			<a href="Account.html">
+		<div class="header__body">
+			<a class="header__ref" href="Intex.html">
 				<!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
-				<div class="header-container-Logo"></div>
+				<div class="blocklogo"></div>
 			</a>
-			<nav class="header-container-navmenu">
-				<button class="navmenu-settings"></button>
-				<div class="inputContainer">
-					<button class="inputContainer--button">Переключить ночную тему </button>
-				</div>
-			</nav>
 		</div>
-		<!--NavMenu-->
 	</header>
 
 	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
-	<main>
-		<!--SubNavMenu-->
-		<nav class="header-container-SubNavmenu">
-			<div class="navmenu-reference">
-				<a href="Intex.html"> Новости </a>
-			</div>
-			<div class="navmenu-reference">
-				<a href="Account.html"> Аккаунт </a>
-			</div>
-			<div class="navmenu-reference">
-				<a href="Registration.html"> Регистрация </a>
-			</div>
-		</nav>
-		<!--SubNavMenu-->
-		<div class="main-contaner">
-			<!--SubmitPostBox-->
-			<div class="submitPostBox">
-				<div class="submitPostBox-main">
-					<form action="#" class="main-form">
-						<textarea rows="4" placeholder="Есть новости?" class="form--text"
-							id="text"></textarea>
-						<button class="form--submitButton" type="submit"">Отправить!</button>
+	<main class="main">
+		<div class="main__body">
+			<!-- NavMenu component-->
+			<nav class="navmenu">
+				<div class="navmenu__header">
+					<button class="open-button">
+						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+					</button>
+				</div>
+
+				<div class="navmenu__body">
+					<a class="nav-reference" href="Account.html">Аккаунт</a>
+					<a class="nav-reference" href="Registration.html">Регистрация</a>
+					<button class="button">Переключить тему</button>
+				</div>
+			</nav>
+			<!-- NavMenu-->
+
+			<div class="main__content">
+				<!-- SubmitPostBox component-->
+				<div class="submitpostbox">
+					<div class="submitpostbox__body">
+						<form action="#" class="submitpostbox__form form">
+							<textarea rows="4" placeholder="Есть новости?" class="form__text" id="text"></textarea>
+							<button class="form__submitbutton" type="submit">Отправить!</button>
 					</form>
 				</div>
 			</div>
-			<!--SubmitPostBox-->
+			<!-- SubmitPostBox-->
 
-			<!--Post-->
-			<div class=" main-container-post">
-							<div class="post-header">
-								<img class="post-header--AuthorIcon" src="../css/images/Icons_User.png" width="70"
-									height="70" alt="AuthorIcon">
-								<span class="post-header--AuthorName"> ИмяАвтора </span>
+			<!-- Post component-->
+			<div class=" post">
+								<div class="post__body">
+									<div class="post__header">
+										<img class="authoricon" src="../css/images/Icons_User.png" width="70"
+											height="70" alt="AuthorIcon">
+										<span class="authorname">Ламберт</span>
+									</div>
+									<div class="post__main">
+										<div class="post__textcontainer">
+											<p>
+												Ламберт, Ламберт - хер моржовый. Ламберт, Ламберт - вредный хой.
+											</p>
+										</div>
+									</div>
+								</div>
+					</div>
+					<!-- Post-->
+
+					<!-- Post component-->
+					<div class="post">
+						<div class="post__body">
+							<div class="post__header">
+								<img class="authoricon" src="../css/images/Icons_User.png" width="70" height="70"
+									alt="AuthorIcon">
+								<span>ДубЗелёный</span>
 							</div>
-							<div class="post-main">
-								<div class="post-main-textContainer">
+							<div class="post__main">
+								<div class="post__textcontainer">
 									<p>
-										Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti dicta dolores
-										totam,
-										asperiores perspiciatis molestias soluta necessitatibus minima magni ab repellat
-										suscipit
-										ipsam placeat deserunt iste nisi, perferendis, cumque veniam.
+										У лукоморья дуб зелёный;
+										Златая цепь на дубе том:
+										И днём и ночью кот учёный
+										Всё ходит по цепи кругом;
+										Идёт направо - песнь заводит,
+										Налево - сказку говорит.
+										Там чудеса: там леший бродит,
+										Русалка на ветвях сидит;
+										Там на неведомых дорожках
+										Следы невиданных зверей;
+										Избушка там на курьих ножках
+										Стоит без окон, без дверей;
+										Там лес и дол видений полны;
+										Там о заре прихлынут волны
+										На брег песчаный и пустой,
+										И тридцать витязей прекрасных
+										Чредой из вод выходят ясных,
+										И с ними дядька их морской;
+										Там королевич мимоходом
+										Пленяет грозного царя;
+										Там в облаках перед народом
+										Через леса, через моря
+										Колдун несёт богатыря;
+										В темнице там царевна тужит,
+										А бурый волк ей верно служит;
+										Там ступа с Бабою Ягой
+										Идёт, бредёт сама собой,
+										Там царь Кащей над златом чахнет;
+										Там русский дух... там Русью пахнет!
+										И там я был, и мёд я пил;
+										У моря видел дуб зелёный;
+										Под ним сидел, и кот учёный
+										Свои мне сказки говорил.
 									</p>
 								</div>
 							</div>
-				</div>
-				<!--Post-->
-
-				<!--Post-->
-				<div class="main-container-post">
-					<div class="post-header">
-						<img class="post-header--AuthorIcon" src="../css/images/Icons_User.png" width="70" height="70"
-							alt="AuthorIcon">
-						<span class="post-header--AuthorName"> ИмяАвтора </span>
-					</div>
-					<div class="post-main">
-						<div class="post-main-textContainer">
-							<p>
-								Здравствуй последний герой!
-								<p /> <br>
-
-								Ночь коротка, цель далека,<br>
-								Ночью так часто хочется пить,<br>
-								Ты выходишь на кухню, <br>
-								Но вода здесь горька, <br>
-								Ты не можешь здесь спать, <br>
-								Ты не хочешь здесь жить. <br>
-								<p /> <br>
-
-								Доброе утро, последний герой! <br>
-								Доброе утро тебе и таким, как ты, <br>
-								Доброе утро, последний герой. <br>
-								Здравствуй, последний герой! <br>
-								<p /> <br>
-
-								Ты хотел быть один, это быстро прошло, <br>
-								Ты хотел быть один, но не смог быть один, <br>
-								Твоя ноша легка, но немеет рука, <br>
-								И ты встречаешь рассвет за игрой в дурака. <br>
-								<p /> <br>
-
-								Утром ты стремишься скорее уйти, <br>
-								Телефонный звонок, как команда “Вперед!” <br>
-								Ты уходишь туда, куда не хочешь идти, <br>
-								Ты уходишь туда, но тебя там никто не ждет! <br>
-								<p />
 						</div>
 					</div>
+					<!-- Post-->
+					
+					<!-- Post component-->
+					<div class="post">
+						<div class="post__body">
+							<div class="post__header">
+								<img class="authoricon" src="../css/images/Icons_User.png" width="70" height="70"
+									alt="AuthorIcon">
+								<span>Скрюченый</span>
+							</div>
+							<div class="post__main">
+								<div class="post__textcontainer">
+									<p>
+										Жил на свете человек,
+										Скрюченные ножки,
+										И гулял он целый век
+										По скрюченной дорожке.
+									</p>
+									<p>
+										А за скрюченной рекой
+										В скрюченном домишке
+										Жили летом и зимой
+										Скрюченные мышки.
+									</p>
+									<p>
+										И стояли у ворот
+										Скрюченные ёлки,
+										Там гуляли без забот
+										Скрюченные волки.
+									</p>
+									<p>
+										И была у них одна
+										Скрюченная кошка,
+										И мяукала она.
+										Сидя у окошка.
+									<p>
+										А за скрюченным мостом
+										Скрюченная баба
+										По болоту босиком
+										Прыгала, как жаба.
+									</p>
+									<p>
+										И была в руке у ней
+										Скрюченная палка,
+										И летела вслед за ней
+										Скрюченная галка.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Post-->
 				</div>
-				<!--Post-->
 			</div>
 	</main>
 
 	<!-- NightTheme: style="background-color: #3c5a3c; color: #ebffe1;" -->
 	<footer>
-		<div>
-			<span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
-		</div>
-		<div class="ReferenceContainer">
-			<a style="color: red" href="https://github.com/Ulyanov-programmer"
-				class="ReferenceContainer--Reference">Ulyanov GitHub,</a>
-			<a style="color: red" href="https://vk.com/h.wilson" class="ReferenceContainer--Reference">Ulyanov VK</a>
-		</div>
-		<div class="ReferenceContainer">
-			<a style="color: red" href="https://github.com/KurnakovMaksim"
-				class="ReferenceContainer--Reference">Kurnakov GitHub,</a>
-			<a style="color: red" href="https://vk.com/makskurnakov2003" class="ReferenceContainer--Reference">Kurnakov
-				VK</a>
+		<div class="footer-body">
+			<div class="footer__about">
+				<span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
+			</div>
+			<div class="footer__refcontainer">
+				<a href="https://github.com/Ulyanov-programmer">Ulyanov GitHub,</a>
+				<a href="https://vk.com/h.wilson">Ulyanov VK</a>
+			</div>
+			<div class="footer__refcontainer">
+				<a href="https://github.com/KurnakovMaksim">Kurnakov GitHub,</a>
+				<a href="https://vk.com/makskurnakov2003">Kurnakov VK</a>
+			</div>
 		</div>
 	</footer>
 </body>

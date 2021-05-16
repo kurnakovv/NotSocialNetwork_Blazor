@@ -1,11 +1,11 @@
-﻿
-<div class="submitPostBox">
-    <div class="submitPostBox-main">
-        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="main-form">
+﻿<div class="submitpostbox">
+    <div class="submitpostbox__body">
+        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
             <textarea @bind="newPost.Text"
-                      class="form--text"
-                      rows="4" placeholder="Есть новости?" id="text"></textarea>
-            <button class="form--submitButton" type="submit">Отправить!</button>
+                      rows="4" placeholder="Есть новости?"
+                      class="form__text" id="text">
+            </textarea>
+            <button class="form__submitbutton" type="submit">Отправить!</button>
         </EditForm>
     </div>
 </div>

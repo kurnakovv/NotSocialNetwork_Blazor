@@ -1,0 +1,144 @@
+@import "../css/NullStyle.css";
+.header__body {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blocklogo {
+  background: url("../css/images/TitleIconBlack.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  height: 50px;
+  width: 170px;
+}
+
+.footer-body {
+  font-size: 17px;
+  background-color: #c8dcaa;
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.footer__about {
+  font-size: 19px;
+}
+.footer__refcontainer {
+  display: flex;
+  margin-top: 6px;
+}
+.footer__refcontainer a {
+  color: #8080b3;
+}
+
+.form__text {
+  resize: none;
+  padding: 8px;
+  font-size: 15px;
+  background-color: #f6fdf2;
+}
+.form__submitbutton {
+  padding: 5px;
+  background-color: gray;
+  color: white;
+  font-size: 20px;
+}
+.form__submitbutton:hover {
+  background-color: #3c8c3c;
+}
+
+body {
+  font-family: arial;
+  display: flex;
+  flex-direction: column;
+  background-color: #e3f0e3;
+  font-size: 50px;
+  min-height: 100vh;
+}
+
+.main {
+  flex-grow: 1;
+}
+.main__body {
+  display: flex;
+}
+.main__content {
+  padding: 0 50px;
+  width: 100%;
+}
+
+.navmenu {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  background-color: #f1ffea;
+}
+.navmenu__header {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.navmenu__body {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 15px 0;
+  text-align: center;
+}
+.navmenu__body :hover {
+  background-color: #3c8c3c;
+  color: white;
+}
+
+.nav-reference {
+  padding: 10px 15px;
+  margin: 0 0 7px 0;
+  font-size: 20px;
+  color: black;
+}
+
+.button {
+  padding: 10px 15px;
+  font-size: 20px;
+  background-color: #f1ffea;
+}
+
+.open-button {
+  background-color: transparent;
+}
+
+.submitpostbox__body {
+  padding: 10px;
+  background-color: #f1ffea;
+}
+.submitpostbox__form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+.post {
+  background-color: #f1ffea;
+}
+.post__body {
+  display: flex;
+  flex-direction: column;
+  margin: 25px 0px;
+  padding: 15px;
+  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
+}
+.post__header {
+  font-size: 25px;
+  font-weight: 600;
+}
+.post__header .authoricon {
+  margin: 0 10px 15px 0;
+}
+.post__header .authorname {
+  text-align: center;
+}
+.post__textcontainer {
+  font-size: 20px;
+}

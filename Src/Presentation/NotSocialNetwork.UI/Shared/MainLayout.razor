@@ -1,39 +1,30 @@
 ﻿@inherits LayoutComponentBase
 @inject ILocalStorageService localStorage
 
-<head>
-    <meta charset="utf-8" />
-    <title>NewsSite</title>
-    <link rel="stylesheet" href="../css/DefaultStyles.css">
-</head>
+<header>
+    <div class="header__body">
+        <a class="header__ref" href="/" title="Home">
+            <!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
+            <div class="blocklogo"></div>
+        </a>
+    </div>
+</header>
+<main class="main">
+    <div class="main__body">
+        <SubNavMenu /> 
 
-<main style="background-color: @_main_BackColor; color: @_main_Color;">
-    <header>
-        <div class="header-container">
-            <a href="/">
-                <div style="background: url(@TitleReference) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" class="header-container-Logo"></div>
-            </a>
-            <nav class="header-container-navmenu">
-                <button class="navmenu-settings" @onclick="@OpenSettingsContainer">
-                </button>
-                <div style="visibility: @_visibilityOfNavmenuButtons" class="inputContainer">
-                    <button @onclick="@EditNightThemeCookies" class="inputContainer--button">Переключить ночную тему </button>
-                </div>
-            </nav>
+        <div class="main__content">
+            @Body
         </div>
-    </header>
-    <SubNavMenu />
-
-    <div class="main-contaner">
-        @Body
     </div>
 </main>
-
-<footer style="background-color: @_footer_BackColor; color: @_footer_Color;">
-    <div>
-        <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
+<footer>
+    <div class="footer-body">
+        <div class="footer__about">
+            <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
+        </div>
+        <RefContainer ReferenceColor="@_refColor" ReferencesData="ReferenceData" />
     </div>
-    <RefContainer ReferenceColor="@_refColor" ReferencesData="ReferenceData" />
 </footer>
 
 @code{
@@ -60,9 +51,9 @@
 
     protected override void OnInitialized()
     {
-        ReferenceData.Add("https://github.com/Ulyanov-programmer", "Ulyanov GitHub,");
+        ReferenceData.Add("https://github.com/Ulyanov-programmer", "Ulyanov GitHub");
         ReferenceData.Add("https://vk.com/h.wilson", "Ulyanov VK");
-        ReferenceData.Add("https://github.com/KurnakovMaksim", "Kurnakov GitHub,");
+        ReferenceData.Add("https://github.com/KurnakovMaksim", "Kurnakov GitHub");
         ReferenceData.Add("https://vk.com/makskurnakov2003", "Kurnakov VK");
     }
 

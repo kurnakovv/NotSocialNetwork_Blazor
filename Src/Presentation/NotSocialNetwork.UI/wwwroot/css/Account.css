@@ -1,4 +1,4 @@
-@import "../css/DefaultStyles.css";
+@import "../css/main.css";
 .main-contaner .main-contaner-UserInfo {
   display: flex;
 }
@@ -9,5 +9,6 @@
   flex-grow: 1;
 }
 .main-contaner .main-contaner-UserInfo .UserInfo-container .UserInfo-userLogo {
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }

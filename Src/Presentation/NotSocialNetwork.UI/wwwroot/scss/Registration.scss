@@ -1,0 +1,42 @@
+@import "../css/main.css";
+
+.TitleContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.main-container-form {
+	margin: 3.5% 0;
+
+	.form-container {
+		display: flex;
+		justify-content: center;
+
+		margin: 1% 0%;
+
+		:hover {
+			box-shadow: 0px 0px 20px 0.7px rgb(0 0 0 / 10%);
+			background-color: rgba(255, 239, 120, 1);
+		}
+
+		:focus {
+			background-color: rgba(170, 250, 100, 1);
+		}
+
+		.form-container--input {
+			flex-grow: 1;
+			font-size: 30px;
+			padding: 10px;
+			margin: 0% 15%;
+
+			background-color: rgba(255, 239, 120, 0.7);
+		}
+	}
+}
+
+.form-container--submitButton {
+	padding: 15px 25px;
+	font-size: 30px;
+
+	background-color: rgba(255, 239, 120, 1);
+}

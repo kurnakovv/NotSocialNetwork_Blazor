@@ -1,0 +1,24 @@
+$FooterColor: #c8dcaa;
+
+.footer-body {
+    font-size: 17px;
+    background-color: $FooterColor;
+    flex-shrink: 0;
+    padding: 10px 20px;
+}
+
+.footer {
+
+    &__about {
+        font-size: 19px;
+    }
+
+    &__refcontainer {
+        display: flex;
+        margin-top: 6px;
+
+        a {
+            color: rgb(50%, 50%, 70%);
+        }
+    }
+}

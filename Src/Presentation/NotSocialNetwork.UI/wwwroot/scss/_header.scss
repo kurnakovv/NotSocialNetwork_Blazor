@@ -1,0 +1,27 @@
+// ! Do not delete these variables, 
+// ! otherwise the SCSS compiler does not convert files.
+$ButtonColor: #3c8c3c;
+$DefaultFontSize: 20px;
+
+.header {
+
+    &__body {
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    // &__ref {}
+}
+
+.blocklogo {
+    background: url("../css/images/TitleIconBlack.png") no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    height: 50px;
+    width: 170px;
+}
