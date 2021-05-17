@@ -52,6 +52,7 @@
 
 .form__text {
   resize: none;
+  width: 100%;
   padding: 8px;
   font-size: 15px;
   background-color: #f6fdf2;
@@ -176,4 +177,8 @@ body {
 
 .dark-window {
   background-color: #2b802b;
+}
+
+.dark-button {
+  color: wheat;
 }

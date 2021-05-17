@@ -1,8 +1,8 @@
-﻿@inject HttpClient Http
+﻿@page "/Login"
+
+@inject HttpClient Http
 @inject ILocalStorageService localStorage
 @inject NavigationManager NavigationManager
-
-@page "/Login"
 
 <head>
     <title>NotSocialNetwork - Login</title>
@@ -34,16 +34,19 @@
     async Task SendUserForAuthentication()
     {
         var result = await Http.PostAsJsonAsync
-                    ("https://localhost:5001/api/authentication", loginDTO);
-        
+                    ("https://localhost:44353/api/authentication", loginDTO);
+
         //TODO: We need TryCatch!
         if (result.IsSuccessStatusCode)
         {
-            string token = result.Content.ReadAsStringAsync().Result;
+            LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
 
-            await WriteTokenAsCookies(token);
+            await WriteTokenAsCookies(tokenAndGuid.Token);
 
-            message = "Вы аутентифицированы!";
+            await WriteGuidIdAsCookies(tokenAndGuid.UserId);
+
+
+            NavigationManager.NavigateTo("/");
         }
         else
         {
@@ -54,5 +57,10 @@
     async Task WriteTokenAsCookies(string token)
     {
         await localStorage.SetItemAsync<string>("token", token);
+    }
+
+    async Task WriteGuidIdAsCookies(Guid id)
+    {
+        await localStorage.SetItemAsync<Guid>("id", id);
     }
 }
