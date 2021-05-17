@@ -19,7 +19,7 @@ namespace NotSocialNetwork.Services.Managers
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
-            var expirationDate = DateTime.UtcNow.AddMinutes(10);
+            var expirationDate = DateTime.UtcNow.AddDays(2);
 
             var securityTokenDescriptor = new SecurityTokenDescriptor
             {
