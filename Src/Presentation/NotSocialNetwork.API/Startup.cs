@@ -37,6 +37,8 @@ namespace NotSocialNetwork.API
             //ConfigureInMemoryDatabase(services);
             // Real database.
             ConfigureProductionServices(services);
+            // Real database for docker.
+            //ConfigureProductionServicesForDocker(services);
 
             ConnectMapping(services);
             ConnectSwagger(services);
@@ -74,6 +76,11 @@ namespace NotSocialNetwork.API
         private void ConfigureProductionServices(IServiceCollection services)
         {
             SetupDbContextInStartup.AddDbContext(services, Configuration.GetConnectionString("NotSocialNetworkDB"));
+        }
+
+        private void ConfigureProductionServicesForDocker(IServiceCollection services)
+        {
+            SetupDbContextInStartup.AddDbContext(services, Configuration.GetValue<string>("PersistenceModule:DefaultConnection"));
         }
 
         private void ConnectMapping(IServiceCollection services)
