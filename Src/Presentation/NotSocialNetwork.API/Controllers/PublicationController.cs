@@ -138,7 +138,7 @@ namespace NotSocialNetwork.API.Controllers
         [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        //TODO: later be [JwtAuthorize]
+        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Add.",
             Description = "Add publication."
