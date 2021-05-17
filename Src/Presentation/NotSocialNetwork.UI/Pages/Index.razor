@@ -1,11 +1,12 @@
-﻿@inject HttpClient Http
-@page "/"
+﻿@page "/"
+@inject HttpClient Http
+@inject ILocalStorageService localStorage
 
-<SubmitPostBox Http="Http" />
+<SubmitPostBox Http="Http" DarkThemeCssClass="@_submitPostBoxDarkClass" />
 
 @if (posts.Any())
 {
-    <Post Posts="posts.ToList()" />
+    <Post Posts="posts.ToList()" DarkThemeCssClass="@_postDarkClass" />
 }
 else
 {
@@ -13,21 +14,55 @@ else
 }
 
 @code{
-    List<PublicationEntity> posts;
+    IEnumerable<PublicationDTO> posts;
+
+    #region ClassVariables
+
+    string _submitPostBoxDarkClass = "";
+    string _postDarkClass = "";
+
+    #endregion
+
+
+    #region RenderMethods
 
     protected async override Task OnInitializedAsync()
     {
         // Do not change the ad logic for the posts variable.
-        // otherwise, when the page is rendered, it will be reset to zero. 
-        posts = new List<PublicationEntity>();
+        // otherwise, when the page is rendered, it will be reset to zero.
+        posts = new List<PublicationDTO>();
 
-        GetPostsAsync();
+        await GetPostsAsync();
     }
 
-    async void GetPostsAsync()
+    protected async override void OnAfterRender(bool firstRender)
     {
-        posts = Http.GetFromJsonAsync<IEnumerable<PublicationEntity>>
-                ("https://localhost:5001/api/publication")
-                .Result.ToList();
+        bool isNightTheme = await CookieHelper.GetNightThemeCookies(localStorage);
+
+        SetBackgroundStyles(isNightTheme);
+    }
+
+    #endregion
+
+
+    async Task GetPostsAsync()
+    {
+        posts = Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ("https://localhost:44353/api/publication/index=0")
+                .Result;
+    }
+
+    void SetBackgroundStyles(bool cookieOfNightThemeValue)
+    {
+        if (cookieOfNightThemeValue)
+        {
+            _submitPostBoxDarkClass = CssStyles.DarkWindowClass;
+            _postDarkClass = CssStyles.DarkWindowClass;
+        }
+        else
+        {
+            _submitPostBoxDarkClass = ""; _postDarkClass = "";
+        }
+        StateHasChanged();
     }
 }

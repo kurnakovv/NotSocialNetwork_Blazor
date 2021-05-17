@@ -1,0 +1,36 @@
+﻿<nav class="navmenu @DarkThemeCssClass">
+    <div class="navmenu__header">
+        <button class="open-button" @onclick="HideOrShowNavmenu">
+            <img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+        </button>
+    </div>
+
+    <div class="navmenu__body @_displayOfNavmenu">
+        <a class="nav-reference" href="/Account">Аккаунт</a>
+        <a class="nav-reference" href="/Registration">Регистрация</a>
+        <button class="button" @onclick="SetNightThemeMethod">Переключить тему</button>
+    </div>
+</nav>
+
+@code {
+    [Parameter] public string DarkThemeCssClass { get; set; }
+    [Parameter] public EventCallback SetNightThemeMethod { get; set; }
+
+
+    const string _displayNone_CssClass = "display-none";
+
+    string _displayOfNavmenu = _displayNone_CssClass;
+
+    async Task HideOrShowNavmenu()
+    {
+        if (_displayOfNavmenu == "")
+        {
+            _displayOfNavmenu = _displayNone_CssClass;
+        }
+        else
+        {
+            _displayOfNavmenu = "";
+        }
+        StateHasChanged();
+    }
+}

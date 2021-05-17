@@ -1,0 +1,31 @@
+$FooterColor: #c8dcaa;
+
+.footer-body {
+    font-size: 17px;
+    flex-shrink: 0;
+    padding: 10px 20px;
+}
+
+.footer {
+    background-color: $FooterColor;
+
+    &__about {
+        font-size: 19px;
+    }
+
+    &__refcontainer {
+        display: flex;
+        margin-top: 6px;
+
+        a {
+            color: rgb(50%, 50%, 70%);
+        }
+    }
+}
+.dark-footer{
+	background-color: rgb(2, 99, 2);
+    color: wheat;
+    a {
+        color: aquamarine;
+    }
+}

@@ -1,17 +1,18 @@
-﻿
-<div class="submitPostBox">
-    <div class="submitPostBox-main">
-        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="main-form">
+﻿<div class="submitpostbox @DarkThemeCssClass">
+    <div class="submitpostbox__body">
+        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
             <textarea @bind="newPost.Text"
-                      class="form--text"
-                      rows="4" placeholder="Есть новости?" id="text"></textarea>
-            <button class="form--submitButton" type="submit">Отправить!</button>
+                      rows="4" placeholder="Есть новости?"
+                      class="form__text" id="text">
+            </textarea>
+            <button class="form__submitbutton" type="submit">Отправить!</button>
         </EditForm>
     </div>
 </div>
 
 @code {
     [Parameter] public HttpClient Http { get; set; }
+    [Parameter] public string DarkThemeCssClass { get; set; }
     AddPublicationDTO newPost = new();
 
     async Task SubmitNewPost()
@@ -21,7 +22,6 @@
             When the authentication logic is ready, insert the data
             from the authentication cookies here.
         */
-        //newPost.Title = "";
         newPost.AuthorId = new Guid("22db8d01-06e0-45af-8543-45b3a514c55e");
 
         if (newPost != null)

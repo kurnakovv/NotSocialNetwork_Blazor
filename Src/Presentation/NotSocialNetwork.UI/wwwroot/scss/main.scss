@@ -1,0 +1,107 @@
+@import "../css/NullStyle.css";
+@import "../scss/header";
+@import "../scss/footer";
+@import "../scss/form";
+@import "../scss/post";
+
+$WindowColor: #f1ffea;
+
+$ActiveButtonColor: #64aa64;
+$ButtonColor: #3c8c3c;
+
+$DefaultFontSize: 20px;
+$DefaultFontFamily: arial;
+
+body {
+	font-family: $DefaultFontFamily;
+	display: flex;
+	flex-direction: column;
+	background-color: #e3f0e3;
+	font-size: 50px;
+	min-height: 100vh;
+}
+
+.main {
+	flex-grow: 1;
+
+	&__body {
+		display: flex;
+	}
+
+	&__content {
+		padding: 0 50px;
+		width: 100%;
+	}
+}
+
+.navmenu {
+	height: max-content;
+	background-color: $WindowColor;
+
+	&__header {
+		display: flex;
+		justify-content: center;
+		padding: 10px;
+	}
+
+	&__body {
+		display: flex;
+		flex-flow: column nowrap;
+
+		padding: 15px 0;
+
+		text-align: center;
+
+		:hover {
+			background-color: $ButtonColor;
+			color: white;
+		}
+	}
+}
+
+.nav-reference {
+	padding: 10px 15px;
+	margin: 0 0 7px 0;
+
+	font-size: $DefaultFontSize;
+	color: black;
+}
+
+.button {
+	padding: 10px 15px;
+
+	font-size: $DefaultFontSize;
+	background-color: transparent;
+}
+
+.open-button {
+	background-color: transparent;
+}
+
+.submitpostbox {
+	background-color: $WindowColor;
+
+	&__body {
+		padding: 10px;
+	}
+
+	&__form {
+		display: flex;
+		flex-flow: column nowrap;
+		width: 100%;
+	}
+}
+
+
+.display-none {
+	display: none;
+}
+
+
+.dark-background{
+	background-color: rgb(13, 78, 13);
+	color: wheat;
+}
+.dark-window{
+	background-color: rgb(43, 128, 43);
+}

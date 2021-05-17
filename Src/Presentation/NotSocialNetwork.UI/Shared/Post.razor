@@ -1,30 +1,33 @@
 ﻿@foreach (var post in Posts)
 {
-    if (post.Images != null)
+    if (post.ImagePaths.Any())
     {
-        /* TODO: Когда будет готов PublicationEntity с ссылкой на аватары и картинки, 
+        /* TODO: Когда будет готов PublicationEntity с ссылкой на аватары и картинки,
         поместить ниже установку ссылки в imageUrl. */
         imageUrl.Clear();
-        imageUrl.Append("URL");
+        imageUrl.Append(post.ImagePaths.First());
     }
-    <div class="main-container-post">
-        <div class="post-header">
-            <img class="post-header--AuthorIcon" src="@imageUrl" width="70" height="70" alt="AuthorIcon">
-            <span class="post-header--AuthorName"> @*@post.Title*@ </span> @*TODO: Do somethink...*@
-        </div>
-        <div class="post-main">
-            <div class="post-main-textContainer">
-                <p>
-                    @post.Text
-                </p>
+    <div class="post @DarkThemeCssClass">
+        <div class="post__body">
+            <div class="post__header">
+                <img class="authoricon" src="@imageUrl" width="70" height="70"
+                     alt="AuthorIcon">
+                <span class="authorname">@post.Author.Name</span>
+            </div>
+            <div class="post__main">
+                <div class="post__textcontainer">
+                    <p>
+                        @post.Text
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 }
 
-
 @code {
-    [Parameter] public List<PublicationEntity> Posts { get; set; }
+    [Parameter] public List<PublicationDTO> Posts { get; set; }
+    [Parameter] public string DarkThemeCssClass { get; set; }
 
     StringBuilder imageUrl = new("../css/images/Icons_User.png");
 

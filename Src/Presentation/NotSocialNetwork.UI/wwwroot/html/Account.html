@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<title> NotSocialNetwork </title>
@@ -7,41 +8,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS  -->
-	<link rel="stylesheet" href="../css/AccountStyles.css">
+	<link rel="stylesheet" href="../css/Account.css">
 </head>
-	<body>
-		<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
-		<header>
-			<!--NavMenu-->
-			<div class="header-container">
-				<a href="Account.html">
-					<!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
-					<div class="header-container-Logo"></div>
-				</a>
-				<nav class="header-container-navmenu">
-					<button class="navmenu-settings"></button>
-			        <div class="inputContainer">
-			            <button class="inputContainer--button">Переключить ночную тему </button>
-			        </div>
-				</nav>
-			</div>
-			<!--NavMenu-->
-		</header>
 
-		<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
-		<main>
-			<nav class="header-container-SubNavmenu">
-					<div class="navmenu-reference">
-						<a href="Intex.html"> Новости </a>
-					</div>
-					<div class="navmenu-reference">
-						<a href="Account.html"> Аккаунт </a>
-					</div>
-					<div class="navmenu-reference">
-						<a href="Registration.html"> Регистрация </a>
-					</div>
-				</nav>
-			<div class="main-contaner">
+<body>
+	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
+	<header>
+		<div class="header__body">
+			<a class="header__ref" href="Intex.html">
+				<!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
+				<div class="blocklogo"></div>
+			</a>
+		</div>
+	</header>
+
+	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
+	<main class="main">
+		<div class="main__body">
+			<!-- NavMenu component-->
+			<nav class="navmenu">
+				<div class="navmenu__header">
+					<button class="open-button">
+						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+					</button>
+				</div>
+
+				<div class="navmenu__body">
+					<a class="nav-reference" href="Intex.html">Новости</a>
+					<a class="nav-reference" href="Account.html">Аккаунт</a>
+					<a class="nav-reference" href="Registration.html">Регистрация</a>
+					<button class="button">Переключить ночную тему</button>
+				</div>
+			</nav>
+			<!-- NavMenu-->
+
+			<div class="main__content">
 				<div class="main-contaner-UserInfo">
 					<div class="UserInfo-container">
 						<div class="UserInfo-nickname">
@@ -55,37 +56,50 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="main-contaner-UserPosts">
-					<!--Post-->
-					<div class="main-container-post">
-					<div class="post-header">
-						<img class="post-header--AuthorIcon" src="../css/images/Icons_User.png" width="70" height="70" alt="AuthorIcon">
-						<span class="post-header--AuthorName"> ИмяАвтора </span>
-					</div>
-					<div class="post-main">
-						<div class="post-main-textContainer">
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti dicta dolores totam, asperiores perspiciatis molestias soluta necessitatibus minima magni ab repellat suscipit ipsam placeat deserunt iste nisi, perferendis, cumque veniam.
-							</p>
+					<!-- Post component-->
+					<div class="post">
+						<div class="post__body">
+							<div class="post__header">
+								<img class="authoricon" src="../css/images/Icons_User.png" width="70" height="70"
+									alt="AuthorIcon">
+								<span class="authorname"> ИмяАвтора </span>
+							</div>
+							<div class="post__main">
+								<div class="post__textcontainer">
+									<p>
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti dicta dolores
+										totam,
+										asperiores perspiciatis molestias soluta necessitatibus minima magni ab repellat
+										suscipit ipsam placeat deserunt iste nisi, perferendis, cumque veniam.
+									</p>
+								</div>
+							</div>
 						</div>
 					</div>
+					<!-- Post-->
 				</div>
 			</div>
-		</main>
+		</div>
+	</main>
 
-		<!-- NightTheme: style="background-color: #3c5a3c; color: #ebffe1;" -->
-		<footer>
-			<div>
+	<!-- NightTheme: style="background-color: #3c5a3c; color: #ebffe1;" -->
+	<footer>
+		<div class="footer-body">
+			<div class="footer__about">
 				<span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
 			</div>
-			<div class="ReferenceContainer">
-				<a href="https://github.com/Ulyanov-programmer" class="ReferenceContainer--Reference">Ulyanov GitHub,</a>
-				<a href="https://vk.com/h.wilson" class="ReferenceContainer--Reference">Ulyanov VK</a>
+			<div class="footer__refcontainer">
+				<a href="https://github.com/Ulyanov-programmer">Ulyanov GitHub,</a>
+				<a href="https://vk.com/h.wilson">Ulyanov VK</a>
 			</div>
-			<div class="ReferenceContainer">
-				<a href="https://github.com/KurnakovMaksim" class="ReferenceContainer--Reference">Kurnakov GitHub,</a>
-				<a href="https://vk.com/makskurnakov2003" class="ReferenceContainer--Reference">Kurnakov VK</a>
+			<div class="footer__refcontainer">
+				<a href="https://github.com/KurnakovMaksim">Kurnakov GitHub,</a>
+				<a href="https://vk.com/makskurnakov2003">Kurnakov VK</a>
 			</div>
-		</footer>
-	</body>
+		</div>
+	</footer>
+</body>
+
 </html>

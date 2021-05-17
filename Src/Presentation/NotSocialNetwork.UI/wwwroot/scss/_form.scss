@@ -1,0 +1,24 @@
+.form {
+
+	&__text {
+		resize: none;
+
+		padding: 8px;
+		font-size: 15px;
+		background-color: #f6fdf2;
+	}
+
+	&__submitbutton {
+		padding: 5px;
+		background-color: gray;
+
+		color: white;
+		font-size: 24px;
+	}
+	&__submitbutton:hover{
+		background-color: $ButtonColor;
+	}
+}
+.dark-textarea{
+	background-color: rgb(212, 250, 212);
+}
