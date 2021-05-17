@@ -9,9 +9,33 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+;http://+
       - ASPNETCORE_HTTPS_PORT=5001
+      - PersistenceModule__DefaultConnection=Server=sql1;User Id=SA;Password=<YourStrong!Passw0rddD>;Database=NotSocialNetworkDB;
     volumes:
       - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
       - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
+    depends_on:
+      - sql1
+      - notsocialnetwork_seed
     ports:
       - "5000:80"
       - "5001:443"
+  notsocialnetwork_seed:
+    build:
+      context: .
+      dockerfile: NotSocialNetworkSeed/Dockerfile
+    environment:
+      - PersistenceModule__DefaultConnection=Server=sql1;User Id=SA;Password=<YourStrong!Passw0rddD>;Database=NotSocialNetworkDB;
+    command: bash -c "/root/.dotnet/tools/dotnet-ef database update --project Src/Infrastructure/NotSocialNetwork.DBContexts --startup-project Src/Presentation/NotSocialNetwork.API"
+    depends_on:
+      - sql1
+    healthcheck:
+        interval: 30s
+        timeout: 10s
+        retries: 5
+  sql1:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      SA_PASSWORD: "<YourStrong!Passw0rddD>"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
