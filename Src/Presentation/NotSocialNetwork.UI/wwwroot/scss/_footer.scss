@@ -2,12 +2,12 @@ $FooterColor: #c8dcaa;
 
 .footer-body {
     font-size: 17px;
-    background-color: $FooterColor;
     flex-shrink: 0;
     padding: 10px 20px;
 }
 
 .footer {
+    background-color: $FooterColor;
 
     &__about {
         font-size: 19px;
@@ -20,5 +20,12 @@ $FooterColor: #c8dcaa;
         a {
             color: rgb(50%, 50%, 70%);
         }
+    }
+}
+.dark-footer{
+	background-color: rgb(2, 99, 2);
+    color: wheat;
+    a {
+        color: aquamarine;
     }
 }

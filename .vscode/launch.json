@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Src/Presentation/NotSocialNetwork.UI/bin/Debug/net5.0/NotSocialNetwork.UI.dll",
+            "program": "${workspaceFolder}/Src/Presentation/NotSocialNetwork.UI/bin/Debug/net5.0/NotSocialNetwork.UI.Views.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Src/Presentation/NotSocialNetwork.UI",
             "stopAtEntry": false,

@@ -16,13 +16,21 @@
   width: 170px;
 }
 
+.dark-logo {
+  background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat;
+  width: 170px;
+  height: 50px;
+}
+
 .footer-body {
   font-size: 17px;
-  background-color: #c8dcaa;
   flex-shrink: 0;
   padding: 10px 20px;
 }
 
+.footer {
+  background-color: #c8dcaa;
+}
 .footer__about {
   font-size: 19px;
 }
@@ -32,6 +40,14 @@
 }
 .footer__refcontainer a {
   color: #8080b3;
+}
+
+.dark-footer {
+  background-color: #026302;
+  color: wheat;
+}
+.dark-footer a {
+  color: aquamarine;
 }
 
 .form__text {
@@ -44,10 +60,38 @@
   padding: 5px;
   background-color: gray;
   color: white;
-  font-size: 20px;
+  font-size: 24px;
 }
 .form__submitbutton:hover {
   background-color: #3c8c3c;
+}
+
+.dark-textarea {
+  background-color: #d4fad4;
+}
+
+.post {
+  background-color: #f1ffea;
+}
+.post__body {
+  display: flex;
+  flex-direction: column;
+  margin: 25px 0px;
+  padding: 15px;
+  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
+}
+.post__header {
+  font-size: 25px;
+  font-weight: 600;
+}
+.post__header .authoricon {
+  margin: 0 10px 15px 0;
+}
+.post__header .authorname {
+  text-align: center;
+}
+.post__textcontainer {
+  font-size: 20px;
 }
 
 body {
@@ -102,16 +146,18 @@ body {
 .button {
   padding: 10px 15px;
   font-size: 20px;
-  background-color: #f1ffea;
+  background-color: transparent;
 }
 
 .open-button {
   background-color: transparent;
 }
 
+.submitpostbox {
+  background-color: #f1ffea;
+}
 .submitpostbox__body {
   padding: 10px;
-  background-color: #f1ffea;
 }
 .submitpostbox__form {
   display: flex;
@@ -119,26 +165,15 @@ body {
   width: 100%;
 }
 
-.post {
-  background-color: #f1ffea;
+.display-none {
+  display: none;
 }
-.post__body {
-  display: flex;
-  flex-direction: column;
-  margin: 25px 0px;
-  padding: 15px;
-  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
+
+.dark-background {
+  background-color: #0d4e0d;
+  color: wheat;
 }
-.post__header {
-  font-size: 25px;
-  font-weight: 600;
-}
-.post__header .authoricon {
-  margin: 0 10px 15px 0;
-}
-.post__header .authorname {
-  text-align: center;
-}
-.post__textcontainer {
-  font-size: 20px;
+
+.dark-window {
+  background-color: #2b802b;
 }

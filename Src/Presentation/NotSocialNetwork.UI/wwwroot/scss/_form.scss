@@ -13,9 +13,12 @@
 		background-color: gray;
 
 		color: white;
-		font-size: 20px;
+		font-size: 24px;
 	}
 	&__submitbutton:hover{
 		background-color: $ButtonColor;
 	}
+}
+.dark-textarea{
+	background-color: rgb(212, 250, 212);
 }

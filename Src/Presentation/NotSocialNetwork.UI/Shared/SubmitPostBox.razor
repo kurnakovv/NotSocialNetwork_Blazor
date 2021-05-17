@@ -1,4 +1,4 @@
-﻿<div class="submitpostbox">
+﻿<div class="submitpostbox @DarkThemeCssClass">
     <div class="submitpostbox__body">
         <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
             <textarea @bind="newPost.Text"
@@ -12,6 +12,7 @@
 
 @code {
     [Parameter] public HttpClient Http { get; set; }
+    [Parameter] public string DarkThemeCssClass { get; set; }
     AddPublicationDTO newPost = new();
 
     async Task SubmitNewPost()
@@ -21,7 +22,6 @@
             When the authentication logic is ready, insert the data
             from the authentication cookies here.
         */
-        //newPost.Title = "";
         newPost.AuthorId = new Guid("22db8d01-06e0-45af-8543-45b3a514c55e");
 
         if (newPost != null)

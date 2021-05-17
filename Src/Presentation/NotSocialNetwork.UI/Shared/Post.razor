@@ -7,7 +7,7 @@
         imageUrl.Clear();
         imageUrl.Append(post.ImagePaths.First());
     }
-    <div class="post">
+    <div class="post @DarkThemeCssClass">
         <div class="post__body">
             <div class="post__header">
                 <img class="authoricon" src="@imageUrl" width="70" height="70"
@@ -27,6 +27,7 @@
 
 @code {
     [Parameter] public List<PublicationDTO> Posts { get; set; }
+    [Parameter] public string DarkThemeCssClass { get; set; }
 
     StringBuilder imageUrl = new("../css/images/Icons_User.png");
 

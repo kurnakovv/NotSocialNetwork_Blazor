@@ -1,119 +1,91 @@
 ﻿@inherits LayoutComponentBase
 @inject ILocalStorageService localStorage
 
-<header>
+<header class="header @_headerDarkClass">
     <div class="header__body">
         <a class="header__ref" href="/" title="Home">
-            <!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
-            <div class="blocklogo"></div>
+            <div class="blocklogo @_titleDarkClass"></div>
         </a>
     </div>
 </header>
-<main class="main">
+
+<main class="main @_mainDarkClass">
     <div class="main__body">
-        <SubNavMenu /> 
+        <NavMenu DarkThemeCssClass="@_windowDarkClass" 
+                 SetNightThemeMethod="EditNightTheme" /> 
 
         <div class="main__content">
             @Body
         </div>
     </div>
 </main>
-<footer>
+
+<footer class="footer @_footerDarkClass">
     <div class="footer-body">
         <div class="footer__about">
             <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
         </div>
-        <RefContainer ReferenceColor="@_refColor" ReferencesData="ReferenceData" />
+        <RefContainer ReferenceColor="red" ReferencesData="ReferenceData" />
     </div>
 </footer>
 
 @code{
-    string _visibilityOfNavmenuButtons = "none";
-    Dictionary<string, string> ReferenceData = new();
+    Dictionary<string, string> ReferenceData = new()
+    {
+        ["https://github.com/Ulyanov-programmer"] = "Ulyanov GitHub",
+        ["https://vk.com/h.wilson"] = "Ulyanov VK",
+        ["https://github.com/KurnakovMaksim"] = "Kurnakov GitHub",
+        ["https://vk.com/makskurnakov2003"] = "Kurnakov VK"
+    };
 
-    #region HtmlStylesAndRefs
+    #region ClassVariables
 
-    string _main_BackColor;
-    string _main_Color;
-    string _footer_BackColor;
-    string _footer_Color;
-    string _refColor;
-
-    string TitleReference;
-
-    private const string TitleBlackRef = "../css/images/TitleIconBlack.png";
-    private const string TitleWhiteRef = "../css/images/TitleIconWhite.png";
+    string _headerDarkClass = "";
+    string _mainDarkClass = "";
+    string _footerDarkClass = "";
+    string _windowDarkClass = "";
+    string _titleDarkClass = "";
 
     #endregion
 
 
     #region RenderingMethods
 
-    protected override void OnInitialized()
-    {
-        ReferenceData.Add("https://github.com/Ulyanov-programmer", "Ulyanov GitHub");
-        ReferenceData.Add("https://vk.com/h.wilson", "Ulyanov VK");
-        ReferenceData.Add("https://github.com/KurnakovMaksim", "Kurnakov GitHub");
-        ReferenceData.Add("https://vk.com/makskurnakov2003", "Kurnakov VK");
-    }
-
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var cookieResult = await localStorage.GetItemAsync<bool>("nightTheme");
-            SetHtmlStyles(cookieResult);
+            var cookieResult = await CookieHelper.GetNightThemeCookies(localStorage);
+            SetBackgroundStyles(cookieResult);
         }
     }
 
     #endregion
 
-    void SetHtmlStyles(bool cookieOfNightThemeValue)
+
+    void SetBackgroundStyles(bool cookieOfNightThemeValue)
     {
         if (cookieOfNightThemeValue)
         {
-            _main_BackColor = "#325032";
-            _main_Color = "black";
-            _footer_BackColor = "#3c5a3c";
-            _footer_Color = "#ebffe1";
-            _refColor = "red";
+            _headerDarkClass = CssStyles.DarkBackgroundClass;
+            _mainDarkClass = CssStyles.DarkBackgroundClass;
+            _footerDarkClass = CssStyles.DarkFooterClass;
 
-            TitleReference = TitleWhiteRef;
+            _windowDarkClass = CssStyles.DarkWindowClass;
+            _titleDarkClass = CssStyles.DarkTitleClass;
         }
         else
         {
-            _main_BackColor = ""; _main_Color = "";
-            _footer_BackColor = ""; _footer_Color = "";
-            _refColor = "";
-
-            TitleReference = TitleBlackRef;
+            _headerDarkClass = ""; _mainDarkClass = "";_footerDarkClass = "";
+            _titleDarkClass = ""; _windowDarkClass = "";
         }
         StateHasChanged();
     }
 
-    void OpenSettingsContainer()
+    async void EditNightTheme()
     {
-        if (_visibilityOfNavmenuButtons is "visible")
-        {
-            _visibilityOfNavmenuButtons = "hidden";
-        }
-        else
-        {
-            _visibilityOfNavmenuButtons = "visible";
-        }
-    }
+        bool newValueOfNightTheme = await CookieHelper.EditNightThemeCookies(localStorage);
 
-    async Task EditNightThemeCookies()
-    {
-        if (await localStorage.GetItemAsync<bool>("nightTheme"))
-        {
-            await localStorage.SetItemAsync("nightTheme", false);
-            SetHtmlStyles(false);
-        }
-        else
-        {
-            await localStorage.SetItemAsync("nightTheme", true);
-            SetHtmlStyles(true);
-        }
+        SetBackgroundStyles(newValueOfNightTheme);
     }
 }

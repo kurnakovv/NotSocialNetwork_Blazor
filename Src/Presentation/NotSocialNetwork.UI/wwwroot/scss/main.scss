@@ -2,10 +2,8 @@
 @import "../scss/header";
 @import "../scss/footer";
 @import "../scss/form";
+@import "../scss/post";
 
-$ShadowColor: rgb(0 0 0 / 10%);
-
-$BorderColor: rgba(100, 170, 100, 0.5);
 $WindowColor: #f1ffea;
 
 $ActiveButtonColor: #64aa64;
@@ -47,7 +45,6 @@ body {
 	}
 
 	&__body {
-		// To hide or show the navigation menu, set Display to None or Flex.
 		display: flex;
 		flex-flow: column nowrap;
 
@@ -74,7 +71,7 @@ body {
 	padding: 10px 15px;
 
 	font-size: $DefaultFontSize;
-	background-color: $WindowColor;
+	background-color: transparent;
 }
 
 .open-button {
@@ -82,10 +79,10 @@ body {
 }
 
 .submitpostbox {
+	background-color: $WindowColor;
 
 	&__body {
 		padding: 10px;
-		background-color: $WindowColor;
 	}
 
 	&__form {
@@ -95,35 +92,16 @@ body {
 	}
 }
 
-.post {
-	background-color: $WindowColor;
 
-	&__body {
-		display: flex;
-		flex-direction: column;
-		margin: 25px 0px;
-		padding: 15px;
+.display-none {
+	display: none;
+}
 
-		box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
-	}
 
-	&__header {
-		font-size: 25px;
-		font-weight: 600;
-
-		.authoricon {
-			margin: 0 10px 15px 0;
-		}
-
-		.authorname {
-			text-align: center;
-
-		}
-	}
-
-	// &__main {}
-
-	&__textcontainer {
-		font-size: $DefaultFontSize;
-	}
+.dark-background{
+	background-color: rgb(13, 78, 13);
+	color: wheat;
+}
+.dark-window{
+	background-color: rgb(43, 128, 43);
 }
