@@ -47,9 +47,8 @@ else
 
     async Task GetPostsAsync()
     {
-        posts = Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
-                ("https://localhost:44353/api/publication/index=0")
-                .Result;
+        posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ("https://localhost:44353/api/publication/index=0");
     }
 
     void SetBackgroundStyles(bool cookieOfNightThemeValue)
