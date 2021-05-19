@@ -29,7 +29,7 @@
             {
                 newPost.AuthorId = await CookieHelper.GetCurrentId(LocalStorage);
 
-                await CookieHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
+                CookieHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
 
                 var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
                 ($"{HttpHelper.APIAddress}publication", newPost);
