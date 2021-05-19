@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject ILocalStorageService localStorage
+@using System.Threading
 
 <header class="header @_headerDarkClass">
     <div class="header__body">
@@ -85,6 +86,7 @@
     async void EditNightTheme()
     {
         bool newValueOfNightTheme = await CookieHelper.EditNightThemeCookies(localStorage);
+
 
         SetBackgroundStyles(newValueOfNightTheme);
     }

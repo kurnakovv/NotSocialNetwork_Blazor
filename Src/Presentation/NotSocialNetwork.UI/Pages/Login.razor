@@ -33,24 +33,55 @@
 
     async Task SendUserForAuthentication()
     {
-        var result = await Http.PostAsJsonAsync
-                    ("https://localhost:44353/api/authentication", loginDTO);
-
-        //TODO: We need TryCatch!
-        if (result.IsSuccessStatusCode)
+        try
         {
-            LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
+            var result = await Http.PostAsJsonAsync
+                        ($"{HttpHelper.APIAddress}authentication", loginDTO);
 
-            await WriteTokenAsCookies(tokenAndGuid.Token);
+            if (result.IsSuccessStatusCode)
+            {
+                LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
 
-            await WriteGuidIdAsCookies(tokenAndGuid.UserId);
+                await WriteTokenAsCookies(tokenAndGuid.Token);
+
+                await WriteGuidIdAsCookies(tokenAndGuid.UserId);
 
 
-            NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                message = "Пользователь с такими данными не найден или произошла ошибка!";
+            }
         }
-        else
+        catch (HttpRequestException httpReqEx)
         {
-            message = "Пользователь с такими данными не найден или произошла ошибка!";
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Сервер не нашёл вас, проверьте корректность введённых данных.";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Что-то пошло не так, попробуйте позже.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер не активен. Пожалуйста, попробуйте позже.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
     }
 

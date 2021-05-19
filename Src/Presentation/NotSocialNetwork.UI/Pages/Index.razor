@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @inject ILocalStorageService localStorage
 
-<SubmitPostBox Http="Http" DarkThemeCssClass="@_submitPostBoxDarkClass" />
+<SubmitPostBox Http="Http" DarkThemeCssClass="@_submitPostBoxDarkClass" LocalStorage="localStorage" />
 
 @if (posts.Any())
 {
@@ -10,11 +10,12 @@
 }
 else
 {
-    <span>Упс, пока что постов нет...</span>
+    <span>@message</span>
 }
 
 @code{
     IEnumerable<PublicationDTO> posts;
+    string message;
 
     #region ClassVariables
 
@@ -47,9 +48,43 @@ else
 
     async Task GetPostsAsync()
     {
-        posts = Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
-                ("https://localhost:44353/api/publication/index=0")
-                .Result;
+        try
+        {
+            posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ($"{HttpHelper.APIAddress}publication/index=0");
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, пока что постов нет...";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Сервер не понимает нас, возможно мы расстались. \n" +
+                                "Попробуйте повторить попытку позже.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch(Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
     }
 
     void SetBackgroundStyles(bool cookieOfNightThemeValue)

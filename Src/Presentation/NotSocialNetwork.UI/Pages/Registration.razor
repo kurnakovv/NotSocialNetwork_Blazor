@@ -35,18 +35,50 @@
 </EditForm>
 
 @code{
-    string message = "Регистрация";
+    string message;
 
     RegistrationUserDTO newUserDTO = new();
 
     async Task SendNewUser()
     {
-        var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                           ("https://localhost:5001/api/user", newUserDTO);
+        try
+        {
+            var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                               ($"{HttpHelper.APIAddress}user", newUserDTO);
 
-        if (result.IsSuccessStatusCode)
-            message = "Вы были успешно зарегистрированы!";
-        else
-            message = "Произошла ошибка при попытке регистрации. :с";
+            if (result.IsSuccessStatusCode)
+                message = "Вы были успешно зарегистрированы!";
+            else
+                message = "Произошла ошибка при попытке регистрации. :с";
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, сервер не нашёл, куда вас поместить. Попробуйте позже.";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Что-то пошло не так, попробуйте изменить пост. Попробуйте позже.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер не активен. Пожалуйста, попробуйте позже.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
     }
 }

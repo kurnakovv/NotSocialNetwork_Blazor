@@ -7,33 +7,74 @@
                       class="form__text" id="text">
             </textarea>
             <button class="form__submitbutton" type="submit">Отправить!</button>
+            <!--Переделать под модальное окно-->
+            <span>@message</span>
         </EditForm>
     </div>
 </div>
 
 @code {
     [Parameter] public HttpClient Http { get; set; }
-    [Parameter] public ILocalStorageService localStorage { get; set; }
+    [Parameter] public ILocalStorageService LocalStorage { get; set; }
     [Parameter] public string DarkThemeCssClass { get; set; }
 
     AddPublicationDTO newPost = new();
+    string message;
 
     async Task SubmitNewPost()
     {
-        if (newPost != null)
+        try
         {
-            if (string.IsNullOrWhiteSpace(newPost.Text) is false)
+            if (newPost != null && string.IsNullOrWhiteSpace(newPost.Text) is false)
             {
-                //TODO: We need TryCatch!
-                newPost.AuthorId = await CookieHelper.GetCurrentId(localStorage);
+                newPost.AuthorId = await CookieHelper.GetCurrentId(LocalStorage);
 
-                string token = await CookieHelper.GetToken(localStorage);
-
-                await CookieHelper.SetJwtHeader(Http, token);
+                await CookieHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
 
                 var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
-                ("https://localhost:44353/api/publication", newPost);
+                ($"{HttpHelper.APIAddress}publication", newPost);
+
+                if (responce.IsSuccessStatusCode)
+                {
+                    //TODO: Сделать перезагрузку страницы.
+                    message = "Пост был успешно создан! Перезагрузите страницу.";
+                }
+                else
+                {
+                    message = "Произошла внутренняя ошибка сервера, возможно строк аутентификации истёк.";
+                }
             }
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Что-то пошло не так, попробуйте изменить пост.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
     }
 }
