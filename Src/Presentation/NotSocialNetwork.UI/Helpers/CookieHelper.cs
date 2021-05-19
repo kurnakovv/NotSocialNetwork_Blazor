@@ -60,7 +60,7 @@ namespace NotSocialNetwork.UI.Helpers
             return id;
         }
 
-        internal static async Task SetJwtHeader(HttpClient http, string token)
+        internal static void SetJwtHeader(HttpClient http, string token)
         {
             http.DefaultRequestHeaders
                 .Authorization = new AuthenticationHeaderValue("bearer", token);

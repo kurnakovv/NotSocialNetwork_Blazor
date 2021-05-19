@@ -1,7 +1,7 @@
 ﻿<nav class="navmenu @DarkThemeCssClass">
     <div class="navmenu__header">
         <button class="open-button" @onclick="HideOrShowNavmenu">
-            <img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+            <img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50" height="40">
         </button>
     </div>
 
@@ -21,7 +21,7 @@
 
     string _displayOfNavmenu = _displayNone_CssClass;
 
-    async Task HideOrShowNavmenu()
+    void HideOrShowNavmenu()
     {
         if (_displayOfNavmenu == "")
         {
