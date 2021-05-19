@@ -29,7 +29,7 @@
 
                 string token = await CookieHelper.GetToken(localStorage);
 
-                await CookieHelper.SetJwtHeader(Http, token);
+                CookieHelper.SetJwtHeader(Http, token);
 
                 var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
                 ("https://localhost:44353/api/publication", newPost);
