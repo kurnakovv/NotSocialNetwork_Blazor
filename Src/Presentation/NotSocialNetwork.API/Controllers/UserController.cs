@@ -23,9 +23,7 @@ namespace NotSocialNetwork.API.Controllers
     {
         public UserController(
             IUserService userService,
-            IMapper mapper,
-            IFileSystem<ImageEntity> imageFileSystem,
-            IHostEnvironment hostEnvironment)
+            IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
