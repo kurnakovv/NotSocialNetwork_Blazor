@@ -1,4 +1,7 @@
+$WindowColor: #e3f0e331;
+
 .form {
+	background-color: rgba(193, 209, 193, 0.349);
 
 	&__text {
 		background-color: transparent;
@@ -9,7 +12,8 @@
 	}
 
 	&__text:focus {
-		background-color: #f6fdf2;
+		background-color: #e3f0e31e;
+		height: 10em;
 	}
 
 	&__submitbutton {
@@ -23,8 +27,4 @@
 	&__submitbutton:hover {
 		background-color: $ButtonColor;
 	}
-}
-
-.dark-textarea {
-	background-color: rgb(212, 250, 212);
 }

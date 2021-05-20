@@ -4,7 +4,7 @@
 @import "../scss/form";
 @import "../scss/post";
 
-$WindowColor: #f1ffea;
+$WindowColor: #e3f0e331;
 
 $ActiveButtonColor: #64aa64;
 $ButtonColor: #3c8c3c;
@@ -36,7 +36,7 @@ body {
 
 .navmenu {
 	height: max-content;
-	background-color: $WindowColor;
+	background-color: rgba(193, 209, 193, 0.349);
 
 	&__header {
 		display: flex;
@@ -97,14 +97,23 @@ body {
 	display: none;
 }
 
-
-.dark-background{
+.dark-theme {
 	background-color: rgb(13, 78, 13);
 	color: wheat;
-}
-.dark-window{
-	background-color: rgb(43, 128, 43);
-}
-.dark-button{
-	color: wheat;
+
+	button {
+		color: wheat;
+	}
+
+	a {
+		color: wheat;
+	}
+
+	textarea {
+		color: wheat;
+
+		&::placeholder {
+			color: wheat;
+		}
+	}
 }

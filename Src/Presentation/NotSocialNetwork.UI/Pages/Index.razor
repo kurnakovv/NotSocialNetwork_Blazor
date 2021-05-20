@@ -3,11 +3,11 @@
 @inject ILocalStorageService localStorage
 
 
-<SubmitPostBox Http="Http" DarkThemeCssClass="@_submitPostBoxDarkClass" LocalStorage="localStorage" />
+<SubmitPostBox Http="Http" LocalStorage="localStorage"/>
 
 @if (posts.Any())
 {
-    <Post Http="Http" Posts="posts.ToList()" DarkThemeCssClass="@_postDarkClass" />
+    <Post Http="Http" Posts="posts.ToList()"/>
 }
 else
 {
@@ -36,13 +36,6 @@ else
         posts = new List<PublicationDTO>();
 
         await GetPostsAsync();
-    }
-
-    protected async override void OnAfterRender(bool firstRender)
-    {
-        bool isNightTheme = await CookieHelper.GetNightThemeCookies(localStorage);
-
-        SetBackgroundStyles(isNightTheme);
     }
 
     #endregion
@@ -87,23 +80,5 @@ else
             message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
                         "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
-    }
-
-    void SetBackgroundStyles(bool isNightTheme)
-    {
-        if (string.IsNullOrEmpty(_postDarkClass) && isNightTheme)
-        {
-            _submitPostBoxDarkClass = CssStyles.DarkWindowClass;
-            _postDarkClass = CssStyles.DarkWindowClass;
-        }
-        else if (string.IsNullOrEmpty(_postDarkClass) == false && !isNightTheme)
-        {
-            _submitPostBoxDarkClass = ""; _postDarkClass = "";
-        }
-        else
-        {
-            return;
-        }
-        StateHasChanged();
     }
 }

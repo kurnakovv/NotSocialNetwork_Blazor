@@ -3,7 +3,7 @@
     <div class="submitpostbox__body">
         <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
             <textarea @bind="newPost.Text"
-                      rows="4" placeholder="Есть новости?"
+                      rows="1" placeholder="Есть новости?"
                       class="form__text" id="text">
             </textarea>
             <button class="form__submitbutton" type="submit">Отправить!</button>
@@ -16,7 +16,6 @@
 @code {
     [Parameter] public HttpClient Http { get; set; }
     [Parameter] public ILocalStorageService LocalStorage { get; set; }
-    [Parameter] public string DarkThemeCssClass { get; set; }
 
     AddPublicationDTO newPost = new();
     string message;

@@ -50,13 +50,18 @@
   color: aquamarine;
 }
 
+.form {
+  background-color: rgba(193, 209, 193, 0.349);
+}
 .form__text {
+  background-color: transparent;
   resize: none;
   padding: 8px;
   font-size: 15px;
 }
 .form__text:focus {
-  background-color: #f6fdf2;
+  background-color: #e3f0e31e;
+  height: 10em;
 }
 .form__submitbutton {
   padding: 5px;
@@ -68,19 +73,15 @@
   background-color: #3c8c3c;
 }
 
-.dark-textarea {
-  background-color: #d4fad4;
-}
-
 .post {
-  background-color: transparent;
+  background-color: #e3f0e331;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 .post__body {
   display: flex;
   flex-direction: column;
   margin: 45px 0px;
   padding: 15px;
-  box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.2);
 }
 .post__header {
   font-size: 25px;
@@ -97,9 +98,9 @@
   opacity: 1;
 }
 .post__delete-button {
+  font-size: 12px;
   opacity: 0.8;
   background-color: transparent;
-  font-size: 12px;
 }
 .post__textcontainer {
   font-size: 20px;
@@ -129,7 +130,7 @@ body {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  background-color: #f1ffea;
+  background-color: rgba(193, 209, 193, 0.349);
 }
 .navmenu__header {
   display: flex;
@@ -165,7 +166,7 @@ body {
 }
 
 .submitpostbox {
-  background-color: #f1ffea;
+  background-color: #e3f0e331;
 }
 .submitpostbox__body {
   padding: 10px;
@@ -180,15 +181,25 @@ body {
   display: none;
 }
 
-.dark-background {
+.dark-theme {
   background-color: #0d4e0d;
   color: wheat;
 }
-
-.dark-window {
-  background-color: #2b802b;
+.dark-theme button {
+  color: wheat;
 }
-
-.dark-button {
+.dark-theme a {
+  color: wheat;
+}
+.dark-theme textarea {
+  color: wheat;
+}
+.dark-theme textarea::-moz-placeholder {
+  color: wheat;
+}
+.dark-theme textarea:-ms-input-placeholder {
+  color: wheat;
+}
+.dark-theme textarea::placeholder {
   color: wheat;
 }

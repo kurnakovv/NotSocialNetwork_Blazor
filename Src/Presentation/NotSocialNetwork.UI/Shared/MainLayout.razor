@@ -12,8 +12,7 @@
 
 <main class="main @_mainDarkClass">
     <div class="main__body">
-        <NavMenu DarkThemeCssClass="@_windowDarkClass"
-                 SetNightThemeMethod="EditNightTheme" ButtonThemeCssClass="@_buttonDarkClass" />
+        <NavMenu SetNightThemeMethod="EditNightTheme" />
 
         <div class="main__content">
             @Body
@@ -45,8 +44,6 @@
     string _mainDarkClass = "";
     string _footerDarkClass = "";
 
-    string _buttonDarkClass = "";
-    string _windowDarkClass = "";
     string _titleDarkClass = "";
 
     #endregion
@@ -74,14 +71,12 @@
             _mainDarkClass = CssStyles.DarkBackgroundClass;
             _footerDarkClass = CssStyles.DarkFooterClass;
 
-            _buttonDarkClass = CssStyles.DarkButtonClass;
-            _windowDarkClass = CssStyles.DarkWindowClass;
             _titleDarkClass = CssStyles.DarkTitleClass;
         }
         else
         {
-            _headerDarkClass = ""; _mainDarkClass = ""; _footerDarkClass = "";
-            _titleDarkClass = ""; _windowDarkClass = "";
+            _headerDarkClass = ""; _mainDarkClass = ""; 
+            _footerDarkClass = ""; _titleDarkClass = "";
         }
         StateHasChanged();
     }

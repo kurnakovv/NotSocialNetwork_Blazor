@@ -1,4 +1,4 @@
-﻿<nav class="navmenu @DarkThemeCssClass">
+﻿<nav class="navmenu">
     <div class="navmenu__header">
         <button class="open-button" @onclick="HideOrShowNavmenu">
             <img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50" height="40">
@@ -6,27 +6,23 @@
     </div>
 
     <div class="navmenu__body @_displayOfNavmenu">
-        <a class="nav-reference @ButtonThemeCssClass" href="/Account">Аккаунт</a>
-        <a class="nav-reference @ButtonThemeCssClass" href="/Registration">Регистрация</a>
-        <button class="button @ButtonThemeCssClass" @onclick="SetNightThemeMethod">Переключить тему</button>
+        <a class="nav-reference" href="/Account">Аккаунт</a>
+        <a class="nav-reference" href="/Registration">Регистрация</a>
+        <button class="button" @onclick="SetNightThemeMethod">Переключить тему</button>
     </div>
 </nav>
 
 @code {
-    [Parameter] public string DarkThemeCssClass { get; set; }
-    [Parameter] public string ButtonThemeCssClass { get; set; }
     [Parameter] public EventCallback SetNightThemeMethod { get; set; }
 
+    string _displayOfNavmenu = "";
 
-    const string _displayNone_CssClass = "display-none";
-
-    string _displayOfNavmenu = _displayNone_CssClass;
 
     void HideOrShowNavmenu()
     {
         if (_displayOfNavmenu == "")
         {
-            _displayOfNavmenu = _displayNone_CssClass;
+            _displayOfNavmenu = CssStyles.DisplayNone;
         }
         else
         {

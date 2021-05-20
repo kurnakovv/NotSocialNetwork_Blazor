@@ -1,16 +1,16 @@
-$WindowColor: #f1ffea;
+$WindowColor: #e3f0e331;
 $DefaultFontSize: 20px;
 
 .post {
-    background-color: transparent;
+    background-color: $WindowColor;
+
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
 
     &__body {
         display: flex;
         flex-direction: column;
         margin: 45px 0px;
         padding: 15px;
-
-        box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.2);
     }
 
     &__header {
@@ -36,9 +36,9 @@ $DefaultFontSize: 20px;
     }
 
     &__delete-button {
+        font-size: 12px;
         opacity: 0.8;
         background-color: transparent;
-        font-size: 12px;
     }
 
     &__textcontainer {
