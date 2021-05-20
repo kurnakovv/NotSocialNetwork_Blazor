@@ -15,20 +15,25 @@ namespace NotSocialNetwork.API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var appDbContext = services.GetRequiredService<AppDbContext>();
+                DefaultImagesInit.AddTestImage(appDbContext);
+            }
 
             #region Memory data (Hide if using real database)
-            //var host = CreateHostBuilder(args).Build();
-
             //using (var scope = host.Services.CreateScope())
             //{
             //    var services = scope.ServiceProvider;
             //    var appDbContext = services.GetRequiredService<AppDbContext>();
             //    TestDataInit.AddTestData(appDbContext);
             //}
-
-            //host.Run();
             #endregion
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
