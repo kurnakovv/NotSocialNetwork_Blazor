@@ -19,7 +19,10 @@ namespace NotSocialNetwork.Mapping.AutoMapper
         private void UserMapper()
         {
             CreateMap<UserEntity, UserDTO>().ReverseMap();
-            CreateMap<UserEntity, RegistrationUserDTO>().ReverseMap();
+            CreateMap<UserEntity, RegistrationUserDTO>()
+                .ForMember(apd => apd.Image, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(u => u.Image, opt => opt.Ignore());
         }
 
         private void PublicationMapper()

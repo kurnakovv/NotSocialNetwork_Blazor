@@ -1,11 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
 using NotSocialNetwork.Application.Services;
 using NotSocialNetwork.Data.EFRepositories;
-using NotSocialNetwork.Services.Managers;
+using NotSocialNetwork.Services.Systems;
+using NotSocialNetwork.Services.Facades;
+using NotSocialNetwork.Application.Interfaces.Facades;
 
 namespace NotSocialNetwork.DI.DIConfig
 {
@@ -16,6 +18,7 @@ namespace NotSocialNetwork.DI.DIConfig
             ConfigureRepositories(services);
             ConfigureServices(services);
             ConfigureSystems(services);
+            ConfigureFacades(services);
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
@@ -33,8 +36,14 @@ namespace NotSocialNetwork.DI.DIConfig
 
         private static void ConfigureSystems(IServiceCollection services)
         {
-            services.AddTransient<IFileSystem<ImageEntity>, ImageFileSystem>();
+            services.AddTransient<IImageFileSystem, ImageFileSystem>();
+            services.AddTransient<IImageRepositorySystem, ImageRepositorySystem>();
             services.AddTransient<IJwtSystem, JwtSystem>();
+        }
+
+        private static void ConfigureFacades(IServiceCollection services)
+        {
+            services.AddTransient<IFileFacade<ImageEntity>, ImageFacade>();
         }
     }
 }

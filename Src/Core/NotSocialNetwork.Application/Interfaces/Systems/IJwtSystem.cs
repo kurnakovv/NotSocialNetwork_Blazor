@@ -1,6 +1,6 @@
 ﻿using NotSocialNetwork.Application.Entities;
 
-namespace NotSocialNetwork.Application.Interfaces.Managers
+namespace NotSocialNetwork.Application.Interfaces.Systems
 {
     public interface IJwtSystem
     {

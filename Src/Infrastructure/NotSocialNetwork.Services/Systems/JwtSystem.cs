@@ -1,13 +1,13 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace NotSocialNetwork.Services.Managers
+namespace NotSocialNetwork.Services.Systems
 {
     public class JwtSystem : IJwtSystem
     {

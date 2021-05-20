@@ -2,9 +2,10 @@
 using NotSocialNetwork.Application.Entities.Abstract;
 using System;
 
-namespace NotSocialNetwork.Application.Interfaces.Managers
+namespace NotSocialNetwork.Application.Interfaces.Facades
 {
-    public interface IFileSystem<TFile> where TFile: BaseEntity
+    public interface IFileFacade<TFile> 
+        where TFile: BaseEntity
     {
         Guid Save(TFile file, string pathToSave);
         TFile Get(Guid id);

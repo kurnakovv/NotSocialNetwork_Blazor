@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using NotSocialNetwork.Application.DTOs;
+﻿using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http.Headers;
 
-namespace NotSocialNetwork.Services.Managers
+namespace NotSocialNetwork.Services.Systems
 {
-    public class ImageFileSystem : IFileSystem<ImageEntity>
+    public class ImageFileSystem : IImageFileSystem
     {
         public ImageFileSystem(
             IRepository<ImageEntity> imageRepository)
@@ -24,49 +22,38 @@ namespace NotSocialNetwork.Services.Managers
         private static ICollection<string> _imageExtensions 
             = new List<string> { ".jpg", ".png", ".jpeg", ".gif" };
 
-        public ImageEntity Get(Guid id)
+        public void TrySave(ImageEntity file, string pathToSave)
         {
-            var image = _imageRepository.Get(id);
-
-            if (image == null)
+            if(file == null)
             {
-                throw new ObjectNotFoundException($"Image by id: {id} not found!");
+                return;
             }
 
-            return image;
-        }
-
-        public Guid Save(ImageEntity file, string pathToSave)
-        {
             file.Title = file.ImageFromForm.FileName;
             SaveFileToFolder(file, pathToSave);
-
-            SaveFilePath(file);
-
-            return file.Id;
         }
         
         public Guid Delete(Guid id, string filePath)
         {
-            var file = Get(id);
+            var file = _imageRepository.Get(id);
 
-            DeleteFilePath(id);
             DeleteFileFromFolder(file.Title, filePath);
-
-            _imageRepository.Commit();
 
             return file.Id;
         }
 
-        public Guid Update(UpdateFileDTO updateFile)
+        public void TryUpdate(UpdateFileDTO updateFile)
         {
-            Delete(updateFile.OldFile.Id, updateFile.FilePath);
-            Save((ImageEntity)updateFile.NewFile, updateFile.FilePath);
+            if(updateFile == null)
+            {
+                return;
+            }
 
-            return updateFile.NewFile.Id;
+            Delete(updateFile.OldFile.Id, updateFile.FilePath);
+            TrySave((ImageEntity)updateFile.NewFile, updateFile.FilePath);
         }
 
-        private bool IsImageConteinFormat(string title)
+        private bool IsImageContainFormat(string title)
         {
             var fileExtension = Path.GetExtension(title);
 
@@ -78,33 +65,20 @@ namespace NotSocialNetwork.Services.Managers
             return false;
         }
 
-        private void SaveFilePath(ImageEntity file)
-        {
-            var isContainImage = _imageRepository.GetAll().Any(i => i.Id == file.Id);
-
-            if (isContainImage == true)
-            {
-                throw new ObjectAlreadyExistException($"Image by id: {file.Id} already exist.");
-            }
-
-            _imageRepository.Add(file);
-            _imageRepository.Commit();
-        }
-
         private void SaveFileToFolder(ImageEntity file, string pathToSave)
         {
-            var newFileTitle = string.Empty;
             var fileExtension = Path.GetExtension(file.Title);
             var uniqueFileName = Convert.ToString(Guid.NewGuid());
 
+            // Delete spaces.
             file.Title = ContentDispositionHeaderValue.Parse(file.ImageFromForm.ContentDisposition).FileName.Trim('"');
 
-            if (IsImageConteinFormat(file.Title) == false)
+            if (IsImageContainFormat(file.Title) == false)
             {
                 throw new InvalidFileFormatException("The file contains the wrong format");
             }
 
-            newFileTitle = uniqueFileName + fileExtension;
+            var newFileTitle = uniqueFileName + fileExtension;
 
             file.Title = pathToSave + "\\wwwroot\\userImages" + $@"\{newFileTitle}";
 
@@ -115,11 +89,6 @@ namespace NotSocialNetwork.Services.Managers
             }
 
             file.Title = newFileTitle;
-        }
-
-        private void DeleteFilePath(Guid id)
-        {
-            _imageRepository.Delete(id);
         }
 
         private void DeleteFileFromFolder(string title, string filePath)

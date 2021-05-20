@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
