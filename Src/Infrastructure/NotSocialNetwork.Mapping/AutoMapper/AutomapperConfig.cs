@@ -18,6 +18,7 @@ namespace NotSocialNetwork.Mapping.AutoMapper
 
         private void UserMapper()
         {
+            CreateMap<UserEntity, UserDTO>().ReverseMap();
             CreateMap<UserEntity, RegistrationUserDTO>().ReverseMap();
         }
 

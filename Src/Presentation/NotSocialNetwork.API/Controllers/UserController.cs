@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using NotSocialNetwork.API.Attributes;
@@ -22,24 +23,21 @@ namespace NotSocialNetwork.API.Controllers
     {
         public UserController(
             IUserService userService,
-            IFileSystem<ImageEntity> imageFileSystem,
-            IHostEnvironment hostEnvironment)
+            IMapper mapper)
         {
             _userService = userService;
-            _imageFileSystem = imageFileSystem;
-            _hostEnvironment = hostEnvironment;
+            _mapper = mapper;
         }
 
         private readonly IUserService _userService;
-        private readonly IFileSystem<ImageEntity> _imageFileSystem;
-        private readonly IHostEnvironment _hostEnvironment;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Get all users by pagination.
         /// </summary>
         /// <returns>Users.</returns>
         [HttpGet("index={index}")]
-        [ProducesResponseType(typeof(IEnumerable<UserEntity>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<UserDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(
@@ -47,13 +45,15 @@ namespace NotSocialNetwork.API.Controllers
             Description = "Get all users by pagination."
         )]
         [JwtAuthorize]
-        public ActionResult<IEnumerable<UserEntity>> Get(int index = 0)
+        public ActionResult<IEnumerable<UserDTO>> Get(int index = 0)
         {
             try
             {
-                var users = _userService.GetByPagination(index);
+                var usersEntity = _userService.GetByPagination(index);
 
-                return Ok(users);
+                var usersDTO = _mapper.Map<IEnumerable<UserDTO>>(usersEntity);
+
+                return Ok(usersDTO);
             }
             catch (ObjectNotFoundException ex)
             {
@@ -71,18 +71,22 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="id">User id.</param>
         /// <returns>User.</returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
             Summary = "Get by id.",
             Description = "Get user by id."
         )]
         [JwtAuthorize]
-        public ActionResult<UserEntity> Get(Guid id)
+        public ActionResult<UserDTO> Get(Guid id)
         {
             try
             {
-                return Ok(_userService.GetById(id));
+                var userEntity = _userService.GetById(id);
+
+                var userDTO = _mapper.Map<UserDTO>(userEntity);
+
+                return Ok(userDTO);
             }
             catch (ObjectNotFoundException ex)
             {
@@ -96,44 +100,24 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="registrationUserDTO">User parameters.</param>
         /// <returns>User.</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(RegistrationUserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(
             Summary = "Add.",
             Description = "Add user."
         )]
-        public ActionResult<RegistrationUserDTO> Add(RegistrationUserDTO registrationUserDTO)
+        public ActionResult<UserDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
             {
-                // TODO: Add mapping.
-                var image = new ImageEntity();
-                var user = new UserEntity();
+                var userEntity = _mapper.Map<UserEntity>(registrationUserDTO);
 
-                if (registrationUserDTO.Files != null)
-                {
-                    image.ImageFromForm = registrationUserDTO.Files;
-                    image.Title = registrationUserDTO.Files.FileName;
+                _userService.Add(userEntity);
 
-                    user.Name = registrationUserDTO.Name;
-                    user.Email = registrationUserDTO.Email;
-                    user.DateOfBirth = registrationUserDTO.DateOfBirth;
-                    user.Image = image;
+                var userDTO = _mapper.Map<UserDTO>(userEntity);
 
-                    _imageFileSystem.Save(user.Image, _hostEnvironment.ContentRootPath);
-                }
-                else
-                {
-                    user.Name = registrationUserDTO.Name;
-                    user.Email = registrationUserDTO.Email;
-                    user.DateOfBirth = registrationUserDTO.DateOfBirth;
-                    user.Image = null;
-                }
-
-                _userService.Add(user);
-
-                return Ok(registrationUserDTO);
+                return Ok(userDTO);
             }
             catch (InvalidFileFormatException ex)
             {
@@ -151,20 +135,22 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="user">User parameters.</param>
         /// <returns>User.</returns>
         [HttpPut]
-        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
             Summary = "Update.",
             Description = "Update user."
         )]
         [JwtAuthorize]
-        public ActionResult<UserEntity> Update(UserEntity user)
+        public ActionResult<UserDTO> Update(UserEntity user)
         {
             try
             {
                 _userService.Update(user);
 
-                return Ok(user);
+                var userDTO = _mapper.Map<UserDTO>(user);
+
+                return Ok(userDTO);
             }
             catch (ObjectNotFoundException ex)
             {
@@ -178,20 +164,22 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="id">User id.</param>
         /// <returns>User.</returns>
         [HttpDelete]
-        [ProducesResponseType(typeof(UserEntity), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
             Summary = "Delete by id.",
             Description = "Delete user by id."
         )]
         [JwtAuthorize]
-        public ActionResult<UserEntity> Delete(Guid id)
+        public ActionResult<UserDTO> Delete(Guid id)
         {
             try
             {
                 var user = _userService.Delete(id);
 
-                return Ok(user);
+                var userDTO = _mapper.Map<UserDTO>(user);
+
+                return Ok(userDTO);
             }
             catch (ObjectNotFoundException ex)
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using NotSocialNetwork.API.Controllers;
@@ -8,7 +9,6 @@ using NotSocialNetwork.Application.Interfaces.Managers;
 using NotSocialNetwork.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
@@ -43,9 +43,12 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         {
             // Arrange
             var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
             userService.Setup(u => u.GetAll())
                 .Returns(_users);
-            var userController = new UserController(userService.Object, null, null);
+            var userController = new UserController(
+                                    userService.Object,
+                                    mapper.Object);
 
             // Act
             var results = userController.Get();
@@ -61,9 +64,12 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         {
             // Arrange
             var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
             userService.Setup(u => u.GetById(_user.Id))
                 .Returns(_user);
-            var userController = new UserController(userService.Object, null, null);
+            var userController = new UserController(
+                                        userService.Object,
+                                        mapper.Object);
 
             // Act
             var result = userController.Get(_user.Id);
@@ -79,6 +85,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         {
             // Arrange
             var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
             var hostEnvironment = new Mock<IHostEnvironment>();
             var imageFileSystem = new Mock<IFileSystem<ImageEntity>>();
 
@@ -93,8 +100,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var userController = new UserController(
                                     userService.Object,
-                                    imageFileSystem.Object,
-                                    hostEnvironment.Object);
+                                    mapper.Object);
 
             // Act
             var result = userController.Add(_userDTO);
@@ -110,11 +116,14 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         {
             // Arrange
             var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
 
             userService.Setup(u => u.Update(_user))
                 .Returns(_user);
 
-            var userController = new UserController(userService.Object, null, null);
+            var userController = new UserController(
+                                        userService.Object,
+                                        mapper.Object);
 
             // Act
             var result = userController.Update(_user);
@@ -130,11 +139,14 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         {
             // Arrange
             var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
 
             userService.Setup(u => u.Delete(_user.Id))
                 .Returns(_user);
 
-            var userController = new UserController(userService.Object, null, null);
+            var userController = new UserController(
+                                    userService.Object,
+                                    mapper.Object);
 
             // Act
             var result = userController.Delete(_user.Id);

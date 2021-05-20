@@ -13,6 +13,5 @@ namespace NotSocialNetwork.Application.DTOs
         public string Email { get; set; }
         [Required]
         public DateTimeOffset DateOfBirth = new(DateTime.Now);
-        public IFormFile Files { get; set; }
     }
 }
