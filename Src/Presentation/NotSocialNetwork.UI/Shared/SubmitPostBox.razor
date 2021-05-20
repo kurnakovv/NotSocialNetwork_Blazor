@@ -1,5 +1,5 @@
 ﻿
-<div class="submitpostbox @DarkThemeCssClass">
+<div class="submitpostbox">
     <div class="submitpostbox__body">
         <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
             <textarea @bind="newPost.Text"
@@ -29,7 +29,7 @@
             {
                 newPost.AuthorId = await CookieHelper.GetCurrentId(LocalStorage);
 
-                CookieHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
+                HttpHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
 
                 var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
                 ($"{HttpHelper.APIAddress}publication", newPost);

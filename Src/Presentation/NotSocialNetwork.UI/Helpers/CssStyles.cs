@@ -8,5 +8,6 @@ namespace NotSocialNetwork.UI.Helpers
         internal const string DarkWindowClass = "dark-window";
         internal const string DarkFooterClass = "dark-footer";
         internal const string DarkTitleClass = "dark-logo";
+        internal const string DarkButtonClass = "dark-button";
     }
 }

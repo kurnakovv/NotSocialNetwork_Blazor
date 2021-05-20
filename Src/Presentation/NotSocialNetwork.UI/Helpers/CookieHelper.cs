@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace NotSocialNetwork.UI.Helpers
@@ -60,10 +58,16 @@ namespace NotSocialNetwork.UI.Helpers
             return id;
         }
 
-        internal static void SetJwtHeader(HttpClient http, string token)
+        internal static async Task<string> GetEmailAtCookies(ILocalStorageService localStorage)
         {
-            http.DefaultRequestHeaders
-                .Authorization = new AuthenticationHeaderValue("bearer", token);
+            string token = await localStorage.GetItemAsync<string>("email");
+
+            return token;
+        }
+
+        internal static async void SetEmailAtCookies(ILocalStorageService localStorage, string email)
+        {
+            await localStorage.SetItemAsync<string>("email", email);
         }
     }
 }

@@ -6,14 +6,15 @@
     </div>
 
     <div class="navmenu__body @_displayOfNavmenu">
-        <a class="nav-reference" href="/Account">Аккаунт</a>
-        <a class="nav-reference" href="/Registration">Регистрация</a>
-        <button class="button" @onclick="SetNightThemeMethod">Переключить тему</button>
+        <a class="nav-reference @ButtonThemeCssClass" href="/Account">Аккаунт</a>
+        <a class="nav-reference @ButtonThemeCssClass" href="/Registration">Регистрация</a>
+        <button class="button @ButtonThemeCssClass" @onclick="SetNightThemeMethod">Переключить тему</button>
     </div>
 </nav>
 
 @code {
     [Parameter] public string DarkThemeCssClass { get; set; }
+    [Parameter] public string ButtonThemeCssClass { get; set; }
     [Parameter] public EventCallback SetNightThemeMethod { get; set; }
 
 

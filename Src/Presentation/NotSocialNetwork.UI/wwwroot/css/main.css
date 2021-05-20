@@ -52,9 +52,10 @@
 
 .form__text {
   resize: none;
-  width: 100%;
   padding: 8px;
   font-size: 15px;
+}
+.form__text:focus {
   background-color: #f6fdf2;
 }
 .form__submitbutton {
@@ -72,14 +73,14 @@
 }
 
 .post {
-  background-color: #f1ffea;
+  background-color: transparent;
 }
 .post__body {
   display: flex;
   flex-direction: column;
-  margin: 25px 0px;
+  margin: 45px 0px;
   padding: 15px;
-  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.2);
 }
 .post__header {
   font-size: 25px;
@@ -90,6 +91,15 @@
 }
 .post__header .authorname {
   text-align: center;
+}
+.post__footer button:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+.post__delete-button {
+  opacity: 0.8;
+  background-color: transparent;
+  font-size: 12px;
 }
 .post__textcontainer {
   font-size: 20px;

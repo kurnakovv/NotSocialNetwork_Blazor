@@ -47,7 +47,10 @@
                                ($"{HttpHelper.APIAddress}user", newUserDTO);
 
             if (result.IsSuccessStatusCode)
+            {
+                CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
                 message = "Вы были успешно зарегистрированы!";
+            }
             else
                 message = "Произошла ошибка при попытке регистрации. :с";
         }

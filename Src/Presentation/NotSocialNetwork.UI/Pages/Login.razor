@@ -42,8 +42,8 @@
             {
                 LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
 
+                CookieHelper.SetEmailAtCookies(localStorage, loginDTO.Email);
                 await WriteTokenAsCookies(tokenAndGuid.Token);
-
                 await WriteGuidIdAsCookies(tokenAndGuid.UserId);
 
 

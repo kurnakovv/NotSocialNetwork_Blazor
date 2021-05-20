@@ -1,4 +1,6 @@
-﻿@foreach (var post in Posts)
+﻿@inject ILocalStorageService localStorage
+
+@foreach (var post in Posts)
 {
     if (post.ImagePaths.Any())
     {
@@ -7,7 +9,7 @@
         imageUrl.Clear();
         imageUrl.Append(post.ImagePaths.First());
     }
-    <div class="post @DarkThemeCssClass">
+    <div class="post">
         <div class="post__body">
             <div class="post__header">
                 <img class="authoricon" src="@imageUrl" width="70" height="70"
@@ -21,17 +23,53 @@
                     </p>
                 </div>
             </div>
+            @if (_emailOfCurrentUser == post.Author.Email)
+            {
+                <div class="post__footer">
+                    <button class='post__delete-button' @onclick="() => DeletePost(post.Id)" type='button'>Удалить пост</button>
+                </div>
+            }
         </div>
     </div>
 }
 
 @code {
     [Parameter] public List<PublicationDTO> Posts { get; set; }
+    [Parameter] public HttpClient Http { get; set; }
     [Parameter] public string DarkThemeCssClass { get; set; }
 
+    string _emailOfCurrentUser;
     StringBuilder imageUrl = new("../css/images/Icons_User.png");
 
-    //protected async override Task OnInitializedAsync()
-    //{
-    //}
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _emailOfCurrentUser = await CookieHelper.GetEmailAtCookies(localStorage);
+            StateHasChanged();
+        }
+    }
+
+    async Task DeletePost(Guid idOfPost)
+    {
+        try
+        {
+            HttpHelper.SetJwtHeader(Http, await CookieHelper.GetToken(localStorage));
+
+            var result = await Http.DeleteAsync($"{HttpHelper.APIAddress}publication/?id={idOfPost}");
+
+            if (result.IsSuccessStatusCode)
+            {
+                Posts.RemoveAll(post => post.Id == idOfPost);
+                StateHasChanged();
+            }
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+        }
+        catch (Exception)
+        {
+        }
+    }
 }

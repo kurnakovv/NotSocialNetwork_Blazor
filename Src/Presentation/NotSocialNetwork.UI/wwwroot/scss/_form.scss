@@ -1,11 +1,14 @@
 .form {
 
 	&__text {
+		background-color: transparent;
 		resize: none;
-		width: 100%;
 
 		padding: 8px;
 		font-size: 15px;
+	}
+
+	&__text:focus {
 		background-color: #f6fdf2;
 	}
 
@@ -16,10 +19,12 @@
 		color: white;
 		font-size: 24px;
 	}
-	&__submitbutton:hover{
+
+	&__submitbutton:hover {
 		background-color: $ButtonColor;
 	}
 }
-.dark-textarea{
+
+.dark-textarea {
 	background-color: rgb(212, 250, 212);
 }
