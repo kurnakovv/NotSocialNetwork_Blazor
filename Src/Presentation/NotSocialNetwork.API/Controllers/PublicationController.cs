@@ -6,11 +6,13 @@ using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
+using NotSocialNetwork.Application.Interfaces.Facades;
+using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.API.Controllers
 {
@@ -24,18 +26,18 @@ namespace NotSocialNetwork.API.Controllers
         public PublicationController(
             IPublicationService publicationService,
             IMapper mapper,
-            IFileSystem<ImageEntity> imageSystem,
+            IFileFacade<ImageEntity> imageFacade,
             IHostEnvironment hostEnvironment)
         {
             _publicationService = publicationService;
             _mapper = mapper;
-            _imageSystem = imageSystem;
+            _imageFacade = imageFacade;
             _hostEnvironment = hostEnvironment;
         }
 
         private readonly IPublicationService _publicationService;
         private readonly IMapper _mapper;
-        private readonly IFileSystem<ImageEntity> _imageSystem;
+        private readonly IFileFacade<ImageEntity> _imageFacade;
         private readonly IHostEnvironment _hostEnvironment;
 
         /// <summary>
@@ -150,12 +152,19 @@ namespace NotSocialNetwork.API.Controllers
                 var publicationEntity =
                     _mapper.Map<PublicationEntity>(publication);
 
-                 //var publicationEntityWithImages = AddImages(publication, publicationEntity);
+                if (publication.Images != null)
+                {
+                    var publicationEntityWithImages = AddImages(publication, publicationEntity);
+                    _publicationService.Add(publicationEntityWithImages);
+                }
+                else
+                {
+                    var defaultImage = _imageFacade.Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
+                    publicationEntity.Images.Add(defaultImage);
 
-                 //_publicationService.Add(publicationEntityWithImages);
+                    _publicationService.Add(publicationEntity);
+                }
                  
-                 _publicationService.Add(publicationEntity);
-
                 return Ok(publication);
             }
             catch (ObjectAlreadyExistException ex)
@@ -242,9 +251,9 @@ namespace NotSocialNetwork.API.Controllers
                     ImageFromForm = file,
                 };
 
-                var imageId = _imageSystem.Save(image, _hostEnvironment.ContentRootPath);
+                var imageId = _imageFacade.Save(image, _hostEnvironment.ContentRootPath);
 
-                var newImage = _imageSystem.Get(imageId);
+                var newImage = _imageFacade.Get(imageId);
 
                 publicationEntity.Images.Add(newImage);
             }

@@ -4,13 +4,14 @@ using Moq;
 using NotSocialNetwork.API.Controllers;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Microsoft.Extensions.Hosting;
+using NotSocialNetwork.Application.Interfaces.Facades;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 {
@@ -121,7 +122,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Arrange
             var publicationService = new Mock<IPublicationService>();
             var mapper = new Mock<IMapper>();
-            var imageSystem = new Mock<IFileSystem<ImageEntity>>();
+            var imageFacade = new Mock<IFileFacade<ImageEntity>>();
             var hostEnviroment = new Mock<IHostEnvironment>();
 
             mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
@@ -130,7 +131,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var publicationController = new PublicationController(
                                                 publicationService.Object,
                                                 mapper.Object,
-                                                imageSystem.Object,
+                                                imageFacade.Object,
                                                 hostEnviroment.Object);
 
             // Act

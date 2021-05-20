@@ -6,11 +6,13 @@ using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Managers;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
+using NotSocialNetwork.Application.Interfaces.Facades;
+using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.API.Controllers
 {
@@ -23,14 +25,20 @@ namespace NotSocialNetwork.API.Controllers
     {
         public UserController(
             IUserService userService,
-            IMapper mapper)
+            IMapper mapper,
+            IFileFacade<ImageEntity> imageFacade,
+            IHostEnvironment hostEnvironment)
         {
             _userService = userService;
             _mapper = mapper;
+            _imageFacade = imageFacade;
+            _hostEnvironment = hostEnvironment;
         }
 
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly IFileFacade<ImageEntity> _imageFacade;
+        private readonly IHostEnvironment _hostEnvironment;
 
         /// <summary>
         /// Get all users by pagination.
@@ -107,11 +115,23 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Add.",
             Description = "Add user."
         )]
-        public ActionResult<UserDTO> Add(RegistrationUserDTO registrationUserDTO)
+        public ActionResult<UserDTO> Add(/*[FromForm]*/RegistrationUserDTO registrationUserDTO)
         {
             try
             {
                 var userEntity = _mapper.Map<UserEntity>(registrationUserDTO);
+
+                if (registrationUserDTO.Image != null)
+                {
+                    var image = new ImageEntity() { ImageFromForm = registrationUserDTO.Image };
+                    _imageFacade.Save(image, _hostEnvironment.ContentRootPath);
+                    userEntity.Image = image;
+                }
+                else
+                {
+                    var defaultImage = _imageFacade.Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
+                    userEntity.Image = defaultImage;
+                }
 
                 _userService.Add(userEntity);
 
