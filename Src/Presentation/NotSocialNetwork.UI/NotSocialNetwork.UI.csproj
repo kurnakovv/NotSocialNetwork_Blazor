@@ -17,7 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotSocialNetwork.API\NotSocialNetwork.API.csproj" />
+    <ProjectReference Include="..\..\Core\NotSocialNetwork.Application\NotSocialNetwork.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

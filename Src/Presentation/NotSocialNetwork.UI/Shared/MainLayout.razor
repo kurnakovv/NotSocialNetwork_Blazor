@@ -55,8 +55,12 @@
     {
         if (firstRender)
         {
-            var cookieResult = await CookieHelper.GetNightThemeCookies(localStorage);
-            SetBackgroundStyles(cookieResult);
+            CurrentUserData.IsNightTheme = await CookieHelper.GetNightThemeCookies(localStorage);
+            CurrentUserData.Id = await CookieHelper.GetCurrentId(localStorage);
+            CurrentUserData.Email = await CookieHelper.GetEmailAtCookies(localStorage);
+            CurrentUserData.Token = await CookieHelper.GetToken(localStorage);
+
+            SetBackgroundStyles(CurrentUserData.IsNightTheme);
         }
     }
 
@@ -75,7 +79,7 @@
         }
         else
         {
-            _headerDarkClass = ""; _mainDarkClass = ""; 
+            _headerDarkClass = ""; _mainDarkClass = "";
             _footerDarkClass = ""; _titleDarkClass = "";
         }
         StateHasChanged();

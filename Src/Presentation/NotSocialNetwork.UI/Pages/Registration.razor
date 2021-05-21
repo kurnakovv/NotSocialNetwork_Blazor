@@ -1,6 +1,10 @@
-﻿@inject HttpClient Http
+﻿@page "/Registration"
+
+@inject HttpClient Http
 @inject ILocalStorageService localStorage
-@page "/Registration"
+@inject NavigationManager NavNanager
+
+@using System.IO
 
 <head>
     <title>NotSocialNetwork - Login</title>
@@ -16,43 +20,63 @@
           action="#" class="main-container-form">
     <div class="form-container">
         <InputText @bind-Value="newUserDTO.Name"
-                   class="form-container--input" placeholder="Никнейм"/>
+                   class="form-container--input" placeholder="Никнейм" />
     </div>
     <div class="form-container">
         <InputText @bind-Value="newUserDTO.Email"
-                   type="Email" class="form-container--input" placeholder="Email"/>
+                   type="Email" class="form-container--input" placeholder="Email" />
     </div>
     <div class="form-container">
         <InputDate TValue="DateTimeOffset" @bind-Value="newUserDTO.DateOfBirth"
                    placeholder="Ваш день рождения"
-                   class="form-container--input"/>
+                   class="form-container--input" />
     </div>
     <div class="form-container">
         <button type="submit" class="form-container--submitButton">
             Зарегистрироваться
         </button>
     </div>
+    <div class="form-container">
+        <InputFile class="form-container--file" @bind-value="_avatar" accept=".png, .jpeg, .jpg" />
+    </div>
 </EditForm>
 
 @code{
     string message;
+    string noteContent;
+    string fileName = "note.txt";
+    InputFileChangeEventArgs _avatar;
 
     RegistrationUserDTO newUserDTO = new();
+
+
+    public async void SaveAvatar(InputFileChangeEventArgs inputFile)
+    {
+        await using FileStream fs = new($@"wwwroot\{inputFile.File.Name}", FileMode.Create);
+        await inputFile.File.OpenReadStream(1024 * 100).CopyToAsync(fs);
+    }
+    public static void CopyStream(Stream input, Stream output)
+    {
+        input.CopyToAsync(output);
+    }
 
     async Task SendNewUser()
     {
         try
         {
-            var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                               ($"{HttpHelper.APIAddress}user", newUserDTO);
-
-            if (result.IsSuccessStatusCode)
+            if (UserValidityCheck(newUserDTO))
             {
-                CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
-                message = "Вы были успешно зарегистрированы!";
+                var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                                   ($"{HttpHelper.APIAddress}user", newUserDTO);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
+                    message = "Вы были успешно зарегистрированы!";
+                }
+                else
+                    message = "Произошла ошибка при попытке регистрации. :с";
             }
-            else
-                message = "Произошла ошибка при попытке регистрации. :с";
         }
         catch (HttpRequestException httpReqEx)
         {
@@ -83,5 +107,15 @@
             message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
                         "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
+    }
+
+    private bool UserValidityCheck(RegistrationUserDTO newUserDTO)
+    {
+        if (newUserDTO != null && string.IsNullOrWhiteSpace(newUserDTO.Email) == false &&
+            string.IsNullOrWhiteSpace(newUserDTO.Name) == false && _avatar != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

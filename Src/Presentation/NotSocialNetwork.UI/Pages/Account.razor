@@ -1,6 +1,7 @@
 ﻿@page "/Account"
 @inject HttpClient Http
 @inject ILocalStorageService localStorage
+@inject NavigationManager NavManager
 
 <link href="/css/Account.css" rel="stylesheet">
 
@@ -18,9 +19,12 @@
     </div>
 </div>
 
-<Post Posts="posts.ToList()" />
+<Post Posts="posts.ToList()" Http="Http" />
+<span>@message</span>
+
 
 @code{
+    string message;
     IEnumerable<PublicationDTO> posts;
 
 
@@ -32,16 +36,50 @@
         // otherwise, when the page is rendered, it will be reset to zero.
         posts = new List<PublicationDTO>();
 
-        await GetPostsAsync();
+        await GetPostsOfCurrentUserAsync();
     }
 
     #endregion
 
 
-    async Task GetPostsAsync()
+    async Task GetPostsOfCurrentUserAsync()
     {
-        posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
-                ("https://localhost:44353/api/publication/index=0");
+        try
+        {
+            posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ($"{HttpHelper.APIAddress}publication/author={CurrentUserData.Id}");
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, пока что постов нет...";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    NavManager.NavigateTo("/login");
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
     }
 }
 
