@@ -26,19 +26,16 @@ namespace NotSocialNetwork.API.Controllers
         public UserController(
             IUserService userService,
             IMapper mapper,
-            IFileFacade<ImageEntity> imageFacade,
-            IHostEnvironment hostEnvironment)
+            IImageRepositorySystem imageRepositorySystem)
         {
             _userService = userService;
             _mapper = mapper;
-            _imageFacade = imageFacade;
-            _hostEnvironment = hostEnvironment;
+            _imageRepositorySystem = imageRepositorySystem;
         }
 
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly IFileFacade<ImageEntity> _imageFacade;
-        private readonly IHostEnvironment _hostEnvironment;
+        private readonly IImageRepositorySystem _imageRepositorySystem;
 
         /// <summary>
         /// Get all users by pagination.
@@ -115,23 +112,14 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Add.",
             Description = "Add user."
         )]
-        public ActionResult<UserDTO> Add(/*[FromForm]*/RegistrationUserDTO registrationUserDTO)
+        public ActionResult<UserDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
             {
                 var userEntity = _mapper.Map<UserEntity>(registrationUserDTO);
 
-                if (registrationUserDTO.Image != null)
-                {
-                    var image = new ImageEntity() { ImageFromForm = registrationUserDTO.Image };
-                    _imageFacade.Save(image, _hostEnvironment.ContentRootPath);
-                    userEntity.Image = image;
-                }
-                else
-                {
-                    var defaultImage = _imageFacade.Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
-                    userEntity.Image = defaultImage;
-                }
+                var image = _imageRepositorySystem.TrySave(registrationUserDTO.Image);
+                userEntity.Image = image;
 
                 _userService.Add(userEntity);
 

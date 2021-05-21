@@ -31,11 +31,13 @@ namespace NotSocialNetwork.Services.Systems
             return image;
         }
 
-        public Guid TrySave(ImageEntity image)
+        public ImageEntity TrySave(ImageEntity image)
         {
             if(image == null)
             {
-                return DefaultImageConfig.DEFAULT_IMAGE_ID;
+                var defaultImage = Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
+
+                return defaultImage;
             }
 
             IsImageAlreadyExist(image);
@@ -43,7 +45,7 @@ namespace NotSocialNetwork.Services.Systems
             _imageRepository.Add(image);
             _imageRepository.Commit();
 
-            return image.Id;
+            return image;
         }
 
         public Guid TryUpdate(UpdateFileDTO updateFile)
