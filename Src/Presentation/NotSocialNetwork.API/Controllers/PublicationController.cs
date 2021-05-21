@@ -26,19 +26,16 @@ namespace NotSocialNetwork.API.Controllers
         public PublicationController(
             IPublicationService publicationService,
             IMapper mapper,
-            IFileFacade<ImageEntity> imageFacade,
-            IHostEnvironment hostEnvironment)
+            IImageRepositorySystem imageRepositorySystem)
         {
             _publicationService = publicationService;
             _mapper = mapper;
-            _imageFacade = imageFacade;
-            _hostEnvironment = hostEnvironment;
+            _imageRepositorySystem = imageRepositorySystem;
         }
 
         private readonly IPublicationService _publicationService;
         private readonly IMapper _mapper;
-        private readonly IFileFacade<ImageEntity> _imageFacade;
-        private readonly IHostEnvironment _hostEnvironment;
+        private readonly IImageRepositorySystem _imageRepositorySystem;
 
         /// <summary>
         /// Get all publications by pagination.
@@ -152,19 +149,9 @@ namespace NotSocialNetwork.API.Controllers
                 var publicationEntity =
                     _mapper.Map<PublicationEntity>(publication);
 
-                if (publication.Images != null)
-                {
-                    var publicationEntityWithImages = AddImages(publication, publicationEntity);
-                    _publicationService.Add(publicationEntityWithImages);
-                }
-                else
-                {
-                    var defaultImage = _imageFacade.Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
-                    publicationEntity.Images.Add(defaultImage);
+                var publicationEntityWithImages = AddImages(publication, publicationEntity);
+                _publicationService.Add(publicationEntityWithImages);
 
-                    _publicationService.Add(publicationEntity);
-                }
-                 
                 return Ok(publication);
             }
             catch (ObjectAlreadyExistException ex)
@@ -244,16 +231,9 @@ namespace NotSocialNetwork.API.Controllers
         // TODO: Transfer this logic in PublicationService.
         private PublicationEntity AddImages(AddPublicationDTO publication, PublicationEntity publicationEntity)
         {
-            foreach(IFormFile file in publication.Images)
+            foreach(ImageEntity imageEntity in publication.Images)
             {
-                var image = new ImageEntity()
-                {
-                    ImageFromForm = file,
-                };
-
-                var imageId = _imageFacade.Save(image, _hostEnvironment.ContentRootPath);
-
-                var newImage = _imageFacade.Get(imageId);
+                var newImage = _imageRepositorySystem.TrySave(imageEntity);
 
                 publicationEntity.Images.Add(newImage);
             }

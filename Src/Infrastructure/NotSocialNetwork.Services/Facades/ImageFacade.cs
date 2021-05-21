@@ -30,9 +30,9 @@ namespace NotSocialNetwork.Services.Facades
         public Guid Save(ImageEntity file, string pathToSave)
         {
             _imageFileSystem.TrySave(file, pathToSave);
-            var imageId = _imageRepositorySystem.TrySave(file);
+            var image = _imageRepositorySystem.TrySave(file);
 
-            return imageId;
+            return image.Id;
         }
 
         public Guid Update(UpdateFileDTO updateFile)
