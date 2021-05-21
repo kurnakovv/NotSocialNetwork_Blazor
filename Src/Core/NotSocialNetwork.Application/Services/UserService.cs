@@ -22,7 +22,11 @@ namespace NotSocialNetwork.Application.Services
 
         public UserEntity Add(UserEntity user)
         {
-            if(GetAll().Any(u => u.Id == user.Id))
+            if (GetAll().Any(u => u.Email == user.Email))
+            {
+                throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
+            }
+            if (GetAll().Any(u => u.Id == user.Id))
             {
                 throw new ObjectAlreadyExistException($"User by Id: {user.Id} already exists.");
             }
