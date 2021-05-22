@@ -7,13 +7,10 @@ $WindowColor: #e3f0e331;
 		background-color: transparent;
 		resize: none;
 
-		padding: 8px;
-		font-size: 15px;
-	}
-
-	&__text:focus {
-		background-color: #e3f0e31e;
-		height: 10em;
+		padding: 7px;
+		height: 47px;
+		font-size: 16px;
+		overflow: hidden;
 	}
 
 	&__submitbutton {

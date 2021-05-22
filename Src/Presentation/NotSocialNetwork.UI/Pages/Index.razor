@@ -3,11 +3,16 @@
 @inject ILocalStorageService localStorage
 
 
-<SubmitPostBox Http="Http" LocalStorage="localStorage"/>
+<SubmitPostBox Http="Http" LocalStorage="localStorage" />
 
 @if (posts.Any())
 {
-    <Post Http="Http" Posts="posts.ToList()"/>
+    <Post Http="Http" Posts="posts" />
+    if (posts.Count % 10 == 0)
+    {
+        _paginationNumber++;
+        <button @onclick="LoadMorePosts">Показать ещё</button>
+    }
 }
 else
 {
@@ -15,9 +20,11 @@ else
 }
 
 @code{
-    IEnumerable<PublicationDTO> posts;
-    string message;
+    List<PublicationDTO> posts;
+
+    int _paginationNumber;
     string _emailOfCurrentUser;
+    string message;
 
     #region ClassVariables
 
@@ -41,12 +48,13 @@ else
     #endregion
 
 
-    async Task GetPostsAsync()
+    async Task GetPostsAsync(int paginationNumber = 0)
     {
         try
         {
-            posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
-                ($"{HttpHelper.APIAddress}publication/index=0");
+            posts.AddRange(
+                await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ($"{HttpHelper.APIAddress}publication/index={paginationNumber}"));
         }
         catch (HttpRequestException httpReqEx)
         {
@@ -80,5 +88,12 @@ else
             message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
                         "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
+    }
+
+    async Task LoadMorePosts()
+    {
+        await GetPostsAsync(_paginationNumber);
+
+        StateHasChanged();
     }
 }

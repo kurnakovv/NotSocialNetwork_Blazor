@@ -3,14 +3,14 @@
 <div class="submitpostbox">
     <div class="submitpostbox__body">
         <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
-            <textarea @bind="newPost.Text"
-                      rows="1" placeholder="Есть новости?"
-                      class="form__text" id="text">
-            </textarea>
-            <button class="form__submitbutton" type="submit">Отправить!</button>
-            <!--Переделать под модальное окно-->
-            <span>@message</span>
+            <div class='submitpostbox__container'>
+                <textarea @bind="newPost.Text" rows="1" placeholder="Есть новости?" class="form__text"
+                          id="text"></textarea>
+                <button class="form__submitbutton" type="submit">Отправить!</button>
+            </div>
         </EditForm>
+        <!--Переделать под модальное окно-->
+        <span>@message</span>
     </div>
 </div>
 
@@ -28,16 +28,17 @@
             //TODO: Добавить функционал добавления картинки к посту.
             if (newPost != null && string.IsNullOrWhiteSpace(newPost.Text) is false)
             {
-                newPost.AuthorId = await CookieHelper.GetCurrentId(LocalStorage);
+                newPost.AuthorId = CurrentUserData.Id;
+                newPost.Images = new List<ImageEntity>();
 
-                HttpHelper.SetJwtHeader(Http, await CookieHelper.GetToken(LocalStorage));
+                HttpHelper.SetJwtHeader(Http, CurrentUserData.Token);
 
                 var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
                 ($"{HttpHelper.APIAddress}publication", newPost);
 
                 if (responce.IsSuccessStatusCode)
                 {
-                    NavNanager.NavigateTo(NavNanager.Uri);
+                    message = "Пост успешно загружен! Пожалуйста, перезагрузите страницу.";
                 }
                 else
                 {

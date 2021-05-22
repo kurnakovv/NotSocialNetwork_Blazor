@@ -5,12 +5,19 @@ using System.Threading.Tasks;
 
 namespace NotSocialNetwork.UI.Helpers
 {
-    public static class CurrentUserData
+    internal static class CurrentUserData
     {
-        public static Guid Id { get; set; }
-        public static string Token { get; set; }
-        public static string Email { get; set; }
+        internal static Guid Id { get; set; }
+        internal static string Token { get; set; }
+        internal static string Email { get; set; }
 
-        public static bool IsNightTheme { get; set; }
+        internal static bool IsNightTheme { get; set; }
+
+        internal static void SetNewData(Guid newID, string newToken, string newEmail)
+        {
+            Id = newID;
+            Token = newToken;
+            Email = newEmail;
+        }
     }
 }

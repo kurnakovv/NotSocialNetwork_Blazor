@@ -20,6 +20,14 @@ $FooterColor: #c8dcaa;
         a {
             color: rgb(50%, 50%, 70%);
         }
+        a::after{
+            content: " ";
+            white-space: pre;
+        }
+        a::before{
+            content: " ";
+            white-space: pre;
+        }
     }
 }
 .dark-footer{

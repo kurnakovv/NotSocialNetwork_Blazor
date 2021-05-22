@@ -69,5 +69,15 @@ namespace NotSocialNetwork.UI.Helpers
         {
             await localStorage.SetItemAsync<string>("email", email);
         }
+
+        internal static async Task SetTokenAtCookiesAsync(ILocalStorageService localStorage, string token)
+        {
+            await localStorage.SetItemAsync<string>("token", token);
+        }
+
+        internal static async Task SetIdAtCookiesAsync(ILocalStorageService localStorage, Guid id)
+        {
+            await localStorage.SetItemAsync<Guid>("id", id);
+        }
     }
 }

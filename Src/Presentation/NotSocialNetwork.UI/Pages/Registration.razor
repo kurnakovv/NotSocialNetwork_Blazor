@@ -37,27 +37,44 @@
         </button>
     </div>
     <div class="form-container">
-        <InputFile class="form-container--file" @bind-value="_avatar" accept=".png, .jpeg, .jpg" />
+        <InputFile class="form-container--file" OnChange="@AddAvatar" accept=".png, .jpeg, .jpg" />
     </div>
 </EditForm>
 
 @code{
     string message;
-    string noteContent;
-    string fileName = "note.txt";
-    InputFileChangeEventArgs _avatar;
+    const long _MAX_FILE_SIZE = 20971520;
 
+    InputFileChangeEventArgs loadedFileArgs;
     RegistrationUserDTO newUserDTO = new();
 
 
-    public async void SaveAvatar(InputFileChangeEventArgs inputFile)
+    bool CheckFileSize(IBrowserFile file)
     {
-        await using FileStream fs = new($@"wwwroot\{inputFile.File.Name}", FileMode.Create);
-        await inputFile.File.OpenReadStream(1024 * 100).CopyToAsync(fs);
+        if (file.Size > _MAX_FILE_SIZE)
+        {
+            return false;
+        }
+        return true;
     }
-    public static void CopyStream(Stream input, Stream output)
+
+    void AddAvatar(InputFileChangeEventArgs inputFile)
     {
-        input.CopyToAsync(output);
+        loadedFileArgs = inputFile;
+    }
+
+    public async Task<string> SaveAvatar()
+    {
+        string newFileName = Guid.NewGuid().ToString();
+
+        if (CheckFileSize(loadedFileArgs.File))
+        {
+            await using FileStream fs = new($@"wwwroot\images\{newFileName}.jpeg", FileMode.Create);
+            await loadedFileArgs.File.OpenReadStream(_MAX_FILE_SIZE).CopyToAsync(fs);
+
+            return newFileName;
+        }
+        return "";
     }
 
     async Task SendNewUser()
@@ -66,16 +83,22 @@
         {
             if (UserValidityCheck(newUserDTO))
             {
-                var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                                   ($"{HttpHelper.APIAddress}user", newUserDTO);
-
-                if (result.IsSuccessStatusCode)
+                string imageTitle = await SaveAvatar();
+                if (string.IsNullOrEmpty(imageTitle) == false)
                 {
+                    newUserDTO.Image = new();
+                    newUserDTO.Image.Title = imageTitle;
+
+                    var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                                       ($"{HttpHelper.APIAddress}user", newUserDTO);
+
                     CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
                     message = "Вы были успешно зарегистрированы!";
                 }
                 else
-                    message = "Произошла ошибка при попытке регистрации. :с";
+                {
+
+                }
             }
         }
         catch (HttpRequestException httpReqEx)
@@ -112,7 +135,7 @@
     private bool UserValidityCheck(RegistrationUserDTO newUserDTO)
     {
         if (newUserDTO != null && string.IsNullOrWhiteSpace(newUserDTO.Email) == false &&
-            string.IsNullOrWhiteSpace(newUserDTO.Name) == false && _avatar != null)
+            string.IsNullOrWhiteSpace(newUserDTO.Name) == false && loadedFileArgs != null)
         {
             return true;
         }

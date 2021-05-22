@@ -43,9 +43,10 @@
                 LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
 
                 CookieHelper.SetEmailAtCookies(localStorage, loginDTO.Email);
-                await WriteTokenAsCookies(tokenAndGuid.Token);
-                await WriteGuidIdAsCookies(tokenAndGuid.UserId);
+                await CookieHelper.SetTokenAtCookiesAsync(localStorage, tokenAndGuid.Token);
+                await CookieHelper.SetIdAtCookiesAsync(localStorage, tokenAndGuid.UserId);
 
+                CurrentUserData.SetNewData(tokenAndGuid.UserId, tokenAndGuid.Token, loginDTO.Email);
 
                 NavigationManager.NavigateTo("/");
             }
@@ -83,15 +84,5 @@
             message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
                         "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
-    }
-
-    async Task WriteTokenAsCookies(string token)
-    {
-        await localStorage.SetItemAsync<string>("token", token);
-    }
-
-    async Task WriteGuidIdAsCookies(Guid id)
-    {
-        await localStorage.SetItemAsync<Guid>("id", id);
     }
 }

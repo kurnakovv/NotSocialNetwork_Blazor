@@ -41,6 +41,14 @@
 .footer__refcontainer a {
   color: #8080b3;
 }
+.footer__refcontainer a::after {
+  content: " ";
+  white-space: pre;
+}
+.footer__refcontainer a::before {
+  content: " ";
+  white-space: pre;
+}
 
 .dark-footer {
   background-color: #026302;
@@ -56,12 +64,10 @@
 .form__text {
   background-color: transparent;
   resize: none;
-  padding: 8px;
-  font-size: 15px;
-}
-.form__text:focus {
-  background-color: #e3f0e31e;
-  height: 10em;
+  padding: 7px;
+  height: 47px;
+  font-size: 16px;
+  overflow: hidden;
 }
 .form__submitbutton {
   padding: 5px;
@@ -113,6 +119,9 @@ body {
   background-color: #e3f0e3;
   font-size: 50px;
   min-height: 100vh;
+}
+body span {
+  font-size: 15px;
 }
 
 .main {
@@ -175,6 +184,23 @@ body {
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
+}
+.submitpostbox__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.submitpostbox__container textarea {
+  flex-grow: 1;
+}
+.submitpostbox__container button {
+  display: none;
+}
+.submitpostbox__container:hover {
+  height: 5em;
+}
+.submitpostbox__container:hover button {
+  display: block;
 }
 
 .display-none {
