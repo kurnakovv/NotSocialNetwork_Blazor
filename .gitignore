@@ -341,3 +341,4 @@ healthchecksdb
 
 *userImages/
 .ionide
+/Src/Presentation/NotSocialNetwork.UI/wwwroot/images

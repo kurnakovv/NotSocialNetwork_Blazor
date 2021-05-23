@@ -52,7 +52,7 @@
         try
         {
             posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
-                ($"{HttpHelper.APIAddress}publication/{CurrentUserData.Id}");
+                ($"{HttpHelper.APIAddress}publication/author={CurrentUserData.Id}");
         }
         catch (HttpRequestException httpReqEx)
         {
