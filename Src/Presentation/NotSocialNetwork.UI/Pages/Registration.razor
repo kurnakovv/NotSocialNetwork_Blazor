@@ -98,10 +98,19 @@
                     }
                 }
 
-                var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                                   ($"{HttpHelper.APIAddress}user", newUserDTO);
+                var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
 
-                CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
+                var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
+
+                var user = await HttpHelper.GetUserAsync(Http, responseData.Id);
+
+
+                await CookieHelper.SetNewUserCookies
+                    (localStorage, user.Id, responseData.Token, user.Email);
+
+                CurrentUserData.SetNewData(user.Id, responseData.Token, user.Email);
+                CurrentUserData.IsAuthorized = true;
+
                 message = "Вы были успешно зарегистрированы!";
             }
         }

@@ -1,4 +1,5 @@
 ﻿@page "/Account"
+
 @inject HttpClient Http
 @inject ILocalStorageService localStorage
 @inject NavigationManager NavManager
@@ -94,14 +95,12 @@
     {
         try
         {
-            HttpHelper.SetJwtHeader(Http, CurrentUserData.Token);
+            currentUser = await HttpHelper.GetUserAsync(Http, CurrentUserData.Id);
 
-            currentUser = await Http.GetFromJsonAsync<UserDTO>
-            ($"{HttpHelper.APIAddress}user/{CurrentUserData.Id}");
-
-            if (currentUser != null && currentUser.Image != null)
+            if (currentUser != null && currentUser.Image != null &&
+                string.IsNullOrWhiteSpace(currentUser.Image.Title) is false)
             {
-                authorAvatarPath = new($"../images/{currentUser.Image.Title}.jpeg");
+                authorAvatarPath = new($"../images/{currentUser.Image.Title}");
             }
             else
             {
@@ -119,6 +118,9 @@
                     NavManager.NavigateTo("/login");
                     break;
                 case HttpStatusCode.Unauthorized:
+                    NavManager.NavigateTo("/login");
+                    break;
+                case HttpStatusCode.InternalServerError:
                     NavManager.NavigateTo("/login");
                     break;
                 case HttpStatusCode.Conflict:
@@ -144,8 +146,3 @@
         }
     }
 }
-
-
-
-
-

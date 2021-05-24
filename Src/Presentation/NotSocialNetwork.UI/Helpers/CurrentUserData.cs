@@ -11,6 +11,7 @@ namespace NotSocialNetwork.UI.Helpers
         internal static string Token { get; set; }
         internal static string Email { get; set; }
 
+        internal static bool IsAuthorized { get; set; }
         internal static bool IsNightTheme { get; set; }
 
         internal static void SetNewData(Guid newID, string newToken, string newEmail)

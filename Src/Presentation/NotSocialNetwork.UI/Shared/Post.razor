@@ -3,13 +3,21 @@
 
 @foreach (var post in Posts)
 {
-    //_ImageUrl.Clear();
-    //_ImageUrl.Append($"../images/{post.Author.Image.Title}");
+    if (string.IsNullOrWhiteSpace(post.Author.Image.Title) == false)
+    {
+        _imageUrl.Clear();
+        _imageUrl.Append($"../images/{post.Author.Image.Title}");
+    }
+    else
+    {
+        _imageUrl.Clear();
+        _imageUrl.Append("../css/images/Icons_User.png");
+    }
 
     <div class="post">
         <div class="post__body">
             <div class="post__header">
-                <img class="authoricon" src="../images/@post.Author.Image.Title" width="70" height="70"
+                <img class="authoricon" src="../images/@_imageUrl" width="70" height="70"
                      alt="AuthorIcon">
                 <span class="authorname">@post.Author.Name</span>
             </div>
@@ -37,7 +45,7 @@
 
     string message;
     string _emailOfCurrentUser;
-    StringBuilder _ImageUrl = new("../css/images/Icons_User.png");
+    StringBuilder _imageUrl = new("../css/images/Icons_User.png");
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

@@ -1,5 +1,5 @@
 ﻿<div class="footer__refcontainer">
-    @foreach (var hrefData in ReferencesData)
+    @foreach (var hrefData in _referencesData)
     {
         <a href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
     }
@@ -9,6 +9,16 @@
     /// <summary>
     /// Хранит данные ссылкок, значение Key - сама ссылка, значвние Value - её текст.
     /// </summary>
-    [Parameter] public Dictionary<string, string> ReferencesData { get; set; }
-    [Parameter] public string ReferenceColor { get; set; }
+    Dictionary<string, string> _referencesData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _referencesData = new()
+        {
+            ["https://github.com/Ulyanov-programmer"] = "Ulyanov GitHub,",
+            ["https://vk.com/h.wilson"] = "Ulyanov VK",
+            ["https://github.com/KurnakovMaksim"] = "Kurnakov GitHub,",
+            ["https://vk.com/makskurnakov2003"] = "Kurnakov VK"
+        };
+    }
 }

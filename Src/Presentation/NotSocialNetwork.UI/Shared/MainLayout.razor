@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject ILocalStorageService localStorage
 @inject NavigationManager NavigationManager
+@inject HttpClient Http 
 
 <header class="header @_headerDarkClass">
     <div class="header__body">
@@ -12,7 +13,7 @@
 
 <main class="main @_mainDarkClass">
     <div class="main__body">
-        <NavMenu SetNightThemeMethod="EditNightTheme" />
+        <NavMenu ExitFromAuthorized="ExitFromAuthorized" SetNightTheme="EditNightTheme" />
 
         <div class="main__content">
             @Body
@@ -25,19 +26,11 @@
         <div class="footer__about">
             <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
         </div>
-        <RefContainer ReferenceColor="red" ReferencesData="ReferenceData" />
+        <RefContainer />
     </div>
 </footer>
 
 @code{
-    Dictionary<string, string> ReferenceData = new()
-    {
-        ["https://github.com/Ulyanov-programmer"] = "Ulyanov GitHub",
-        ["https://vk.com/h.wilson"] = "Ulyanov VK",
-        ["https://github.com/KurnakovMaksim"] = "Kurnakov GitHub",
-        ["https://vk.com/makskurnakov2003"] = "Kurnakov VK"
-    };
-
     #region ClassVariables
 
     string _headerDarkClass = "";
@@ -56,11 +49,11 @@
         if (firstRender)
         {
             CurrentUserData.IsNightTheme = await CookieHelper.GetNightThemeCookies(localStorage);
-            CurrentUserData.Id = await CookieHelper.GetCurrentId(localStorage);
-            CurrentUserData.Email = await CookieHelper.GetEmailAtCookies(localStorage);
-            CurrentUserData.Token = await CookieHelper.GetToken(localStorage);
 
+            FindCurrentUser();
             SetBackgroundStyles(CurrentUserData.IsNightTheme);
+
+            StateHasChanged();
         }
     }
 
@@ -89,7 +82,40 @@
     {
         bool newValueOfNightTheme = await CookieHelper.EditNightThemeCookies(localStorage);
 
-
         SetBackgroundStyles(newValueOfNightTheme);
+    }
+
+    async void FindCurrentUser()
+    {
+        try
+        {
+            var userId = await CookieHelper.GetCurrentId(localStorage);
+            var userToken = await CookieHelper.GetToken(localStorage);
+
+            if (string.IsNullOrEmpty(userId.ToString()) is false && string.IsNullOrEmpty(userToken) is false)
+            {
+                var currentUser = await HttpHelper.GetUserAsync(Http, userId, userToken);
+
+                CurrentUserData.SetNewData(userId, userToken, currentUser.Email);
+                CurrentUserData.IsAuthorized = true;
+            }
+        }
+        catch (HttpRequestException)
+        {
+            CurrentUserData.IsAuthorized = false;
+        }
+        catch (Exception)
+        {
+            CurrentUserData.IsAuthorized = false;
+        }
+    }
+
+    async void ExitFromAuthorized()
+    {
+        CurrentUserData.SetNewData(new Guid(), "", "");
+        await CookieHelper.SetNewUserCookies(localStorage, new Guid(), "", "");
+
+        CurrentUserData.IsAuthorized = false;
+        StateHasChanged();
     }
 }

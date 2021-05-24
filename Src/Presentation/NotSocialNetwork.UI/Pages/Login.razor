@@ -42,11 +42,11 @@
             {
                 LoginResult tokenAndGuid = await result.Content.ReadFromJsonAsync<LoginResult>();
 
-                CookieHelper.SetEmailAtCookies(localStorage, loginDTO.Email);
-                await CookieHelper.SetTokenAtCookiesAsync(localStorage, tokenAndGuid.Token);
-                await CookieHelper.SetIdAtCookiesAsync(localStorage, tokenAndGuid.UserId);
+                await CookieHelper.SetNewUserCookies
+                    (localStorage, tokenAndGuid.UserId, tokenAndGuid.Token, loginDTO.Email);
 
                 CurrentUserData.SetNewData(tokenAndGuid.UserId, tokenAndGuid.Token, loginDTO.Email);
+                CurrentUserData.IsAuthorized = true;
 
                 NavigationManager.NavigateTo("/");
             }

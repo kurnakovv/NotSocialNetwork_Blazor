@@ -40,9 +40,13 @@
                 {
                     message = "Пост успешно загружен! Пожалуйста, перезагрузите страницу.";
                 }
+                else if (responce.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    NavNanager.NavigateTo("/login");
+                }
                 else
                 {
-                    message = "Произошла внутренняя ошибка сервера, возможно строк аутентификации истёк.";
+                    message = "Произошла внутренняя ошибка сервера, попробуйте позже.";
                 }
             }
         }
@@ -54,6 +58,9 @@
                     message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
                     break;
                 case HttpStatusCode.Unauthorized:
+                    NavNanager.NavigateTo("/login");
+                    break;
+                case HttpStatusCode.InternalServerError:
                     NavNanager.NavigateTo("/login");
                     break;
                 case HttpStatusCode.BadRequest:

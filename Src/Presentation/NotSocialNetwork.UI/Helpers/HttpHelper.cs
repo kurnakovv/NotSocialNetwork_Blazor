@@ -1,8 +1,10 @@
-﻿using System;
+﻿using NotSocialNetwork.Application.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace NotSocialNetwork.UI.Helpers
@@ -16,6 +18,16 @@ namespace NotSocialNetwork.UI.Helpers
         {
             http.DefaultRequestHeaders
                 .Authorization = new AuthenticationHeaderValue("bearer", token);
+        }
+
+        internal static async Task<UserDTO> GetUserAsync(HttpClient http, Guid userId, string token = "")
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                token = CurrentUserData.Token;
+            }
+            SetJwtHeader(http, token);
+            return await http.GetFromJsonAsync<UserDTO>($"{APIAddress}user/{userId}");
         }
     }
 }

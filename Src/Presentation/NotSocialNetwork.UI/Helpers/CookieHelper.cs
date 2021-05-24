@@ -31,7 +31,7 @@ namespace NotSocialNetwork.UI.Helpers
             return cookieResult;
         }
 
-        internal static async Task SetNightThemeCookies
+        private static async Task SetNightThemeCookies
             (ILocalStorageService localStorage, bool oldValue)
         {
             if (oldValue)
@@ -65,19 +65,29 @@ namespace NotSocialNetwork.UI.Helpers
             return token;
         }
 
-        internal static async void SetEmailAtCookies(ILocalStorageService localStorage, string email)
+        private static async void SetEmailAtCookies(ILocalStorageService localStorage, string email)
         {
             await localStorage.SetItemAsync<string>("email", email);
         }
 
-        internal static async Task SetTokenAtCookiesAsync(ILocalStorageService localStorage, string token)
+        private static async Task SetTokenAtCookiesAsync(ILocalStorageService localStorage, string token)
         {
             await localStorage.SetItemAsync<string>("token", token);
         }
 
-        internal static async Task SetIdAtCookiesAsync(ILocalStorageService localStorage, Guid id)
+        private static async Task SetIdAtCookiesAsync(ILocalStorageService localStorage, Guid id)
         {
             await localStorage.SetItemAsync<Guid>("id", id);
+        }
+
+        internal static async Task<bool> SetNewUserCookies
+            (ILocalStorageService localStorage, Guid id, string token, string email)
+        {
+            await SetIdAtCookiesAsync(localStorage, id);
+            await SetTokenAtCookiesAsync(localStorage, token);
+            SetEmailAtCookies(localStorage, email);
+
+            return true;
         }
     }
 }
