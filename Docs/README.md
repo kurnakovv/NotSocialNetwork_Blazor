@@ -21,12 +21,16 @@
 
 ## Architecture
 
+<a href="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" >
+ <img src="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/media/image5-9.png" />
+</a>
+<a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">
+ <img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" />
+</a>
 
-## Diagram
-![Diagram](Docs/ImgForReadme/Diagram.png)
+> We tried to apply a new architecture - "Clean Architecture"
 
-## Projects
-
+> You can read about architecture by clicking on the images.
 
 ## Technologies
 * C# - v9.0
