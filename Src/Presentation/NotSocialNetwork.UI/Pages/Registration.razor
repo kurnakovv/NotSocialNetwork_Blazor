@@ -66,17 +66,16 @@
         _lableFileText = inputFile.File.Name;
     }
 
-    public async Task<string> SaveAvatar()
+    async Task<string> SaveAvatar()
     {
         string newFileName = Guid.NewGuid().ToString();
-        var fileExtension = Path.GetExtension(loadedFileArgs.File.Name);
 
         if (CheckFileSize(loadedFileArgs.File))
         {
-            await using FileStream fs = new($@"wwwroot\images\{newFileName}.{fileExtension}", FileMode.Create);
+            await using FileStream fs = new($@"wwwroot\images\{newFileName}{_lableFileText}", FileMode.Create);
             await loadedFileArgs.File.OpenReadStream(_MAX_FILE_SIZE).CopyToAsync(fs);
 
-            return $"{newFileName}.{fileExtension}";
+            return $"{newFileName}{_lableFileText}";
         }
         return "";
     }
@@ -102,7 +101,7 @@
 
                 var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
 
-                var user = await HttpHelper.GetUserAsync(Http, responseData.Id);
+                var user = await HttpHelper.GetUserAsync(Http, responseData.Id, responseData.Token);
 
 
                 await CookieHelper.SetNewUserCookies
