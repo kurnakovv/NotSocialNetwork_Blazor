@@ -41,6 +41,8 @@
 * Swagger - v5.6.3
 * xUnit - v2.4.1
 * Moq - v4.16.1
+* JWT - v6.10.1
+* Docker
 
 ## Versions
 
