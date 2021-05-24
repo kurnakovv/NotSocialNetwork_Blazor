@@ -6,7 +6,7 @@
 
 ![MainPage](ImgForReadme/MainImages/MainPageInUI.png)
 
-> Description
+> NotSocialNetwork - This is the place where people can publish their interesting posts.
 
 ## Table of contents
 * [Architecture](#architecture)
