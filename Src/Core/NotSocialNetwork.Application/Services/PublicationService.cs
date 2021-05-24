@@ -26,8 +26,9 @@ namespace NotSocialNetwork.Application.Services
         public IEnumerable<PublicationEntity> GetAll()
         {
             return _publicationRepository.GetAll()
+                       .Include(p => p.Images)
                        .Include(p => p.Author)
-                       .Include(p => p.Images);
+                           .ThenInclude(u => u.Image);
         }
 
         public PublicationEntity GetById(Guid id)
