@@ -92,7 +92,8 @@
             var userId = await CookieHelper.GetCurrentId(localStorage);
             var userToken = await CookieHelper.GetToken(localStorage);
 
-            if (string.IsNullOrEmpty(userId.ToString()) is false && string.IsNullOrEmpty(userToken) is false)
+            if (string.IsNullOrEmpty(userId.ToString()) == false && 
+                string.IsNullOrEmpty(userToken) == false)
             {
                 var currentUser = await HttpHelper.GetUserAsync(Http, userId, userToken);
 

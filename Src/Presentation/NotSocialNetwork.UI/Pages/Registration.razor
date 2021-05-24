@@ -50,6 +50,13 @@
     InputFileChangeEventArgs loadedFileArgs;
     RegistrationUserDTO newUserDTO = new();
 
+    protected override void OnInitialized()
+    {
+        if (CurrentUserData.IsAuthorized)
+        {
+            NavNanager.NavigateTo("/");
+        }
+    }
 
     bool CheckFileSize(IBrowserFile file)
     {
@@ -84,34 +91,36 @@
     {
         try
         {
-            if (UserValidityCheck(newUserDTO))
+            if (UserValidityCheck(newUserDTO) is false)
             {
-                newUserDTO.Image = new();
-                if (loadedFileArgs != null)
-                {
-                    string imageTitle = await SaveAvatar();
-
-                    if (string.IsNullOrEmpty(imageTitle) == false)
-                    {
-                        newUserDTO.Image.Title = imageTitle;
-                    }
-                }
-
-                var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
-
-                var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
-
-                var user = await HttpHelper.GetUserAsync(Http, responseData.Id, responseData.Token);
-
-
-                await CookieHelper.SetNewUserCookies
-                    (localStorage, user.Id, responseData.Token, user.Email);
-
-                CurrentUserData.SetNewData(user.Id, responseData.Token, user.Email);
-                CurrentUserData.IsAuthorized = true;
-
-                message = "Вы были успешно зарегистрированы!";
+                message = "Проверьте корректность введённых значений в полях!";
             }
+
+            newUserDTO.Image = new();
+            if (loadedFileArgs != null)
+            {
+                string imageTitle = await SaveAvatar();
+
+                if (string.IsNullOrEmpty(imageTitle) == false)
+                {
+                    newUserDTO.Image.Title = imageTitle;
+                }
+            }
+
+            var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
+
+            var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
+
+            var user = await HttpHelper.GetUserAsync(Http, responseData.Id, responseData.Token);
+
+
+            await CookieHelper.SetNewUserCookies
+                (localStorage, user.Id, responseData.Token, user.Email);
+
+            CurrentUserData.SetNewData(user.Id, responseData.Token, user.Email);
+            CurrentUserData.IsAuthorized = true;
+
+            message = "Вы были успешно зарегистрированы!";
         }
         catch (HttpRequestException httpReqEx)
         {
