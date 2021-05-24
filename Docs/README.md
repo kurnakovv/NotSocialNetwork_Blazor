@@ -1,8 +1,12 @@
-## NotSocialNetwork (logo)
+<div align="center">
 
-![MainPage](Docs/ImgForReadme/Main.png)
+![Logo](ImgForReadme/MainImages/Logo.png)
 
-> Description
+</div>
+
+![MainPage](ImgForReadme/MainImages/MainPageInUI.png)
+
+> NotSocialNetwork - This is the place where people can publish their interesting posts.
 
 ## Table of contents
 * [Architecture](#architecture)
@@ -17,12 +21,16 @@
 
 ## Architecture
 
+<a href="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures" >
+ <img src="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/media/image5-9.png" />
+</a>
+<a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">
+ <img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" />
+</a>
 
-## Diagram
-![Diagram](Docs/ImgForReadme/Diagram.png)
+> We tried to apply a new architecture - "Clean Architecture"
 
-## Projects
-
+> You can read about architecture by clicking on the images.
 
 ## Technologies
 * C# - v9.0
@@ -33,6 +41,8 @@
 * Swagger - v5.6.3
 * xUnit - v2.4.1
 * Moq - v4.16.1
+* JWT - v6.10.1
+* Docker
 
 ## Versions
 
@@ -82,28 +92,47 @@ docker-compose up
     
 You can run the project without a database, as we initially use InMemoryDatabase, but if you need a database, follow the instructions:
 * Src / Presentation / NotSocialNetwork.API / Startup.cs change in the ConfigureServices method:
+
+For VS or dotnet commands:
 ``` csharp
-// Database in memory.
-// ConfigureInMemoryDatabase (services);
+// In-memory database.
+//ConfigureInMemoryDatabase(services);
 // Real database.
-ConfigureProductionServices (services);
+ConfigureProductionServices(services);
+// Real database for docker.
+//ConfigureProductionServicesForDocker(services);
 ```
+For docker:
+``` csharp
+// In-memory database.
+//ConfigureInMemoryDatabase(services);
+// Real database.
+//ConfigureProductionServices(services);
+// Real database for docker.
+ConfigureProductionServicesForDocker(services);
+```
+
 * Src / Presentation / NotSocialNetwork.API / Program.cs change in the Main method:
 ``` csharp
-CreateHostBuilder(args).Build().Run();
+var host = CreateHostBuilder(args).Build();
+
+using (var scope = host.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var appDbContext = services.GetRequiredService<AppDbContext>();
+    DefaultImagesInit.AddTestImage(appDbContext);
+}
 
 #region Memory data (Hide if using real database)
-    //var host = CreateHostBuilder(args).Build();
+//using (var scope = host.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    var appDbContext = services.GetRequiredService<AppDbContext>();
+//    TestDataInit.AddTestData(appDbContext);
+//}
+#endregion
 
-    //using (var scope = host.Services.CreateScope())
-    //{
-    //    var services = scope.ServiceProvider;
-    //    var appDbContext = services.GetRequiredService<AppDbContext>();
-    //    TestData.AddTestData(appDbContext);
-    //}
-
-    //host.Run();
- #endregion
+host.Run();
 ```
 * In the main root of the project, open a console (cmd or other)
 * Check that you have everything by entering as in the screenshot:

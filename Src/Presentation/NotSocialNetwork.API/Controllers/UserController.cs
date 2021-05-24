@@ -26,16 +26,19 @@ namespace NotSocialNetwork.API.Controllers
         public UserController(
             IUserService userService,
             IMapper mapper,
-            IImageRepositorySystem imageRepositorySystem)
+            IImageRepositorySystem imageRepositorySystem,
+            IJwtSystem jwtSystem)
         {
             _userService = userService;
             _mapper = mapper;
             _imageRepositorySystem = imageRepositorySystem;
+            _jwtSystem = jwtSystem;
         }
 
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly IImageRepositorySystem _imageRepositorySystem;
+        private readonly IJwtSystem _jwtSystem;
 
         /// <summary>
         /// Get all users by pagination.
@@ -112,7 +115,7 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Add.",
             Description = "Add user."
         )]
-        public ActionResult<UserDTO> Add(RegistrationUserDTO registrationUserDTO)
+        public ActionResult<RegistrationResponseDTO> Add(RegistrationUserDTO registrationUserDTO)
         {
             try
             {
@@ -123,9 +126,12 @@ namespace NotSocialNetwork.API.Controllers
 
                 _userService.Add(userEntity);
 
-                var userDTO = _mapper.Map<UserDTO>(userEntity);
+                var registrationResponseDTO = _mapper.Map<RegistrationResponseDTO>(userEntity);
 
-                return Ok(userDTO);
+                var token = _jwtSystem.GenerateToken(userEntity);
+                registrationResponseDTO.Token = token;
+
+                return Ok(registrationResponseDTO);
             }
             catch (InvalidFileFormatException ex)
             {

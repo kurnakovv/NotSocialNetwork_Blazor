@@ -52,7 +52,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object);
+                                        imageRepositorySystem.Object,
+                                        null);
 
             // Act
             var results = userController.Get();
@@ -76,7 +77,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object);
+                                        imageRepositorySystem.Object,
+                                        null);
 
             // Act
             var result = userController.Get(_user.Id);
@@ -108,7 +110,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object);
+                                        imageRepositorySystem.Object,
+                                        null);
 
             // Act
             var result = userController.Add(_userDTO);
@@ -133,7 +136,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object);
+                                        imageRepositorySystem.Object,
+                                        null);
 
             // Act
             var result = userController.Update(_user);
@@ -158,7 +162,8 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object);
+                                        imageRepositorySystem.Object,
+                                        null);
 
             // Act
             var result = userController.Delete(_user.Id);

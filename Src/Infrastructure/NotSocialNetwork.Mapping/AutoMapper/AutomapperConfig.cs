@@ -23,6 +23,7 @@ namespace NotSocialNetwork.Mapping.AutoMapper
                 .ForMember(apd => apd.Image, opt => opt.Ignore())
                 .ReverseMap()
                 .ForMember(u => u.Image, opt => opt.Ignore());
+            CreateMap<UserEntity, RegistrationResponseDTO>();
         }
 
         private void PublicationMapper()
