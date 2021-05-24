@@ -11,7 +11,9 @@
     if (posts.Count % 10 == 0)
     {
         _paginationNumber++;
-        <button @onclick="LoadMorePosts">Показать ещё</button>
+        <div class="button-container">
+            <button class="button button-container__button" @onclick="LoadMorePosts">Показать ещё</button>
+        </div>
     }
 }
 else

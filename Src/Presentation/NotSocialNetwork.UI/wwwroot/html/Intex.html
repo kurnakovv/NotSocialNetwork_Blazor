@@ -1,40 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
 	<meta charset="utf-8" />
 	<meta name="description" content="Главная страница NotSocialNetwork">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<Title>NotSocialNetwork</Title>
 	<!-- CSS  -->
 	<link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
-	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
-	<header class="">
+	<header class="header">
 		<div class="header__body">
 			<a class="header__ref" href="Intex.html">
-				<!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
-				<div class="blocklogo dark-logo"></div>
+				<div class="blocklogo"></div>
 			</a>
 		</div>
 	</header>
 
-	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
 	<main class="main">
 		<div class="main__body">
 			<!-- NavMenu component-->
 			<nav class="navmenu">
 				<div class="navmenu__header">
 					<button class="open-button">
-						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50" height="40">
 					</button>
 				</div>
 
 				<div class="navmenu__body">
-					<a class="nav-reference" href="Account.html">Аккаунт</a>
-					<a class="nav-reference" href="Registration.html">Регистрация</a>
+					<a class="button nav-reference" href="Account.html">Аккаунт</a>
+					<a class="button nav-reference" href="Registration.html">Регистрация</a>
 					<button class="button">Переключить тему</button>
 				</div>
 			</nav>
@@ -46,8 +43,7 @@
 					<div class="submitpostbox__body">
 						<form action="#" class="submitpostbox__form form">
 							<div class='submitpostbox__container'>
-								<textarea rows="1" placeholder="Есть новости?" class="form__text"
-									id="text"></textarea>
+								<textarea rows="1" placeholder="Есть новости?" class="form__text" id="text"></textarea>
 								<button class="form__submitbutton" type="submit">Отправить!</button>
 							</div>
 						</form>
@@ -181,12 +177,15 @@
 					</div>
 				</div>
 				<!-- Post-->
+
+				<div class="button-container">
+					<button class="button button-container__button" @onclick="LoadMorePosts">Показать ещё</button>
+				</div>
 			</div>
 		</div>
 	</main>
 
-	<!-- NightTheme: style="background-color: #3c5a3c; color: #ebffe1;" -->
-	<footer class="">
+	<footer class="footer">
 		<div class="footer-body">
 			<div class="footer__about">
 				<span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>

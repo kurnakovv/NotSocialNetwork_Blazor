@@ -12,61 +12,57 @@
 </head>
 
 <body>
-	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
-	<header>
+	<header class="header">
 		<div class="header__body">
 			<a class="header__ref" href="Intex.html">
-				<!-- NightTheme: style="background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat; width: 170px; height: 50px;" -->
 				<div class="blocklogo"></div>
 			</a>
 		</div>
 	</header>
 
-	<!-- NightTheme: style="background-color: #325032; color: #ebffe1;" -->
 	<main class="main">
 		<div class="main__body">
 			<!-- NavMenu component-->
 			<nav class="navmenu">
 				<div class="navmenu__header">
 					<button class="open-button">
-						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50px" height="40px">
+						<img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50" height="40">
 					</button>
 				</div>
 
 				<div class="navmenu__body">
-					<a class="nav-reference" href="Intex.html">Новости</a>
-					<a class="nav-reference" href="Account.html">Аккаунт</a>
-					<a class="nav-reference" href="Registration.html">Регистрация</a>
-					<button class="button">Переключить ночную тему</button>
+					<a class="button nav-reference" href="Account.html">Аккаунт</a>
+					<a class="button nav-reference" href="Registration.html">Регистрация</a>
+					<button class="button">Переключить тему</button>
 				</div>
 			</nav>
 			<!-- NavMenu-->
 			<div class="main__content">
 				<form action="#" class="main-container-form">
 					<div class="form-container">
-						<input type="text" class="form-container--input" placeholder="Никнейм">
+						<input type="text" class="form-container__input" placeholder="Никнейм">
 					</div>
 					<div class="form-container">
-						<input type="Email" class="form-container--input" placeholder="Email">
+						<input type="Email" class="form-container__input" placeholder="Email">
 					</div>
 					<div class="form-container">
-						<input type="date" class="form-container--input" value="27.12.2020">
+						<input type="date" class="form-container__input" value="27.12.2020">
 					</div>
 					<div class="form-container">
-						<button type="submit" class="form-container--submitButton" @bind="#">
+						<label for="file" class="form-container__file-title">Выбрать аватар...</label>
+						<input id="file" type="file" class="form-container__file" accept=".png, .jpeg, .jpg" />
+					</div>
+					<div class="form-container">
+						<button type="submit" class="form-container--submitButton">
 							Зарегистрироваться
 						</button>
 					</div>
 				</form>
 			</div>
-			<!--<div class="form-container">
-						<input type="file" class="form-container--file" @bind="Image" accept=".png, .jpeg, .jpg">
-				</div>-->
 		</div>
 	</main>
 
-	<!-- NightTheme: style="background-color: #3c5a3c; color: #ebffe1;" -->
-	<footer>
+	<footer class="footer">
 		<div class="footer-body">
 			<div class="footer__about">
 				<span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
@@ -74,8 +70,6 @@
 			<div class="footer__refcontainer">
 				<a href="https://github.com/Ulyanov-programmer">Ulyanov GitHub,</a>
 				<a href="https://vk.com/h.wilson">Ulyanov VK</a>
-			</div>
-			<div class="footer__refcontainer">
 				<a href="https://github.com/KurnakovMaksim">Kurnakov GitHub,</a>
 				<a href="https://vk.com/makskurnakov2003">Kurnakov VK</a>
 			</div>

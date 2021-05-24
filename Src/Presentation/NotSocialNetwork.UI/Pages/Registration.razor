@@ -32,17 +32,19 @@
                    class="form-container--input" />
     </div>
     <div class="form-container">
+        <label for="file" class="form-container__file-title">@_lableFileText</label>
+        <InputFile id="file" class="form-container__file" OnChange="@AddAvatar" accept=".png, .jpeg, .jpg" />
+    </div>
+    <div class="form-container">
         <button type="submit" class="form-container--submitButton">
             Зарегистрироваться
         </button>
-    </div>
-    <div class="form-container">
-        <InputFile class="form-container--file" OnChange="@AddAvatar" accept=".png, .jpeg, .jpg" />
     </div>
 </EditForm>
 
 @code{
     string message;
+    string _lableFileText = "Выбрать аватар (необязательно)";
     const long _MAX_FILE_SIZE = 20971520;
 
     InputFileChangeEventArgs loadedFileArgs;
@@ -61,6 +63,7 @@
     void AddAvatar(InputFileChangeEventArgs inputFile)
     {
         loadedFileArgs = inputFile;
+        _lableFileText = inputFile.File.Name;
     }
 
     public async Task<string> SaveAvatar()
@@ -83,22 +86,22 @@
         {
             if (UserValidityCheck(newUserDTO))
             {
-                string imageTitle = await SaveAvatar();
-                if (string.IsNullOrEmpty(imageTitle) == false)
+                newUserDTO.Image = new();
+                if (loadedFileArgs != null)
                 {
-                    newUserDTO.Image = new();
-                    newUserDTO.Image.Title = imageTitle;
+                    string imageTitle = await SaveAvatar();
 
-                    var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
-                                       ($"{HttpHelper.APIAddress}user", newUserDTO);
-
-                    CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
-                    message = "Вы были успешно зарегистрированы!";
+                    if (string.IsNullOrEmpty(imageTitle) == false)
+                    {
+                        newUserDTO.Image.Title = imageTitle;
+                    }
                 }
-                else
-                {
 
-                }
+                var result = await Http.PostAsJsonAsync<RegistrationUserDTO>
+                                   ($"{HttpHelper.APIAddress}user", newUserDTO);
+
+                CookieHelper.SetEmailAtCookies(localStorage, newUserDTO.Email);
+                message = "Вы были успешно зарегистрированы!";
             }
         }
         catch (HttpRequestException httpReqEx)
@@ -135,7 +138,7 @@
     private bool UserValidityCheck(RegistrationUserDTO newUserDTO)
     {
         if (newUserDTO != null && string.IsNullOrWhiteSpace(newUserDTO.Email) == false &&
-            string.IsNullOrWhiteSpace(newUserDTO.Name) == false && loadedFileArgs != null)
+            string.IsNullOrWhiteSpace(newUserDTO.Name) == false)
         {
             return true;
         }

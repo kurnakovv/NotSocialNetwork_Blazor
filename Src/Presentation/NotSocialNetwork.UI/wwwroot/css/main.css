@@ -152,10 +152,6 @@ body span {
   padding: 15px 0;
   text-align: center;
 }
-.navmenu__body :hover {
-  background-color: #3c8c3c;
-  color: white;
-}
 
 .nav-reference {
   padding: 10px 15px;
@@ -168,6 +164,10 @@ body span {
   padding: 10px 15px;
   font-size: 20px;
   background-color: transparent;
+}
+.button:hover {
+  background-color: #3c8c3c;
+  color: white;
 }
 
 .open-button {
@@ -197,7 +197,7 @@ body span {
   display: none;
 }
 .submitpostbox__container:hover {
-  height: 5em;
+  height: 4em;
 }
 .submitpostbox__container:hover button {
   display: block;
@@ -205,6 +205,15 @@ body span {
 
 .display-none {
   display: none;
+}
+
+.button-container {
+  text-align: center;
+}
+.button-container__button {
+  padding: 7px 15px;
+  margin: 13px;
+  border: 1px solid #3c8c3c;
 }
 
 .dark-theme {
