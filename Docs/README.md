@@ -1,6 +1,10 @@
-## NotSocialNetwork (logo)
+<div align="center">
 
-![MainPage](Docs/ImgForReadme/Main.png)
+![Logo](ImgForReadme/MainImages/Logo.png)
+
+</div>
+
+![MainPage](ImgForReadme/MainImages/MainPageInUI.png)
 
 > Description
 
@@ -82,28 +86,47 @@ docker-compose up
     
 You can run the project without a database, as we initially use InMemoryDatabase, but if you need a database, follow the instructions:
 * Src / Presentation / NotSocialNetwork.API / Startup.cs change in the ConfigureServices method:
+
+For VS or dotnet commands:
 ``` csharp
-// Database in memory.
-// ConfigureInMemoryDatabase (services);
+// In-memory database.
+//ConfigureInMemoryDatabase(services);
 // Real database.
-ConfigureProductionServices (services);
+ConfigureProductionServices(services);
+// Real database for docker.
+//ConfigureProductionServicesForDocker(services);
 ```
+For docker:
+``` csharp
+// In-memory database.
+//ConfigureInMemoryDatabase(services);
+// Real database.
+//ConfigureProductionServices(services);
+// Real database for docker.
+ConfigureProductionServicesForDocker(services);
+```
+
 * Src / Presentation / NotSocialNetwork.API / Program.cs change in the Main method:
 ``` csharp
-CreateHostBuilder(args).Build().Run();
+var host = CreateHostBuilder(args).Build();
+
+using (var scope = host.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var appDbContext = services.GetRequiredService<AppDbContext>();
+    DefaultImagesInit.AddTestImage(appDbContext);
+}
 
 #region Memory data (Hide if using real database)
-    //var host = CreateHostBuilder(args).Build();
+//using (var scope = host.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    var appDbContext = services.GetRequiredService<AppDbContext>();
+//    TestDataInit.AddTestData(appDbContext);
+//}
+#endregion
 
-    //using (var scope = host.Services.CreateScope())
-    //{
-    //    var services = scope.ServiceProvider;
-    //    var appDbContext = services.GetRequiredService<AppDbContext>();
-    //    TestData.AddTestData(appDbContext);
-    //}
-
-    //host.Run();
- #endregion
+host.Run();
 ```
 * In the main root of the project, open a console (cmd or other)
 * Check that you have everything by entering as in the screenshot:
