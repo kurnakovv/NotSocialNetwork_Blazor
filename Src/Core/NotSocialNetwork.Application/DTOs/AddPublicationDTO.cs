@@ -1,8 +1,6 @@
-﻿using System;
+﻿using NotSocialNetwork.Application.Entities;
+using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http;
-using NotSocialNetwork.Application.Entities;
 
 namespace NotSocialNetwork.Application.DTOs
 {

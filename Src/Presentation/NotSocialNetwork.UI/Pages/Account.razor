@@ -92,6 +92,11 @@
         }
     }
 
+    /// <summary>
+    /// Searches for and retrieves user data according to <c>CurrentUserData.Id</c>.
+    /// If the API does not return a user, it will be redirected to the login page.
+    /// </summary>
+    /// <returns></returns>
     async Task GetCurrentUserAsync()
     {
         try

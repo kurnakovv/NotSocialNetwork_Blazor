@@ -16,6 +16,11 @@
 }
 
 @code {
+
+    /// <summary>
+    /// The message to be displayed in the modal window.
+    /// If it is empty, zero, or contains only spaces, the window will not be displayed.
+    /// </summary>
     [Parameter] public string Message { get; set; }
 
     void ClosePopap()

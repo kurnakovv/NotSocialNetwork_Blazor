@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using Moq;
 using NotSocialNetwork.API.Controllers;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using NotSocialNetwork.Application.Interfaces.Facades;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 {

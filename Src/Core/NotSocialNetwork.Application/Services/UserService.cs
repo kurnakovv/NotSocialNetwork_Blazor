@@ -1,12 +1,12 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NotSocialNetwork.Application.Configs;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.Application.Services
 {
@@ -40,16 +40,16 @@ namespace NotSocialNetwork.Application.Services
         public UserEntity Delete(Guid id)
         {
             var user = GetById(id);
-            
+
             _userRepository.Delete(user.Id);
             _userRepository.Commit();
 
             return user;
         }
 
-        public IEnumerable<UserEntity> GetAll() 
+        public IEnumerable<UserEntity> GetAll()
         {
-            return _userRepository.GetAll().Include(u => u.Image).ToList(); 
+            return _userRepository.GetAll().Include(u => u.Image).ToList();
         }
 
         public UserEntity GetById(Guid id)
@@ -69,7 +69,7 @@ namespace NotSocialNetwork.Application.Services
             var user = _userRepository.GetAll()
                             .FirstOrDefault(u => u.Email == email);
 
-            if(user == null)
+            if (user == null)
             {
                 throw new ObjectNotFoundException($"User by email: {email} not found.");
             }
@@ -79,7 +79,7 @@ namespace NotSocialNetwork.Application.Services
 
         public IEnumerable<UserEntity> GetByPagination(int index)
         {
-            if(index < 0)
+            if (index < 0)
             {
                 throw new InvalidOperationException("Index cannot be less than 0.");
             }
@@ -90,7 +90,7 @@ namespace NotSocialNetwork.Application.Services
                             .Skip(countOfSkipItems)
                             .Take(PaginationConfig.MAX_ITEMS);
 
-            if(users.Count() == 0)
+            if (users.Count() == 0)
             {
                 throw new ObjectNotFoundException("No more users.");
             }

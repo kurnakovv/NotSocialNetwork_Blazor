@@ -16,7 +16,7 @@
                    type="Email" class="form-container--input" placeholder="Email" />
     </div>
     <div class="form-container">
-        <button type="submit" class="form-container--submitButton">
+        <button type="submit" class="button">
             Войти
         </button>
     </div>
@@ -28,6 +28,7 @@
     string message;
     LoginDTO loginDTO = new();
 
+    
     async Task SendUserForAuthentication()
     {
         try

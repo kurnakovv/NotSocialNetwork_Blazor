@@ -41,7 +41,7 @@ namespace NotSocialNetwork.Data.EFRepositories
         {
             var t = Get(id);
 
-            if(_appDbContext.Entry(t).State == EntityState.Detached)
+            if (_appDbContext.Entry(t).State == EntityState.Detached)
             {
                 _dbSet.Attach(t);
             }

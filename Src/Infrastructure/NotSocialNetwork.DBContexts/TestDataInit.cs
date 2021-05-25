@@ -16,12 +16,12 @@ namespace NotSocialNetwork.DBContexts
 
         public static void AddTestData(AppDbContext appDbContext)
         {
-            if(appDbContext.Images.Any() == false)
+            if (appDbContext.Images.Any() == false)
             {
                 appDbContext.Images.AddRange(GetImages());
                 appDbContext.SaveChanges();
             }
-            if(appDbContext.Users.Any() == false)
+            if (appDbContext.Users.Any() == false)
             {
                 appDbContext.Users.AddRange(GetUsers());
                 appDbContext.SaveChanges();

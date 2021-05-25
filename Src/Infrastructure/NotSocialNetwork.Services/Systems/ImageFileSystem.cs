@@ -1,8 +1,8 @@
 ﻿using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Repositories;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,12 +19,12 @@ namespace NotSocialNetwork.Services.Systems
         }
 
         private readonly IRepository<ImageEntity> _imageRepository;
-        private static ICollection<string> _imageExtensions 
+        private static ICollection<string> _imageExtensions
             = new List<string> { ".jpg", ".png", ".jpeg", ".gif" };
 
         public void TrySave(ImageEntity file, string pathToSave)
         {
-            if(file == null)
+            if (file == null)
             {
                 return;
             }
@@ -32,7 +32,7 @@ namespace NotSocialNetwork.Services.Systems
             file.Title = file.ImageFromForm.FileName;
             SaveFileToFolder(file, pathToSave);
         }
-        
+
         public Guid Delete(Guid id, string filePath)
         {
             var file = _imageRepository.Get(id);
@@ -44,7 +44,7 @@ namespace NotSocialNetwork.Services.Systems
 
         public void TryUpdate(UpdateFileDTO updateFile)
         {
-            if(updateFile == null)
+            if (updateFile == null)
             {
                 return;
             }
@@ -57,7 +57,7 @@ namespace NotSocialNetwork.Services.Systems
         {
             var fileExtension = Path.GetExtension(title);
 
-            if(_imageExtensions.Contains(fileExtension))
+            if (_imageExtensions.Contains(fileExtension))
             {
                 return true;
             }

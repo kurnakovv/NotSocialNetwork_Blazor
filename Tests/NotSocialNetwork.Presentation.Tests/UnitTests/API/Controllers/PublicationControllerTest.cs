@@ -4,14 +4,12 @@ using Moq;
 using NotSocialNetwork.API.Controllers;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Microsoft.Extensions.Hosting;
-using NotSocialNetwork.Application.Interfaces.Facades;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 {
@@ -26,7 +24,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
         private static IEnumerable<PublicationDTO> _publicationsDTO = new List<PublicationDTO>()
         {
             new PublicationDTO()
-            { 
+            {
                 Author = _author,
                 Text = "Some text1",
             },
@@ -50,11 +48,11 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             },
         };
         private static AddPublicationDTO _appPublicationDTO = new AddPublicationDTO()
-        { 
+        {
             Text = "Some text",
             AuthorId = _author.Id,
         };
-        private static UpdatePublicationDTO _updatePublicationDTO = new UpdatePublicationDTO() 
+        private static UpdatePublicationDTO _updatePublicationDTO = new UpdatePublicationDTO()
         {
             Id = _publicationEntities.ElementAt(0).Id,
             Text = "Update text",

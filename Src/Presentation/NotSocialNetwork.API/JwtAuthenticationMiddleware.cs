@@ -23,7 +23,7 @@ namespace NotSocialNetwork.API
         public async Task Invoke(HttpContext context, IUserService userService)
         {
             ValidateToken(context, userService);
-        
+
             await _next(context);
         }
 

@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using NotSocialNetwork.Application.Interfaces.Facades;
-using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.API.Controllers
 {

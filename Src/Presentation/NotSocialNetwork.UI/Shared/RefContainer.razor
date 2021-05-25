@@ -1,4 +1,5 @@
-﻿<div class="footer__refcontainer">
+﻿
+<div class="footer__refcontainer">
     @foreach (var hrefData in _referencesData)
     {
         <a href="@hrefData.Key" class="ReferenceContainer--Reference">@hrefData.Value</a>
@@ -7,11 +8,11 @@
 
 @code{
     /// <summary>
-    /// Хранит данные ссылкок, значение Key - сама ссылка, значвние Value - её текст.
+    /// Stores the data of links, the Key value is the link itself, the Value value is its text.
     /// </summary>
     Dictionary<string, string> _referencesData;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _referencesData = new()
         {

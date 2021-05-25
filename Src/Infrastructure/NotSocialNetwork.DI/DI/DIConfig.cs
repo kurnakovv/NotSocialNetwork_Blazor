@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NotSocialNetwork.Application.Entities;
-using NotSocialNetwork.Application.Interfaces.Systems;
+using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Services;
 using NotSocialNetwork.Data.EFRepositories;
-using NotSocialNetwork.Services.Systems;
 using NotSocialNetwork.Services.Facades;
-using NotSocialNetwork.Application.Interfaces.Facades;
+using NotSocialNetwork.Services.Systems;
 
 namespace NotSocialNetwork.DI.DIConfig
 {

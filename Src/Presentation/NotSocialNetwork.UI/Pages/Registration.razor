@@ -31,7 +31,7 @@
         <InputFile id="file" class="form-container__file" OnChange="@AddAvatar" accept=".png, .jpeg, .jpg" />
     </div>
     <div class="form-container">
-        <button type="submit" class="form-container--submitButton">
+        <button type="submit" class="button">
             Зарегистрироваться
         </button>
     </div>
@@ -42,19 +42,14 @@
 @code{
     string message;
     string _lableFileText = "Выбрать аватар (необязательно)";
+
+    /// <summary>
+    /// ~20 MB.
+    /// </summary>
     const long _MAX_FILE_SIZE = 20971520;
 
     InputFileChangeEventArgs loadedFileArgs;
     RegistrationUserDTO newUserDTO = new();
-
-
-    protected override void OnInitialized()
-    {
-        if (CurrentUserData.IsAuthorized)
-        {
-            NavNanager.NavigateTo("/");
-        }
-    }
 
 
     bool CheckFileSize(IBrowserFile file)
@@ -72,6 +67,10 @@
         _lableFileText = inputFile.File.Name;
     }
 
+    /// <summary>
+    /// Saves the avatar file (if present in loadedFileArgs) and generates a new name for it.
+    /// </summary>
+    /// <returns>The name of the saved file.</returns>
     async Task<string> SaveAvatar()
     {
         string newFileName = Guid.NewGuid().ToString();
@@ -86,6 +85,11 @@
         return "";
     }
 
+    /// <summary>
+    /// Submits data from the form to create a new user.
+    /// If successful, sets this user's data to cookie and CurrentUserData.
+    /// </summary>
+    /// <returns></returns>
     async Task SendNewUser()
     {
         try

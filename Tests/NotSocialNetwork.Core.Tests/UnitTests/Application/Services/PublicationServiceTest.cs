@@ -56,7 +56,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
-            
+
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
 
@@ -93,7 +93,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
-            
+
 
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
                                                             userService.Object);

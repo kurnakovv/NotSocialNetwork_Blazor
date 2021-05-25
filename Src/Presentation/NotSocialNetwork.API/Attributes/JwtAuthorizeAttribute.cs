@@ -15,12 +15,12 @@ namespace NotSocialNetwork.API.Attributes
             if (user == null)
             {
                 context.Result = new JsonResult(
-                    new 
-                    { 
+                    new
+                    {
                         message = "Unauthorized"
-                    }) 
+                    })
                 {
-                    StatusCode = StatusCodes.Status401Unauthorized 
+                    StatusCode = StatusCodes.Status401Unauthorized
                 };
             }
         }

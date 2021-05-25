@@ -33,7 +33,7 @@ namespace NotSocialNetwork.Services.Systems
 
         public ImageEntity TrySave(ImageEntity image)
         {
-            if(image == null)
+            if (image == null)
             {
                 var defaultImage = Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
 
@@ -50,7 +50,7 @@ namespace NotSocialNetwork.Services.Systems
 
         public Guid TryUpdate(UpdateFileDTO updateFile)
         {
-            if(updateFile.NewFile == null)
+            if (updateFile.NewFile == null)
             {
                 return updateFile.OldFile.Id;
             }

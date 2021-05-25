@@ -49,7 +49,7 @@ namespace NotSocialNetwork.Application.Services
 
             var publications = GetAll().Where(a => a.Author.Id == authorId);
 
-            if(publications.Count() == 0)
+            if (publications.Count() == 0)
             {
                 throw new ObjectNotFoundException($"User by id: {authorId} don't have a publications.");
             }
@@ -86,7 +86,7 @@ namespace NotSocialNetwork.Application.Services
             }
 
             IsAuthorFound(publication.AuthorId);
-            
+
             _publicationRepository.Add(publication);
             _publicationRepository.Commit();
 

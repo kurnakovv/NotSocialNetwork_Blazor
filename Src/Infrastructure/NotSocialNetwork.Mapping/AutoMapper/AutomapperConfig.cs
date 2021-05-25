@@ -37,7 +37,7 @@ namespace NotSocialNetwork.Mapping.AutoMapper
                 .ForMember(apd => apd.Images, opt => opt.Ignore())
                 .ReverseMap()
                 .ForMember(p => p.Images, opt => opt.Ignore());
-                
+
             CreateMap<PublicationEntity, UpdatePublicationDTO>().ReverseMap();
         }
 

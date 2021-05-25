@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using NotSocialNetwork.Application.Interfaces.Facades;
-using NotSocialNetwork.Application.Configs;
 
 namespace NotSocialNetwork.API.Controllers
 {
@@ -87,8 +84,8 @@ namespace NotSocialNetwork.API.Controllers
             try
             {
                 var publicationEntity = _publicationService.GetById(id);
-                
-                var publicationDTO = 
+
+                var publicationDTO =
                     _mapper.Map<PublicationDTO>(publicationEntity);
 
                 return Ok(publicationDTO);
@@ -231,7 +228,7 @@ namespace NotSocialNetwork.API.Controllers
         // TODO: Transfer this logic in PublicationService.
         private PublicationEntity AddImages(AddPublicationDTO publication, PublicationEntity publicationEntity)
         {
-            foreach(ImageEntity imageEntity in publication.Images)
+            foreach (ImageEntity imageEntity in publication.Images)
             {
                 var newImage = _imageRepositorySystem.TrySave(imageEntity);
 

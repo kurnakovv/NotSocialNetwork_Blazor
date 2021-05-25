@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace NotSocialNetwork.API.Controllers
@@ -48,7 +48,7 @@ namespace NotSocialNetwork.API.Controllers
                 }
 
                 var user = _userService.GetByEmail(login.Email);
-                
+
                 var token = _jwtSystem.GenerateToken(user);
 
                 var result = new LoginResult()
@@ -59,7 +59,7 @@ namespace NotSocialNetwork.API.Controllers
 
                 return Ok(result);
             }
-            catch(ObjectNotFoundException ex)
+            catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }

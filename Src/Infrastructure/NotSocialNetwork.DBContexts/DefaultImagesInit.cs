@@ -1,6 +1,5 @@
 ﻿using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.Entities;
-using System;
 using System.Linq;
 
 namespace NotSocialNetwork.DBContexts

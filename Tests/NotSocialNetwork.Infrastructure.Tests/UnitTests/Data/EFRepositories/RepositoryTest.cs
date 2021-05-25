@@ -1,14 +1,11 @@
-﻿using Moq;
-using NotSocialNetwork.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using NotSocialNetwork.Application.Entities;
+using NotSocialNetwork.Data.EFRepositories;
+using NotSocialNetwork.DBContexts;
 using System;
 using System.Collections.Generic;
-using Xunit;
 using System.Linq;
-using NotSocialNetwork.DBContexts;
-using NotSocialNetwork.Data.EFRepositories;
-using NotSocialNetwork.Application.Entities.Abstract;
-using NotSocialNetwork.Application.Entities;
-using Microsoft.EntityFrameworkCore;
+using Xunit;
 
 namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
 {
