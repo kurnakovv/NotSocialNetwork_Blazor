@@ -33,6 +33,20 @@
 > You can read about architecture by clicking on the images.
 
 ## Technologies
+
+<div style="text-align:left;">
+
+<div style="float:right;">
+
+Frontend:
+* Html - v5.0
+* Css - v3.0
+* Scss
+* Blazored - LocalStorage
+
+</div>
+
+Backend:
 * C# - v9.0
 * .Net - v5.0
 * EntityFrameworkCore - v5.0
@@ -43,6 +57,9 @@
 * Moq - v4.16.1
 * JWT - v6.10.1
 * Docker
+
+</div>
+
 
 ## Versions
 
