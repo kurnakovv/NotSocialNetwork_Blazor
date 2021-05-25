@@ -28,7 +28,7 @@
     string message;
     LoginDTO loginDTO = new();
 
-    
+
     async Task SendUserForAuthentication()
     {
         try
@@ -46,7 +46,7 @@
                 CurrentUserData.SetNewData(tokenAndGuid.UserId, tokenAndGuid.Token, loginDTO.Email);
                 CurrentUserData.IsAuthorized = true;
 
-                NavigationManager.NavigateTo("/");
+                message = "Вы были успешно аутентифицированы! Пожалуйста, вернитесь на главную.";
             }
             else
             {

@@ -112,6 +112,13 @@
 
             var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
 
+            if (result.IsSuccessStatusCode == false)
+            {
+                message = "Что-то пошло не так, возможно вы " +
+                            "ввели данные уже существующего пользователя.";
+                return;
+            }
+
             var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
 
             var user = await HttpHelper.GetUserAsync(Http, responseData.Id, responseData.Token);
@@ -133,7 +140,8 @@
                     message = "Упс, сервер не нашёл, куда вас поместить. Попробуйте позже.";
                     break;
                 case HttpStatusCode.BadRequest:
-                    message = "Что-то пошло не так, попробуйте изменить пост. Попробуйте позже.";
+                    message = "Что-то пошло не так, возможно вы " +
+                            "ввели данные уже существующего пользователя.";
                     break;
                 case HttpStatusCode.Conflict:
                     message = "Сервер борется со злом внутри, оставьте его в покое.";
