@@ -95,19 +95,15 @@
                 message = "Проверьте корректность введённых значений в полях!";
             }
 
-            newUserDTO.Image = new();
             if (loadedFileArgs != null)
             {
+                newUserDTO.Image = new();
                 string imageTitle = await SaveAvatar();
 
                 if (string.IsNullOrEmpty(imageTitle) == false)
                 {
                     newUserDTO.Image.Title = imageTitle;
                 }
-            }
-            else
-            {
-                newUserDTO.Image = null;
             }
 
             var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
