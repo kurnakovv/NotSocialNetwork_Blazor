@@ -1,8 +1,6 @@
 <div align="center">
 
-![Logo](ImgForReadme/MainImages/Logo.png)
-
-<img src="ImgForReadme/MainImages/Logo.png" />
+<img src="ImgForReadme/MainImages/Logo.png" width="250" />
 
 </div>
 
