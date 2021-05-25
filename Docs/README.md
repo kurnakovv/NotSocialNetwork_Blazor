@@ -73,6 +73,7 @@ docker-compose up
 |------------------ | -------------------------------------- |
 | NotSocialNetwork.API  | https://localhost:5001/swagger/index.html |
 | NotSocialNetwork.API  | http://localhost:5000/swagger/index.html |
+| Ms Sql Server  | Server=localhost;User Id=SA;Password=<YourStrong!Passw0rddD> Database=NotSocialNetworkDB; |
 
 </details>
 
