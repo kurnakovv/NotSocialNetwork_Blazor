@@ -106,6 +106,10 @@
                     newUserDTO.Image.Title = imageTitle;
                 }
             }
+            else
+            {
+                newUserDTO.Image = null;
+            }
 
             var result = await Http.PostAsJsonAsync($"{HttpHelper.APIAddress}user", newUserDTO);
 
