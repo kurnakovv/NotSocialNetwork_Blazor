@@ -98,15 +98,7 @@
         {
             currentUser = await HttpHelper.GetUserAsync(Http, CurrentUserData.Id);
 
-            if (currentUser != null && currentUser.Image != null &&
-                string.IsNullOrWhiteSpace(currentUser.Image.Title) is false)
-            {
-                authorAvatarPath = new($"../images/{currentUser.Image.Title}");
-            }
-            else
-            {
-                authorAvatarPath = new($"../css/images/Icons_User.png");
-            }
+            authorAvatarPath = new($"../images/{currentUser.Image.Title}");
         }
         catch (HttpRequestException httpReqEx)
         {
