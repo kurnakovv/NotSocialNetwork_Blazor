@@ -19,7 +19,7 @@
 		</div>
 	</header>
 
-	<main class="main">
+	<main class="main dark-theme">
 		<div class="main__body">
 			<!-- NavMenu component-->
 			<nav class="navmenu">
@@ -198,6 +198,20 @@
 			</div>
 		</div>
 	</footer>
+
+	<div class="popap popap-none">
+		<div class="popap__body">
+			<div class="popap__main">
+				<span>popap message</span>
+			</div>
+			<div class="popap__footer">
+				<div class="button-container">
+					<button class="button button-container__button" @onclick="LoadMorePosts">Показать ещё</button>
+					<button class="button button-container__button" @onclick="LoadMorePosts">Показать ещё</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

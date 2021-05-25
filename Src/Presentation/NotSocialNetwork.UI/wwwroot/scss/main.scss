@@ -17,12 +17,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	background-color: #e3f0e3;
-	font-size: 50px;
+	font-size: 20px;
 	min-height: 100vh;
-
-	span {
-		font-size: 15px;
-	}
 }
 
 .main {
@@ -52,11 +48,7 @@ body {
 		display: flex;
 		flex-flow: column nowrap;
 
-		padding: 15px 0;
-
 		text-align: center;
-
-		
 	}
 }
 
@@ -73,6 +65,7 @@ body {
 
 	font-size: $DefaultFontSize;
 	background-color: transparent;
+
 	&:hover {
 		background-color: $ButtonColor;
 		color: white;
@@ -111,7 +104,7 @@ body {
 	}
 
 	&__container:hover {
-		height: 4em;
+		height: 10em;
 
 		button {
 			display: block;
@@ -126,6 +119,7 @@ body {
 
 .button-container {
 	text-align: center;
+
 	&__button {
 		padding: 7px 15px;
 		margin: 13px;
@@ -133,12 +127,57 @@ body {
 	}
 }
 
+.popap {
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+
+	background-color: rgba(0, 0, 0, 0.562);
+
+	&__body {
+		display: flex;
+		flex-flow: column nowrap;
+
+		width: 40%;
+		height: 40%;
+
+		color: wheat;
+		background-color: #639666;
+
+		justify-content: space-around;
+
+		.button {
+			color: wheat;
+		}
+	}
+
+	&__main {
+		text-align: center;
+	}
+
+	// &__footer {}
+}
+
+.popap-none {
+	display: none;
+}
 
 .dark-theme {
 	background-color: rgb(13, 78, 13);
 	color: wheat;
 
 	button {
+		color: wheat;
+	}
+
+	input {
 		color: wheat;
 	}
 

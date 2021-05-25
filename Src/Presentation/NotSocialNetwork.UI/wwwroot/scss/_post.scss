@@ -29,6 +29,8 @@ $DefaultFontSize: 20px;
 
     // &__main {}
     &__footer {
+        margin: 15px 0 0 0;
+
         button:hover {
             text-decoration: underline;
             opacity: 1;
@@ -37,7 +39,7 @@ $DefaultFontSize: 20px;
 
     &__delete-button {
         font-size: 12px;
-        opacity: 0.8;
+        opacity: 0.6;
         background-color: transparent;
     }
 

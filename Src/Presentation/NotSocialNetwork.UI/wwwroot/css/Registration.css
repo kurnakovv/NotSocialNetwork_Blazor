@@ -8,6 +8,7 @@
   box-shadow: 0px 0px 20px 0.7px rgba(0, 0, 0, 0.1);
 }
 .main-container-form .form-container :focus {
+  color: black;
   background-color: rgba(255, 239, 120, 0.7);
 }
 .main-container-form .form-container input {

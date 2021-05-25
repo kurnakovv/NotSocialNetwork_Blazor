@@ -9,17 +9,17 @@
                 <button class="form__submitbutton" type="submit">Отправить!</button>
             </div>
         </EditForm>
-        <!--Переделать под модальное окно-->
-        <span>@message</span>
     </div>
 </div>
+
+<Popap Message="@Message" />
 
 @code {
     [Parameter] public HttpClient Http { get; set; }
     [Parameter] public ILocalStorageService LocalStorage { get; set; }
+    [Parameter] public string Message { get; set; }
 
     AddPublicationDTO newPost = new();
-    string message;
 
     async Task SubmitNewPost()
     {
@@ -38,7 +38,7 @@
 
                 if (responce.IsSuccessStatusCode)
                 {
-                    message = "Пост успешно загружен! Пожалуйста, перезагрузите страницу.";
+                    Message = "Пост успешно загружен! Пожалуйста, перезагрузите страницу.";
                 }
                 else if (responce.StatusCode == HttpStatusCode.InternalServerError)
                 {
@@ -46,7 +46,7 @@
                 }
                 else
                 {
-                    message = "Произошла внутренняя ошибка сервера, попробуйте позже.";
+                    Message = "Произошла внутренняя ошибка сервера, попробуйте позже.";
                 }
             }
         }
@@ -55,7 +55,7 @@
             switch (httpReqEx.StatusCode)
             {
                 case HttpStatusCode.NotFound:
-                    message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
+                    Message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
                     break;
                 case HttpStatusCode.Unauthorized:
                     NavNanager.NavigateTo("/login");
@@ -64,28 +64,28 @@
                     NavNanager.NavigateTo("/login");
                     break;
                 case HttpStatusCode.BadRequest:
-                    message = "Что-то пошло не так, попробуйте изменить пост.";
+                    Message = "Что-то пошло не так, попробуйте изменить пост.";
                     break;
                 case HttpStatusCode.Conflict:
-                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    Message = "Сервер борется со злом внутри, оставьте его в покое.";
                     break;
                 case HttpStatusCode.Forbidden:
-                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    Message = "Сервер отказался выполнять запрос, это БУНД!";
                     break;
                 case HttpStatusCode.Gone:
-                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    Message = "Попытка общения с мёртвым закончилась полным провалом...";
                     break;
                 default:
-                    message = "Сервер вернул неизвестный статус код. \n" +
-                        "Если не затруднит, обратитесь к одному из разработчиков " +
-                        "по ссылкам внизу страницы.";
+                    Message = "Сервер вернул неизвестный статус код. \n" +
+                    "Если не затруднит, обратитесь к одному из разработчиков " +
+                    "по ссылкам внизу страницы.";
                     break;
             }
         }
         catch (Exception)
         {
-            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
-                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+            Message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                    "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
     }
 }

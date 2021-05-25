@@ -1,27 +1,33 @@
 @import "../css/main.css";
 
-.main-contaner {
+$WindowColor: #e3f0e331;
 
-	.main-contaner-UserInfo {
+.user-info {
+	&__body {
 		display: flex;
+		align-items: center;
+	}
 
-		.UserInfo-container {
-			font-size: 30px;
-			background-color: rgba(255, 239, 120, 0.2);
+	&__logo {
+		background-color: $WindowColor;
+		padding: 5px 5px;
 
-			margin: 0px 10px 10px 15px;
-
-			flex-grow: 1;
-
-			.UserInfo-userLogo {
-				object-fit: contain;
-			}
-
-			.UserInfo-nickname {}
-
-			.UserInfo-contacts {}
-
-			.UserInfo-age {}
+		img {
+			object-fit: contain;
+			height: 300px;
 		}
+	}
+
+	&__info {
+		display: flex;
+		flex-flow: column nowrap;
+
+		padding-left: 20px;
+	}
+
+	&__block {
+		padding: 10px 5px;
+		margin: 10px 0;
+		background-color: $WindowColor;
 	}
 }

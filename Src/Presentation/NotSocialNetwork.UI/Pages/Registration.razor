@@ -11,11 +11,6 @@
     <link href="/css/Registration.css" rel="stylesheet">
 </head>
 
-<div class="TitleContainer">
-    <span>
-        @message
-    </span>
-</div>
 <EditForm Model="newUserDTO" OnValidSubmit="@SendNewUser"
           action="#" class="main-container-form">
     <div class="form-container">
@@ -42,6 +37,8 @@
     </div>
 </EditForm>
 
+<Popap Message="@message" />
+
 @code{
     string message;
     string _lableFileText = "Выбрать аватар (необязательно)";
@@ -50,6 +47,7 @@
     InputFileChangeEventArgs loadedFileArgs;
     RegistrationUserDTO newUserDTO = new();
 
+
     protected override void OnInitialized()
     {
         if (CurrentUserData.IsAuthorized)
@@ -57,6 +55,7 @@
             NavNanager.NavigateTo("/");
         }
     }
+
 
     bool CheckFileSize(IBrowserFile file)
     {
@@ -142,7 +141,6 @@
                     message = "Попытка общения с мёртвым закончилась полным провалом...";
                     break;
                 default:
-                    message = "Сервер не активен. Пожалуйста, попробуйте позже.";
                     break;
             }
         }

@@ -17,7 +17,7 @@
     <div class="post">
         <div class="post__body">
             <div class="post__header">
-                <img class="authoricon" src="../images/@_imageUrl" width="70" height="70"
+                <img class="authoricon" src="../images/@_imageUrl" height="70"
                      alt="AuthorIcon">
                 <span class="authorname">@post.Author.Name</span>
             </div>
@@ -33,17 +33,20 @@
                 <div class="post__footer">
                     <button class='post__delete-button' @onclick="() => DeletePost(post.Id)" type='button'>Удалить пост</button>
                 </div>
-                <span>@message</span>
             }
         </div>
     </div>
+}
+@if (string.IsNullOrWhiteSpace(Message) == false)
+{
+    <Popap Message="@Message" />
 }
 
 @code {
     [Parameter] public List<PublicationDTO> Posts { get; set; }
     [Parameter] public HttpClient Http { get; set; }
+    [Parameter] public string Message { get; set; }
 
-    string message;
     string _emailOfCurrentUser;
     StringBuilder _imageUrl = new("../css/images/Icons_User.png");
 
@@ -75,34 +78,34 @@
             switch (httpReqEx.StatusCode)
             {
                 case HttpStatusCode.NotFound:
-                    message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
+                    Message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
                     break;
                 case HttpStatusCode.Unauthorized:
                     NavNanager.NavigateTo("/login");
                     break;
                 case HttpStatusCode.BadRequest:
-                    message = "Что-то пошло не так, попробуйте изменить пост.";
+                    Message = "Что-то пошло не так, попробуйте изменить пост.";
                     break;
                 case HttpStatusCode.Conflict:
-                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    Message = "Сервер борется со злом внутри, оставьте его в покое.";
                     break;
                 case HttpStatusCode.Forbidden:
-                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    Message = "Сервер отказался выполнять запрос, это БУНД!";
                     break;
                 case HttpStatusCode.Gone:
-                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    Message = "Попытка общения с мёртвым закончилась полным провалом...";
                     break;
                 default:
-                    message = "Сервер вернул неизвестный статус код. \n" +
-                        "Если не затруднит, обратитесь к одному из разработчиков " +
-                        "по ссылкам внизу страницы.";
+                    Message = "Сервер вернул неизвестный статус код. \n" +
+                    "Если не затруднит, обратитесь к одному из разработчиков " +
+                    "по ссылкам внизу страницы.";
                     break;
             }
         }
         catch (Exception)
         {
-            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
-                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+            Message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                    "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
         }
     }
 }

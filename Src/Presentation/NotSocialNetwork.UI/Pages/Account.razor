@@ -6,22 +6,23 @@
 
 <link href="/css/Account.css" rel="stylesheet">
 
-<div class="main-contaner-UserInfo">
-    <div class="UserInfo-userLogo">
-        <img src='@authorAvatarPath' alt="UserAvatar" />
+<div class="user-info__body">
+    <div class="user-info__logo">
+        <img src="@authorAvatarPath" alt="UserAvatar" />
     </div>
-    <div class="UserInfo-container">
-        <div class="UserInfo-nickname">
+    <div class="user-info__info">
+        <div class="user-info__block">
             <span>@currentUser.Name</span>
         </div>
-        <div class="UserInfo-contacts">
+        <div class="user-info__block">
             <span>@currentUser.Email</span>
         </div>
     </div>
 </div>
 
 <Post Posts="posts.ToList()" Http="Http" />
-<span>@message</span>
+
+<Popap Message="@message" />
 
 
 @code{
@@ -60,7 +61,7 @@
             switch (httpReqEx.StatusCode)
             {
                 case HttpStatusCode.NotFound:
-                    message = "У вас пока нет постов.";
+                    // ¯\_(ツ)_/¯
                     break;
                 case HttpStatusCode.Unauthorized:
                     NavManager.NavigateTo("/login");

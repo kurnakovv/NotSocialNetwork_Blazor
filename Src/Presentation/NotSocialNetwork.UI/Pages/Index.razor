@@ -7,7 +7,7 @@
 
 @if (posts.Any())
 {
-    <Post Http="Http" Posts="posts" />
+    <Post Http="Http" Posts="posts" Message="@message" />
     if (posts.Count % 10 == 0)
     {
         _paginationNumber++;
@@ -18,7 +18,7 @@
 }
 else
 {
-    <span>@message</span>
+    <Popap Message="@message"/>
 }
 
 @code{

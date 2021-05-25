@@ -1,0 +1,27 @@
+﻿
+@if (string.IsNullOrWhiteSpace(Message) == false)
+{
+    <div class="popap">
+        <div class="popap__body">
+            <div class="popap__main">
+                <span>@Message</span>
+            </div>
+            <div class="popap__footer">
+                <div class="button-container">
+                    <button @onclick="() => ClosePopap()" class="button button-container__button">Ок</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string Message { get; set; }
+
+    void ClosePopap()
+    {
+        Message = string.Empty;
+
+        StateHasChanged();
+    }
+}

@@ -9,11 +9,6 @@
     <link href="/css/Registration.css" rel="stylesheet">
 </head>
 
-<div class="TitleContainer">
-    <span>
-        @message
-    </span>
-</div>
 <EditForm Model="loginDTO" OnValidSubmit="@SendUserForAuthentication"
           class="main-container-form">
     <div class="form-container">
@@ -26,6 +21,8 @@
         </button>
     </div>
 </EditForm>
+
+<Popap Message="@message" />
 
 @code {
     string message;
