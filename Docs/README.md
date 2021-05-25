@@ -2,6 +2,8 @@
 
 ![Logo](ImgForReadme/MainImages/Logo.png)
 
+<img src="ImgForReadme/MainImages/Logo.png" />
+
 </div>
 
 ![MainPage](ImgForReadme/MainImages/MainPageInUI.png)
