@@ -3,6 +3,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Services;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object, null, null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -74,9 +75,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
+            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
 
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            imageRepositorySystem.Object);
 
             // Act
             var result = publicationService.Add(_publication);
@@ -93,10 +96,12 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
+            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
 
 
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object, 
+                                                            imageRepositorySystem.Object);
 
             publicationRepositoryMock.Setup(r => r.Add(_publication))
                                         .Throws(new ObjectAlreadyExistException($"Publication by Id: {_publication.Id} already exists."));
@@ -113,7 +118,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object, 
+                                                            null,
+                                                            null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -132,7 +139,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            null,
+                                                            null);
 
             // Act
             Action act = () => publicationService.Delete(_publication.Id);
@@ -146,7 +155,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            null,
+                                                            null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -165,7 +176,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            null,
+                                                            null);
 
             // Act
             Action act = () => publicationService.GetById(_publication.Id);
@@ -181,7 +194,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -202,7 +216,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
 
             // Act
             Action act = () => publicationService.GetAllByAuthorId(_publication.Author.Id);
@@ -218,7 +233,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
 
             // Act
             Action act = () => publicationService.GetAllByAuthorId(_authorWithoutPublications.Id);
@@ -234,7 +250,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -254,7 +271,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
             int invalidIndex = -1;
 
             // Act
@@ -271,7 +289,8 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
             var userService = new Mock<IUserService>();
             var publicationService = new PublicationService(publicationRepositoryMock.Object,
-                                                            userService.Object);
+                                                            userService.Object,
+                                                            null);
             int bigIndex = 10;
 
             publicationRepositoryMock.Setup(r => r.GetAll())
@@ -289,7 +308,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            null,
+                                                            null);
 
             publicationRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_publications.AsQueryable());
@@ -309,7 +330,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var publicationRepositoryMock = new Mock<IRepository<PublicationEntity>>();
-            var publicationService = new PublicationService(publicationRepositoryMock.Object, null);
+            var publicationService = new PublicationService(publicationRepositoryMock.Object,
+                                                            null,
+                                                            null);
 
             // Act
             Action act = () => publicationService.Update(_publication);

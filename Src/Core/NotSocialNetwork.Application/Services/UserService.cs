@@ -4,6 +4,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,15 @@ namespace NotSocialNetwork.Application.Services
     public class UserService : IUserService
     {
         public UserService(
-            IRepository<UserEntity> userRepository)
+            IRepository<UserEntity> userRepository,
+            IImageRepositorySystem imageRepositorySystem)
         {
             _userRepository = userRepository;
+            _imageRepositorySystem = imageRepositorySystem;
         }
 
         private readonly IRepository<UserEntity> _userRepository;
+        private readonly IImageRepositorySystem _imageRepositorySystem;
 
         public UserEntity Add(UserEntity user)
         {
@@ -30,6 +34,9 @@ namespace NotSocialNetwork.Application.Services
             {
                 throw new ObjectAlreadyExistException($"User by Id: {user.Id} already exists.");
             }
+
+            var image = _imageRepositorySystem.TrySave(user.Image);
+            user.Image = image;
 
             _userRepository.Add(user);
             _userRepository.Commit();

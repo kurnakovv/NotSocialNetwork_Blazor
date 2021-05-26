@@ -4,6 +4,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,17 @@ namespace NotSocialNetwork.Application.Services
     {
         public PublicationService(
             IRepository<PublicationEntity> publicationRepository,
-            IUserService userService)
+            IUserService userService,
+            IImageRepositorySystem imageRepositorySystem)
         {
             _publicationRepository = publicationRepository;
             _userService = userService;
+            _imageRepositorySystem = imageRepositorySystem;
         }
 
         private readonly IRepository<PublicationEntity> _publicationRepository;
         private readonly IUserService _userService;
+        private readonly IImageRepositorySystem _imageRepositorySystem;
 
         public IEnumerable<PublicationEntity> GetAll()
         {
@@ -87,6 +91,12 @@ namespace NotSocialNetwork.Application.Services
 
             IsAuthorFound(publication.AuthorId);
 
+            if (publication.Images != null &&
+                publication.Images.Count() != 0)
+            {
+                SaveImages(publication);
+            }
+
             _publicationRepository.Add(publication);
             _publicationRepository.Commit();
 
@@ -116,6 +126,14 @@ namespace NotSocialNetwork.Application.Services
         private void IsAuthorFound(Guid id)
         {
             _userService.GetById(id);
+        }
+
+        private void SaveImages(PublicationEntity publication)
+        {
+            foreach (ImageEntity imageEntity in publication.Images)
+            {
+                _imageRepositorySystem.TrySave(imageEntity);
+            }
         }
     }
 }

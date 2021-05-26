@@ -22,17 +22,14 @@ namespace NotSocialNetwork.API.Controllers
     {
         public PublicationController(
             IPublicationService publicationService,
-            IMapper mapper,
-            IImageRepositorySystem imageRepositorySystem)
+            IMapper mapper)
         {
             _publicationService = publicationService;
             _mapper = mapper;
-            _imageRepositorySystem = imageRepositorySystem;
         }
 
         private readonly IPublicationService _publicationService;
         private readonly IMapper _mapper;
-        private readonly IImageRepositorySystem _imageRepositorySystem;
 
         /// <summary>
         /// Get all publications by pagination.
@@ -139,15 +136,14 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Add.",
             Description = "Add publication."
         )]
-        public ActionResult<AddPublicationDTO> Add(/*[FromForm]*/AddPublicationDTO publication)
+        public ActionResult<AddPublicationDTO> Add(AddPublicationDTO publication)
         {
             try
             {
                 var publicationEntity =
                     _mapper.Map<PublicationEntity>(publication);
 
-                var publicationEntityWithImages = AddImages(publication, publicationEntity);
-                _publicationService.Add(publicationEntityWithImages);
+                _publicationService.Add(publicationEntity);
 
                 return Ok(publication);
             }
@@ -223,19 +219,6 @@ namespace NotSocialNetwork.API.Controllers
             {
                 return NotFound(ex.Message);
             }
-        }
-
-        // TODO: Transfer this logic in PublicationService.
-        private PublicationEntity AddImages(AddPublicationDTO publication, PublicationEntity publicationEntity)
-        {
-            foreach (ImageEntity imageEntity in publication.Images)
-            {
-                var newImage = _imageRepositorySystem.TrySave(imageEntity);
-
-                publicationEntity.Images.Add(newImage);
-            }
-
-            return publicationEntity;
         }
     }
 }

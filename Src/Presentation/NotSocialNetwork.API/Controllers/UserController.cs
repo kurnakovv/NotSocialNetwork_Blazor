@@ -23,18 +23,15 @@ namespace NotSocialNetwork.API.Controllers
         public UserController(
             IUserService userService,
             IMapper mapper,
-            IImageRepositorySystem imageRepositorySystem,
             IJwtSystem jwtSystem)
         {
             _userService = userService;
             _mapper = mapper;
-            _imageRepositorySystem = imageRepositorySystem;
             _jwtSystem = jwtSystem;
         }
 
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly IImageRepositorySystem _imageRepositorySystem;
         private readonly IJwtSystem _jwtSystem;
 
         /// <summary>
@@ -117,9 +114,6 @@ namespace NotSocialNetwork.API.Controllers
             try
             {
                 var userEntity = _mapper.Map<UserEntity>(registrationUserDTO);
-
-                var image = _imageRepositorySystem.TrySave(registrationUserDTO.Image);
-                userEntity.Image = image;
 
                 _userService.Add(userEntity);
 

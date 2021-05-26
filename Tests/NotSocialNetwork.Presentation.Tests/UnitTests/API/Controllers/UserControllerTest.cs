@@ -20,7 +20,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             new UserEntity(){Name = "Ivan", DateOfBirth = DateTime.Now, Email = "ivan@gmail.com" },
         };
 
-        private readonly UserEntity _user = new UserEntity()
+        private static readonly UserEntity _user = new UserEntity()
         {
             Name = "Maksim",
             DateOfBirth = DateTime.Now,
@@ -36,6 +36,10 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             DateOfBirth = DateTime.Now,
             Email = "maksim@gmail.com",
         };
+        private static readonly RegistrationResponseDTO _registrationResponseDTO = new()
+        {
+            Id = _user.Id,
+        };
 
         [Fact]
         public void Get_GetAllUsers_OkObjectResult()
@@ -50,7 +54,6 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object,
                                         null);
 
             // Act
@@ -75,7 +78,6 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object,
                                         null);
 
             // Act
@@ -94,22 +96,18 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userService = new Mock<IUserService>();
             var mapper = new Mock<IMapper>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var jwtSystem = new Mock<IJwtSystem>();
 
 
             userService.Setup(u => u.Add(_user))
                 .Returns(_user);
-
-            //hostEnvironment.Setup(h => h.EnvironmentName)
-            //    .Returns("Hosting:UnitTestEnvironment");
-
-            //imageFacade.Setup(i => i.Save(_user.Image, "pathToSave"))
-            //    .Returns(_user.Id);
+            mapper.Setup(m => m.Map<UserEntity>(_userDTO)).Returns(_user);
+            mapper.Setup(m => m.Map<RegistrationResponseDTO>(_user)).Returns(_registrationResponseDTO);
 
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object,
-                                        null);
+                                        jwtSystem.Object);
 
             // Act
             var result = userController.Add(_userDTO);
@@ -134,7 +132,6 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object,
                                         null);
 
             // Act
@@ -160,7 +157,6 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             var userController = new UserController(
                                         userService.Object,
                                         mapper.Object,
-                                        imageRepositorySystem.Object,
                                         null);
 
             // Act

@@ -19,10 +19,7 @@ namespace NotSocialNetwork.Mapping.AutoMapper
         private void UserMapper()
         {
             CreateMap<UserEntity, UserDTO>().ReverseMap();
-            CreateMap<UserEntity, RegistrationUserDTO>()
-                .ForMember(apd => apd.Image, opt => opt.Ignore())
-                .ReverseMap()
-                .ForMember(u => u.Image, opt => opt.Ignore());
+            CreateMap<UserEntity, RegistrationUserDTO>().ReverseMap();
             CreateMap<UserEntity, RegistrationResponseDTO>();
         }
 
@@ -33,10 +30,7 @@ namespace NotSocialNetwork.Mapping.AutoMapper
                            opt => opt.MapFrom(src => src.Images.Select(i => i.Title)))
                 .ReverseMap();
 
-            CreateMap<PublicationEntity, AddPublicationDTO>()
-                .ForMember(apd => apd.Images, opt => opt.Ignore())
-                .ReverseMap()
-                .ForMember(p => p.Images, opt => opt.Ignore());
+            CreateMap<PublicationEntity, AddPublicationDTO>().ReverseMap();
 
             CreateMap<PublicationEntity, UpdatePublicationDTO>().ReverseMap();
         }

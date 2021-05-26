@@ -73,8 +73,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var publicationController = new PublicationController(
                                             publicationService.Object,
-                                            mapper.Object,
-                                            null);
+                                            mapper.Object);
 
             // Act
             var results = publicationController.Get();
@@ -100,8 +99,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var publicationController = new PublicationController(
                                                 publicationService.Object,
-                                                mapper.Object,
-                                                null);
+                                                mapper.Object);
 
             // Act
             var result = publicationController.Get(_publicationEntities.ElementAt(0).Id);
@@ -118,15 +116,10 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
             // Arrange
             var publicationService = new Mock<IPublicationService>();
             var mapper = new Mock<IMapper>();
-            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
-
-            mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
-                .Returns(_publicationsDTO.ElementAt(0));
 
             var publicationController = new PublicationController(
                                                 publicationService.Object,
-                                                mapper.Object,
-                                                imageRepositorySystem.Object);
+                                                mapper.Object);
 
             // Act
             var result = publicationController.Add(_appPublicationDTO);
@@ -149,8 +142,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var publicationController = new PublicationController(
                                                 publicationService.Object,
-                                                mapper.Object,
-                                                null);
+                                                mapper.Object);
 
             // Act
             var result = publicationController.Update(_updatePublicationDTO);
@@ -173,8 +165,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Controllers
 
             var publicationController = new PublicationController(
                                                 publicationService.Object,
-                                                mapper.Object,
-                                                null);
+                                                mapper.Object);
 
             // Act
             var result = publicationController.Delete(_publicationEntities.ElementAt(0).Id);

@@ -2,6 +2,7 @@
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
+using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Services;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,14 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
                 Name = "Name1",
                 DateOfBirth = DateTime.Now,
                 Email = "firstEmail@gmail.com",
+                Image = new ImageEntity() { Title = "Some title1"},
             },
             new UserEntity()
             {
                 Name = "Name2",
                 DateOfBirth = DateTime.Now,
                 Email = "lastEmail@gmail.com",
+                Image = new ImageEntity() { Title = "Some title2"},
             },
         };
 
@@ -34,6 +37,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
             Name = "Name",
             DateOfBirth = DateTime.Now,
             Email = "email@gmail.com",
+            Image = new ImageEntity() { Title = "Some title"},
         };
 
         [Fact]
@@ -41,7 +45,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                                .Returns(_users.AsQueryable());
@@ -61,7 +67,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    imageRepositorySystem.Object);
 
             // Act
             var result = userService.Add(_user);
@@ -78,7 +87,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    imageRepositorySystem.Object);
 
             userRepositoryMock.Setup(r => r.Add(_user))
                                 .Throws(new ObjectAlreadyExistException($"User by Id: {_user.Id} already exists."));
@@ -95,7 +107,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                                .Returns(_users.AsQueryable());
@@ -114,7 +128,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             // Act
             Action act = () => userService.Delete(_user.Id);
@@ -128,7 +144,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                         .Returns(_users.AsQueryable());
@@ -148,7 +166,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             // Act
             Action act = () => userService.GetById(_user.Id);
@@ -162,7 +182,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                                .Returns(_users.AsQueryable());
@@ -180,7 +202,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             // Act
             Action act = () => userService.GetByEmail(_user.Email);
@@ -194,7 +218,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                                .Returns(_users.AsQueryable());
@@ -212,7 +238,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
             int invalidIndex = -1;
 
             // Act
@@ -227,7 +255,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
             int bigIndex = 10;
 
             userRepositoryMock.Setup(r => r.GetAll())
@@ -245,7 +275,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
 
             userRepositoryMock.Setup(r => r.GetAll())
                                                .Returns(_users.AsQueryable());
@@ -266,7 +298,9 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.Services
         {
             // Arrange
             var userRepositoryMock = new Mock<IRepository<UserEntity>>();
-            var userService = new UserService(userRepositoryMock.Object);
+            var userService = new UserService(
+                                    userRepositoryMock.Object,
+                                    null);
             _user.Name = "TestName";
 
             // Act
