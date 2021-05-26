@@ -63,6 +63,7 @@ Backend:
 
 ## Versions
 
+* v1.0.0
 
 ## How to start
 
