@@ -14,13 +14,11 @@ namespace NotSocialNetwork.Services.Systems
         public string GenerateToken(UserEntity user)
         {
             var secret = JwtConfig.secret;
-
             byte[] securityKey = Encoding.ASCII.GetBytes(secret);
-
-            var jwtTokenHandler = new JwtSecurityTokenHandler();
-
             var expirationDate = DateTime.UtcNow.AddDays(2);
 
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            
             var securityTokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

@@ -19,12 +19,12 @@ namespace NotSocialNetwork.API
             }
 
             #region Memory data (Hide if using real database)
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var appDbContext = services.GetRequiredService<AppDbContext>();
-                TestDataInit.AddTestData(appDbContext);
-            }
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    var appDbContext = services.GetRequiredService<AppDbContext>();
+            //    TestDataInit.AddTestData(appDbContext);
+            //}
             #endregion
 
             host.Run();
