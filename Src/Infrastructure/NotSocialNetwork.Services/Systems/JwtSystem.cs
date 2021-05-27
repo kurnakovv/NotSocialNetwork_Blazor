@@ -13,7 +13,7 @@ namespace NotSocialNetwork.Services.Systems
     {
         public string GenerateToken(UserEntity user)
         {
-            var secret = JwtConfig.secret;
+            var secret = JwtConfig.SECRET;
             byte[] securityKey = Encoding.ASCII.GetBytes(secret);
             var expirationDate = DateTime.UtcNow.AddDays(2);
 

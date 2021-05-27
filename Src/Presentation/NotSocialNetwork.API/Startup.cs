@@ -1,14 +1,18 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.DBContexts;
 using NotSocialNetwork.DI.DIConfig;
 using NotSocialNetwork.Mapping.AutoMapper;
 using System.Collections.Generic;
+using System.Text;
 
 namespace NotSocialNetwork.API
 {
@@ -36,6 +40,7 @@ namespace NotSocialNetwork.API
 
             ConnectMapping(services);
             ConnectSwagger(services);
+            ConnectJwt(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,9 +57,8 @@ namespace NotSocialNetwork.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseMiddleware<JwtAuthenticationMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
@@ -125,6 +129,27 @@ namespace NotSocialNetwork.API
                         new List<string>()
                     }
                 });
+            });
+        }
+        
+        private void ConnectJwt(IServiceCollection services)
+        {
+            var key = Encoding.ASCII.GetBytes(JwtConfig.SECRET);
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
     }

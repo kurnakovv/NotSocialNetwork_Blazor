@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
@@ -18,6 +18,7 @@ namespace NotSocialNetwork.API.Controllers
     /// </summary>
     [Route("api/user")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         public UserController(
@@ -46,7 +47,6 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Get all by pagination.",
             Description = "Get all users by pagination."
         )]
-        [JwtAuthorize]
         public ActionResult<IEnumerable<UserDTO>> Get(int index = 0)
         {
             try
@@ -79,7 +79,6 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Get by id.",
             Description = "Get user by id."
         )]
-        [JwtAuthorize]
         public ActionResult<UserDTO> Get(Guid id)
         {
             try
@@ -102,6 +101,7 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="registrationUserDTO">User parameters.</param>
         /// <returns>User.</returns>
         [HttpPost]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -146,7 +146,6 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Update.",
             Description = "Update user."
         )]
-        [JwtAuthorize]
         public ActionResult<UserDTO> Update(UserEntity user)
         {
             try
@@ -175,7 +174,6 @@ namespace NotSocialNetwork.API.Controllers
             Summary = "Delete by id.",
             Description = "Delete user by id."
         )]
-        [JwtAuthorize]
         public ActionResult<UserDTO> Delete(Guid id)
         {
             try

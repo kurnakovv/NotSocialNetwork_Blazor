@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NotSocialNetwork.API.Attributes;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Services;
-using NotSocialNetwork.Application.Interfaces.Systems;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ namespace NotSocialNetwork.API.Controllers
     /// </summary>
     [Route("api/publication")]
     [ApiController]
+    [Authorize]
     public class PublicationController : ControllerBase
     {
         public PublicationController(
@@ -36,6 +36,7 @@ namespace NotSocialNetwork.API.Controllers
         /// </summary>
         /// <returns>Publications.</returns>
         [HttpGet("index={index}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -70,6 +71,7 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="id">Publication id.</param>
         /// <returns>Publication.</returns>
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
@@ -99,6 +101,7 @@ namespace NotSocialNetwork.API.Controllers
         /// <param name="authorId">Author id</param>
         /// <returns>Publications</returns>
         [HttpGet("author={authorId}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
@@ -131,7 +134,6 @@ namespace NotSocialNetwork.API.Controllers
         [ProducesResponseType(typeof(AddPublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Add.",
             Description = "Add publication."
@@ -165,7 +167,6 @@ namespace NotSocialNetwork.API.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Update.",
             Description = "Update publication."
@@ -202,7 +203,6 @@ namespace NotSocialNetwork.API.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [JwtAuthorize]
         [SwaggerOperation(
             Summary = "Delete by id.",
             Description = "Delete publication by id."
