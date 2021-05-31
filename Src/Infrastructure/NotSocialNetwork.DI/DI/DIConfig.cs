@@ -4,7 +4,11 @@ using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Services;
 using NotSocialNetwork.Application.Interfaces.Systems;
+using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
+using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.Services;
+using NotSocialNetwork.Application.UseCases.Publication;
+using NotSocialNetwork.Application.UseCases.User;
 using NotSocialNetwork.Data.EFRepositories;
 using NotSocialNetwork.Services.Facades;
 using NotSocialNetwork.Services.Systems;
@@ -16,6 +20,7 @@ namespace NotSocialNetwork.DI.DIConfig
         public static void ConfigureDI(this IServiceCollection services)
         {
             ConfigureRepositories(services);
+            ConfigureUseCases(services);
             ConfigureServices(services);
             ConfigureSystems(services);
             ConfigureFacades(services);
@@ -26,6 +31,26 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IRepository<UserEntity>, EFCoreRepository<UserEntity>>();
             services.AddTransient<IRepository<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
             services.AddTransient<IRepository<ImageEntity>, EFCoreRepository<ImageEntity>>();
+        }
+
+        private static void ConfigureUseCases(IServiceCollection services)
+        {
+            ConfigureUseCasesUser(services);
+            ConfigureUseCasesPublication(services);
+        }
+
+        private static void ConfigureUseCasesUser(IServiceCollection services)
+        {
+            services.AddTransient<IAddableUser, AddUser>();
+            services.AddTransient<IEditableUser, EditUser>();
+            services.AddTransient<IGetableUser, GetUser>();
+        }
+
+        private static void ConfigureUseCasesPublication(IServiceCollection services)
+        {
+            services.AddTransient<IAddablePublication, AddPublication>();
+            services.AddTransient<IEditablePublication, EditPublication>();
+            services.AddTransient<IGetablePublication, GetPublication>();
         }
 
         private static void ConfigureServices(IServiceCollection services)
