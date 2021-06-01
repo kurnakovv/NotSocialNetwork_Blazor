@@ -7,20 +7,40 @@ using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.Publication;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Unsuccesses
 {
     public class AddPublicationUnsuccessTest
     {
-        private readonly PublicationEntity _publication = new PublicationEntity()
+        private readonly IEnumerable<PublicationEntity> _publications = new List<PublicationEntity>()
         {
-            Images = null,
-            Author = new UserEntity() { Name = "Name", DateOfBirth = DateTime.Now, Email = "some@gmail.com" },
+            new PublicationEntity()
+            {
+                Author = new UserEntity()
+                {
+                    Name = "Name1",
+                    DateOfBirth = DateTime.Now,
+                    Email = "firstEmail@gmail.com",
+                },
+                Images = null,
+            },
+            new PublicationEntity()
+            {
+                Author = new UserEntity()
+                {
+                    Name = "Name1",
+                    DateOfBirth = DateTime.Now,
+                    Email = "firstEmail@gmail.com",
+                },
+                Images = null,
+            }
         };
 
         [Fact]
-        public void Add_AddIvnalidPublication_ObjectAlreadyExistException()
+        public void Add_AddInvalidPublication_ObjectAlreadyExistException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
@@ -33,12 +53,12 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
                                         getableUser.Object,
                                         publicationRepository.Object,
                                         imageRepositorySystem.Object);
-
-            publicationRepository.Setup(r => r.Add(_publication))
-                                        .Throws(new ObjectAlreadyExistException($"Publication by Id: {_publication.Id} already exists."));
+            
+            getablePublication.Setup(gp => gp.GetAll())
+                                  .Returns(_publications);
 
             // Act
-            Action act = () => addPublication.Add(_publication);
+            Action act = () => addPublication.Add(_publications.ElementAt(0));
 
             // Assert
             Assert.Throws<ObjectAlreadyExistException>(act);
