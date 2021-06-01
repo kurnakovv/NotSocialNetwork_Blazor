@@ -2,11 +2,9 @@
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Repositories;
-using NotSocialNetwork.Application.Interfaces.Services;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
-using NotSocialNetwork.Application.Services;
 using NotSocialNetwork.Application.UseCases.Publication;
 using NotSocialNetwork.Application.UseCases.User;
 using NotSocialNetwork.Data.EFRepositories;
@@ -21,7 +19,6 @@ namespace NotSocialNetwork.DI.DIConfig
         {
             ConfigureRepositories(services);
             ConfigureUseCases(services);
-            ConfigureServices(services);
             ConfigureSystems(services);
             ConfigureFacades(services);
         }
@@ -51,12 +48,6 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IAddablePublication, AddPublication>();
             services.AddTransient<IEditablePublication, EditPublication>();
             services.AddTransient<IGetablePublication, GetPublication>();
-        }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IPublicationService, PublicationService>();
         }
 
         private static void ConfigureSystems(IServiceCollection services)
