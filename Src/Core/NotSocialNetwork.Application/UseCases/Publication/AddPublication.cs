@@ -30,15 +30,14 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         public PublicationEntity Add(PublicationEntity publication)
         {
-            if (_getablePublication.GetAll().Any(p => p.Id == publication.Id))
+            if (IsPublicationAlreadyExist(publication) == true)
             {
                 throw new ObjectAlreadyExistException($"Publication by Id: {publication.Id} already exists.");
             }
 
             IsAuthorFound(publication.AuthorId);
 
-            if (publication.Images != null &&
-                publication.Images.Count() != 0)
+            if (IsPublicationContainImages(publication))
             {
                 SaveImages(publication);
             }
@@ -49,9 +48,30 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             return publication;
         }
 
+        private bool IsPublicationAlreadyExist(PublicationEntity publication)
+        {
+            if(_getablePublication.GetAll().Any(p => p.Id == publication.Id) == true)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void IsAuthorFound(Guid id)
         {
             _getableUser.GetById(id);
+        }
+
+        private bool IsPublicationContainImages(PublicationEntity publication)
+        {
+            if (publication.Images != null &&
+                publication.Images.Count() != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void SaveImages(PublicationEntity publication)

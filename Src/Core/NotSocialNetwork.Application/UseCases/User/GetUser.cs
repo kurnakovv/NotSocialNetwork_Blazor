@@ -54,7 +54,7 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public IEnumerable<UserEntity> GetByPagination(int index)
         {
-            if (index < 0)
+            if (IsInvalidIndex(index))
             {
                 throw new InvalidOperationException("Index cannot be less than 0.");
             }
@@ -65,12 +65,32 @@ namespace NotSocialNetwork.Application.UseCases.User
                             .Skip(countOfSkipItems)
                             .Take(PaginationConfig.MAX_ITEMS);
 
-            if (users.Count() == 0)
+            if (IsEmptyUsersCount(users))
             {
                 throw new ObjectNotFoundException("No more users.");
             }
 
             return users;
+        }
+
+        private bool IsInvalidIndex(int index)
+        {
+            if (index < 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsEmptyUsersCount(IEnumerable<UserEntity> users)
+        {
+            if (users.Count() == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

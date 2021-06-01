@@ -50,7 +50,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
             var publications = GetAll().Where(a => a.Author.Id == authorId);
 
-            if (publications.Count() == 0)
+            if (IsEmptyPublicationsCount(publications))
             {
                 throw new ObjectNotFoundException($"User by id: {authorId} don't have a publications.");
             }
@@ -60,7 +60,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         public IEnumerable<PublicationEntity> GetByPagination(int index)
         {
-            if (index < 0)
+            if (IsInvalidIndex(index))
             {
                 throw new InvalidOperationException("Index cannot be less than 0.");
             }
@@ -71,7 +71,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
                                    .Skip(countOfSkipItems)
                                    .Take(PaginationConfig.MAX_ITEMS);
 
-            if (publications.Count() == 0)
+            if (IsEmptyPublicationsCount(publications))
             {
                 throw new ObjectNotFoundException("No more publications.");
             }
@@ -82,6 +82,26 @@ namespace NotSocialNetwork.Application.UseCases.Publication
         private void IsAuthorFound(Guid id)
         {
             _getableUser.GetById(id);
+        }
+
+        private bool IsEmptyPublicationsCount(IEnumerable<PublicationEntity> publications)
+        {
+            if (publications.Count() == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsInvalidIndex(int index)
+        {
+            if(index < 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

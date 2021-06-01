@@ -25,13 +25,9 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public UserEntity Add(UserEntity user)
         {
-            if (_getableUser.GetAll().Any(u => u.Email == user.Email))
+            if (IsUserAlreadyExist(user))
             {
                 throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
-            }
-            if (_getableUser.GetAll().Any(u => u.Id == user.Id))
-            {
-                throw new ObjectAlreadyExistException($"User by Id: {user.Id} already exists.");
             }
 
             SaveImage(user);
@@ -40,6 +36,17 @@ namespace NotSocialNetwork.Application.UseCases.User
             _userRepository.Commit();
 
             return user;
+        }
+
+        private bool IsUserAlreadyExist(UserEntity user)
+        {
+            if(_getableUser.GetAll().Any(u => u.Email == user.Email) ||
+                _getableUser.GetAll().Any(u => u.Id == user.Id))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void SaveImage(UserEntity user)
