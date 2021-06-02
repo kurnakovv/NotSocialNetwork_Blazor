@@ -4,66 +4,68 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.DBContexts;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Data.EFRepositories
 {
-    public class EFCoreRepository<T> : IRepository<T> where T : BaseEntity
+    public class EFCoreRepository<TEntity> : IRepositoryAsync<TEntity>
+        where TEntity : BaseEntity
     {
-        public EFCoreRepository(AppDbContext appDbContext)
+        public EFCoreRepository(
+            AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            _dbSet = appDbContext.Set<T>();
+            _dbSet = appDbContext.Set<TEntity>();
         }
 
         private readonly AppDbContext _appDbContext;
-        private readonly DbSet<T> _dbSet;
+        private readonly DbSet<TEntity> _dbSet;
 
-        public T Add(T t)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            _dbSet.Add(t);
-            return t;
+            _dbSet.Add(entity);
+            await _appDbContext.SaveChangesAsync();
+
+            return entity;
         }
 
-        public T Get(Guid id)
+        public async Task<TEntity> DeleteAsync(Guid id)
         {
-            return _dbSet.Find(id);
-        }
+            var entity = await GetAsync(id);
 
-        public T Update(T t)
-        {
-            var oldT = Get(t.Id);
-            _appDbContext.Entry(oldT).CurrentValues.SetValues(t);
-
-            return t;
-        }
-
-        public T Delete(Guid id)
-        {
-            var t = Get(id);
-
-            if (_appDbContext.Entry(t).State == EntityState.Detached)
+            if (_appDbContext.Entry(entity).State == EntityState.Detached)
             {
-                _dbSet.Attach(t);
+                _dbSet.Attach(entity);
             }
 
-            _dbSet.Remove(t);
+            _dbSet.Remove(entity);
+            await _appDbContext.SaveChangesAsync();
 
-            return t;
+            return entity;
         }
 
-        public IQueryable<T> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
             return _dbSet;
         }
 
-        public void Commit()
+        public async Task<TEntity> GetAsync(Guid id)
         {
-            _appDbContext.SaveChanges();
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            var oldEntity = await GetAsync(entity.Id);
+            _appDbContext.Entry(oldEntity).CurrentValues.SetValues(entity);
+            await _appDbContext.SaveChangesAsync();
+
+            return entity;
         }
 
         public void Dispose()
         {
-            _appDbContext.Dispose();
+            _appDbContext.DisposeAsync();
         }
     }
 }

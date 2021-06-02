@@ -25,9 +25,9 @@ namespace NotSocialNetwork.DI.DIConfig
 
         private static void ConfigureRepositories(IServiceCollection services)
         {
-            services.AddTransient<IRepository<UserEntity>, EFCoreRepository<UserEntity>>();
-            services.AddTransient<IRepository<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
-            services.AddTransient<IRepository<ImageEntity>, EFCoreRepository<ImageEntity>>();
+            services.AddTransient<IRepositoryAsync<UserEntity>, EFCoreRepository<UserEntity>>();
+            services.AddTransient<IRepositoryAsync<PublicationEntity>, EFCoreRepository<PublicationEntity>>();
+            services.AddTransient<IRepositoryAsync<ImageEntity>, EFCoreRepository<ImageEntity>>();
         }
 
         private static void ConfigureUseCases(IServiceCollection services)

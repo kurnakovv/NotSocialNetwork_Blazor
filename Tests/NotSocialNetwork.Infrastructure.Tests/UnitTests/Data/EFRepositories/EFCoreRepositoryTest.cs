@@ -5,16 +5,17 @@ using NotSocialNetwork.DBContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
+namespace NotSocialNetwork.Infrastructure.Tests.UnitTests.Data.EFRepositories
 {
-    public class RepositoryTest : IDisposable
+    public class EFCoreRepositoryTest : IDisposable
     {
-        public RepositoryTest()
+        public EFCoreRepositoryTest()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("TestDb")
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             _appDbContext = new AppDbContext(options);
@@ -70,14 +71,13 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
         }
 
         [Fact]
-        public void Add_AddObject_Object()
+        public async Task AddAsync_AddObject_Object()
         {
             // Arrange
             var repository = new EFCoreRepository<UserEntity>(_appDbContext);
 
             // Act
-            var result = repository.Add(_user);
-            repository.Commit();
+            var result = await repository.AddAsync(_user);
 
             // Assert
             Assert.NotNull(result);
@@ -86,14 +86,13 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
         }
 
         [Fact]
-        public void Delete_DeleteObject_Object()
+        public async Task DeleteAsync_DeleteObject_Object()
         {
             // Arrange
             var repository = new EFCoreRepository<UserEntity>(_appDbContext);
 
             // Act
-            var result = repository.Delete(_users.First().Id);
-            repository.Commit();
+            var result = await repository.DeleteAsync(_users.First().Id);
 
             // Assert
             Assert.NotNull(result);
@@ -101,13 +100,13 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
         }
 
         [Fact]
-        public void Get_GetObject_Object()
+        public async Task GetAsync_GetObject_Object()
         {
             // Arrange
             var repository = new EFCoreRepository<UserEntity>(_appDbContext);
 
             // Act
-            var result = repository.Get(_users.First().Id);
+            var result = await repository.GetAsync(_users.First().Id);
 
             // Assert
             Assert.NotNull(result);
@@ -116,7 +115,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
         }
 
         [Fact]
-        public void Update_UpdateObject_Object()
+        public async Task UpdateAsync_UpdateObject_Object()
         {
             // Arrange
             var repository = new EFCoreRepository<UserEntity>(_appDbContext);
@@ -128,8 +127,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
             };
 
             // Act
-            var result = repository.Update(user);
-            repository.Commit();
+            var result = await repository.UpdateAsync(user);
 
             // Assert
             Assert.NotNull(result);
@@ -141,7 +139,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.Data.EFRepositories
         public void Dispose()
         {
             _appDbContext.Database.EnsureDeleted();
-            _appDbContext.Dispose();
+            _appDbContext.DisposeAsync();
         }
     }
 }
