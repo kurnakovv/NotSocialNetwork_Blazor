@@ -48,7 +48,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Regis
             // Arrange
             var addableUser = new Mock<IAddableUserAsync>();
             var mapper = new Mock<IMapper>();
-            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var imageRepositorySystem = new Mock<IImageRepositorySystemAsync>();
             var jwtSystem = new Mock<IJwtSystem>();
 
 

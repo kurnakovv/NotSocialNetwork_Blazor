@@ -39,7 +39,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
             // Arrange
             var getableUser = new Mock<IGetableUser>();
             var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
-            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var imageRepositorySystem = new Mock<IImageRepositorySystemAsync>();
 
             var addUser = new AddUser(
                                     getableUser.Object,

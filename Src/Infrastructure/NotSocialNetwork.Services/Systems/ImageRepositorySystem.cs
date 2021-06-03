@@ -6,10 +6,11 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Services.Systems
 {
-    public class ImageRepositorySystem : IImageRepositorySystem
+    public class ImageRepositorySystem : IImageRepositorySystemAsync
     {
         public ImageRepositorySystem(
                IRepositoryAsync<ImageEntity> imageRepository)
@@ -19,50 +20,50 @@ namespace NotSocialNetwork.Services.Systems
 
         private readonly IRepositoryAsync<ImageEntity> _imageRepository;
 
-        public ImageEntity Get(Guid id)
+        public async Task<ImageEntity> GetAsync(Guid id)
         {
-            var image = _imageRepository.GetAsync(id);
+            var image = await _imageRepository.GetAsync(id);
 
             if (image == null)
             {
                 throw new ObjectNotFoundException($"Image by id: {id} not found!");
             }
 
-            return image.Result;
+            return image;
         }
 
-        public ImageEntity TrySave(ImageEntity image)
+        public async Task<ImageEntity> TrySaveAsync(ImageEntity image)
         {
             if (image == null)
             {
-                var defaultImage = Get(DefaultImageConfig.DEFAULT_IMAGE_ID);
+                var defaultImage = await GetAsync(DefaultImageConfig.DEFAULT_IMAGE_ID);
 
                 return defaultImage;
             }
 
             IsImageAlreadyExist(image);
 
-            _imageRepository.AddAsync(image);
+            await _imageRepository.AddAsync(image);
 
             return image;
         }
 
-        public Guid TryUpdate(UpdateFileDTO updateFile)
+        public async Task<Guid> TryUpdateAsync(UpdateFileDTO updateFile)
         {
             if (updateFile.NewFile == null)
             {
                 return updateFile.OldFile.Id;
             }
 
-            TryDelete(updateFile.OldFile.Id);
-            TrySave(updateFile.NewFile as ImageEntity);
+            await TryDeleteAsync(updateFile.OldFile.Id);
+            await TrySaveAsync(updateFile.NewFile as ImageEntity);
 
             return updateFile.NewFile.Id;
         }
 
-        public Guid TryDelete(Guid id)
+        public async Task<Guid> TryDeleteAsync(Guid id)
         {
-            _imageRepository.DeleteAsync(id);
+            await _imageRepository.DeleteAsync(id);
 
             return id;
         }

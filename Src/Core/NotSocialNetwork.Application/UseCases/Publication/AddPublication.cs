@@ -16,7 +16,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             IGetablePublication getablePublication,
             IGetableUser getableUser,
             IRepositoryAsync<PublicationEntity> publicationRepository,
-            IImageRepositorySystem imageRepositorySystem)
+            IImageRepositorySystemAsync imageRepositorySystem)
         {
             _getablePublication = getablePublication;
             _getableUser = getableUser;
@@ -27,7 +27,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
         private readonly IGetablePublication _getablePublication;
         private readonly IGetableUser _getableUser;
         private readonly IRepositoryAsync<PublicationEntity> _publicationRepository;
-        private readonly IImageRepositorySystem _imageRepositorySystem;
+        private readonly IImageRepositorySystemAsync _imageRepositorySystem;
 
         public async Task<PublicationEntity> AddAsync(PublicationEntity publication)
         {
@@ -40,7 +40,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
             if (IsPublicationContainImages(publication))
             {
-                SaveImages(publication);
+                await SaveImages(publication);
             }
 
             await _publicationRepository.AddAsync(publication);
@@ -74,11 +74,11 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             return false;
         }
 
-        private void SaveImages(PublicationEntity publication)
+        private async Task SaveImages(PublicationEntity publication)
         {
             foreach (ImageEntity imageEntity in publication.Images)
             {
-                _imageRepositorySystem.TrySave(imageEntity);
+                await _imageRepositorySystem.TrySaveAsync(imageEntity);
             }
         }
     }

@@ -3,50 +3,51 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Services.Facades
 {
-    public class ImageFacade : IFileFacade<ImageEntity>
+    public class ImageFacade : IFileFacadeAsync<ImageEntity>
     {
         public ImageFacade(
-            IImageFileSystem imageFileSystem,
-            IImageRepositorySystem imageRepositorySystem)
+            IImageFileSystemAsync imageFileSystem,
+            IImageRepositorySystemAsync imageRepositorySystem)
         {
             _imageFileSystem = imageFileSystem;
             _imageRepositorySystem = imageRepositorySystem;
         }
 
-        private readonly IImageFileSystem _imageFileSystem;
-        private readonly IImageRepositorySystem _imageRepositorySystem;
+        private readonly IImageFileSystemAsync _imageFileSystem;
+        private readonly IImageRepositorySystemAsync _imageRepositorySystem;
 
 
-        public ImageEntity Get(Guid id)
+        public async Task<ImageEntity> GetAsync(Guid id)
         {
-            var image = _imageRepositorySystem.Get(id);
+            var image = await _imageRepositorySystem.GetAsync(id);
 
             return image;
         }
 
-        public Guid Save(ImageEntity file, string pathToSave)
+        public async Task<Guid> SaveAsync(ImageEntity file, string pathToSave)
         {
-            _imageFileSystem.TrySave(file, pathToSave);
-            var image = _imageRepositorySystem.TrySave(file);
+            await _imageFileSystem.TrySaveAsync(file, pathToSave);
+            var image = await _imageRepositorySystem.TrySaveAsync(file);
 
             return image.Id;
         }
 
-        public Guid Update(UpdateFileDTO updateFile)
+        public async Task<Guid> UpdateAsync(UpdateFileDTO updateFile)
         {
-            _imageFileSystem.TryUpdate(updateFile);
-            _imageRepositorySystem.TryUpdate(updateFile);
+            await _imageFileSystem.TryUpdateAsync(updateFile);
+            await _imageRepositorySystem.TryUpdateAsync(updateFile);
 
             return updateFile.NewFile.Id;
         }
 
-        public Guid Delete(Guid id, string filePath)
+        public async Task<Guid> DeleteAsync(Guid id, string filePath)
         {
-            _imageFileSystem.Delete(id, filePath);
-            _imageRepositorySystem.TryDelete(id);
+            await _imageFileSystem.DeleteAsync(id, filePath);
+            await _imageRepositorySystem.TryDeleteAsync(id);
 
             return id;
         }

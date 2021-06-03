@@ -7,10 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Services.Systems
 {
-    public class ImageFileSystem : IImageFileSystem
+    public class ImageFileSystem : IImageFileSystemAsync
     {
         public ImageFileSystem(
             IRepositoryAsync<ImageEntity> imageRepository)
@@ -22,7 +23,7 @@ namespace NotSocialNetwork.Services.Systems
         private static ICollection<string> _imageExtensions
             = new List<string> { ".jpg", ".png", ".jpeg", ".gif" };
 
-        public void TrySave(ImageEntity file, string pathToSave)
+        public async Task TrySaveAsync(ImageEntity file, string pathToSave)
         {
             if (file == null)
             {
@@ -30,33 +31,56 @@ namespace NotSocialNetwork.Services.Systems
             }
 
             file.Title = file.ImageFromForm.FileName;
-            SaveFileToFolder(file, pathToSave);
+            await SaveFileToFolder(file, pathToSave);
         }
 
-        public Guid Delete(Guid id, string filePath)
+        public async Task<Guid> DeleteAsync(Guid id, string filePath)
         {
-            var file = _imageRepository.GetAsync(id);
+            var file = await _imageRepository.GetAsync(id);
 
-            DeleteFileFromFolder(file.Result.Title, filePath);
+            DeleteFileFromFolder(file.Title, filePath);
 
-            return file.Result.Id;
+            return file.Id;
         }
 
-        public void TryUpdate(UpdateFileDTO updateFile)
+        public async Task TryUpdateAsync(UpdateFileDTO updateFile)
         {
             if (updateFile == null)
             {
                 return;
             }
 
-            Delete(updateFile.OldFile.Id, updateFile.FilePath);
-            TrySave((ImageEntity)updateFile.NewFile, updateFile.FilePath);
+            await DeleteAsync(updateFile.OldFile.Id, updateFile.FilePath);
+            await TrySaveAsync((ImageEntity)updateFile.NewFile, updateFile.FilePath);
         }
 
-        private bool IsImageContainFormat(string title)
+        private async Task SaveFileToFolder(ImageEntity file, string pathToSave)
         {
-            var fileExtension = Path.GetExtension(title);
+            var fileExtension = Path.GetExtension(file.Title);
+            if (IsValidFormat(fileExtension) == false)
+            {
+                throw new InvalidFileFormatException("The file contains the wrong format.");
+            }
 
+            var uniqueFileName = Convert.ToString(Guid.NewGuid());
+
+            file.Title = DeleteSpaces(file);
+
+            var newFileTitle = uniqueFileName + fileExtension;
+
+            file.Title = pathToSave + "\\wwwroot\\userImages" + $@"\{newFileTitle}";
+
+            using (FileStream fs = File.Create(file.Title))
+            {
+                await file.ImageFromForm.CopyToAsync(fs);
+                await fs.FlushAsync();
+            }
+
+            file.Title = newFileTitle;
+        }
+
+        private bool IsValidFormat(string fileExtension)
+        {
             if (_imageExtensions.Contains(fileExtension))
             {
                 return true;
@@ -65,30 +89,11 @@ namespace NotSocialNetwork.Services.Systems
             return false;
         }
 
-        private void SaveFileToFolder(ImageEntity file, string pathToSave)
+        private string DeleteSpaces(ImageEntity file)
         {
-            var fileExtension = Path.GetExtension(file.Title);
-            var uniqueFileName = Convert.ToString(Guid.NewGuid());
+            var titleWithDeletedSpaces = ContentDispositionHeaderValue.Parse(file.ImageFromForm.ContentDisposition).FileName.Trim('"');
 
-            // Delete spaces.
-            file.Title = ContentDispositionHeaderValue.Parse(file.ImageFromForm.ContentDisposition).FileName.Trim('"');
-
-            if (IsImageContainFormat(file.Title) == false)
-            {
-                throw new InvalidFileFormatException("The file contains the wrong format");
-            }
-
-            var newFileTitle = uniqueFileName + fileExtension;
-
-            file.Title = pathToSave + "\\wwwroot\\userImages" + $@"\{newFileTitle}";
-
-            using (FileStream fs = File.Create(file.Title))
-            {
-                file.ImageFromForm.CopyTo(fs);
-                fs.Flush();
-            }
-
-            file.Title = newFileTitle;
+            return titleWithDeletedSpaces;
         }
 
         private void DeleteFileFromFolder(string title, string filePath)

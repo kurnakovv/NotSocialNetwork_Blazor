@@ -52,14 +52,14 @@ namespace NotSocialNetwork.DI.DIConfig
 
         private static void ConfigureSystems(IServiceCollection services)
         {
-            services.AddTransient<IImageFileSystem, ImageFileSystem>();
-            services.AddTransient<IImageRepositorySystem, ImageRepositorySystem>();
+            services.AddTransient<IImageFileSystemAsync, ImageFileSystem>();
+            services.AddTransient<IImageRepositorySystemAsync, ImageRepositorySystem>();
             services.AddTransient<IJwtSystem, JwtSystem>();
         }
 
         private static void ConfigureFacades(IServiceCollection services)
         {
-            services.AddTransient<IFileFacade<ImageEntity>, ImageFacade>();
+            services.AddTransient<IFileFacadeAsync<ImageEntity>, ImageFacade>();
         }
     }
 }

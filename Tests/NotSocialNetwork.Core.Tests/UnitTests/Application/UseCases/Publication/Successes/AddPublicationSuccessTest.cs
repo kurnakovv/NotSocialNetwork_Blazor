@@ -26,7 +26,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
             var getablePublication = new Mock<IGetablePublication>();
             var getableUser = new Mock<IGetableUser>();
             var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
-            var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+            var imageRepositorySystem = new Mock<IImageRepositorySystemAsync>();
 
             var addPublication = new AddPublication(
                                         getablePublication.Object,

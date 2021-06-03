@@ -13,7 +13,7 @@ namespace NotSocialNetwork.Application.UseCases.User
         public AddUser(
             IGetableUser getableUser,
             IRepositoryAsync<UserEntity> userRepository,
-            IImageRepositorySystem imageRepositorySystem)
+            IImageRepositorySystemAsync imageRepositorySystem)
         {
             _getableUser = getableUser;
             _userRepository = userRepository;
@@ -22,7 +22,7 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         private readonly IGetableUser _getableUser;
         private readonly IRepositoryAsync<UserEntity> _userRepository;
-        private readonly IImageRepositorySystem _imageRepositorySystem;
+        private readonly IImageRepositorySystemAsync _imageRepositorySystem;
 
         public async Task<UserEntity> AddAsync(UserEntity user)
         {
@@ -31,7 +31,7 @@ namespace NotSocialNetwork.Application.UseCases.User
                 throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
             }
 
-            SaveImage(user);
+            await SaveImage(user);
 
             await _userRepository.AddAsync(user);
 
@@ -49,9 +49,9 @@ namespace NotSocialNetwork.Application.UseCases.User
             return false;
         }
 
-        private void SaveImage(UserEntity user)
+        private async Task SaveImage(UserEntity user)
         {
-            var image = _imageRepositorySystem.TrySave(user.Image);
+            var image = await _imageRepositorySystem.TrySaveAsync(user.Image);
             user.Image = image;
         }
     }
