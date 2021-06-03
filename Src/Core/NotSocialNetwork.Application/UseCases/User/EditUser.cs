@@ -2,38 +2,37 @@
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.UseCases.User
 {
-    public class EditUser : IEditableUser
+    public class EditUser : IEditableUserAsync
     {
         public EditUser(
             IGetableUser getableUser,
-            IRepository<UserEntity> userRepository)
+            IRepositoryAsync<UserEntity> userRepository)
         {
             _getableUser = getableUser;
             _userRepository = userRepository;
         }
 
         private readonly IGetableUser _getableUser;
-        private readonly IRepository<UserEntity> _userRepository;
+        private readonly IRepositoryAsync<UserEntity> _userRepository;
 
-        public UserEntity Update(UserEntity user)
+        public async Task<UserEntity> UpdateAsync(UserEntity user)
         {
             _getableUser.GetById(user.Id);
 
-            _userRepository.Update(user);
-            _userRepository.Commit();
+            await _userRepository.UpdateAsync(user);
 
             return user;
         }
 
-        public UserEntity Delete(Guid id)
+        public async Task<UserEntity> DeleteAsync(Guid id)
         {
             var user = _getableUser.GetById(id);
 
-            _userRepository.Delete(user.Id);
-            _userRepository.Commit();
+            await _userRepository.DeleteAsync(id);
 
             return user;
         }

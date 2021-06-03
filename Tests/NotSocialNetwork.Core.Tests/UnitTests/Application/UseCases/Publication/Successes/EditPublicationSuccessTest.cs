@@ -4,6 +4,7 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.UseCases.Publication;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Successes
@@ -17,11 +18,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         };
 
         [Fact]
-        public void Update_UpdatePublication_Publication()
+        public async Task UpdateAsync_UpdatePublication_Publication()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var editPublication = new EditPublication(
                                             getablePublication.Object,
                                             publicationRepository.Object);
@@ -31,7 +32,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
 
 
             // Act
-            var result = editPublication.Update(_publication);
+            var result = await editPublication.UpdateAsync(_publication);
 
             // Assert
             Assert.NotNull(result);
@@ -40,11 +41,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         }
 
         [Fact]
-        public void Delete_DeletePublication_Publication()
+        public async Task DeleteAsync_DeletePublication_Publication()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var editPublication = new EditPublication(
                                             getablePublication.Object,
                                             publicationRepository.Object);
@@ -53,7 +54,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
                                   .Returns(_publication);
 
             // Act
-            var result = editPublication.Delete(_publication.Id);
+            var result = await editPublication.DeleteAsync(_publication.Id);
 
             // Assert
             Assert.NotNull(result);

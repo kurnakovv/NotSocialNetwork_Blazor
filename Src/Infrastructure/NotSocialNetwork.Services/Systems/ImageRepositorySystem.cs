@@ -12,23 +12,23 @@ namespace NotSocialNetwork.Services.Systems
     public class ImageRepositorySystem : IImageRepositorySystem
     {
         public ImageRepositorySystem(
-               IRepository<ImageEntity> imageRepository)
+               IRepositoryAsync<ImageEntity> imageRepository)
         {
             _imageRepository = imageRepository;
         }
 
-        private readonly IRepository<ImageEntity> _imageRepository;
+        private readonly IRepositoryAsync<ImageEntity> _imageRepository;
 
         public ImageEntity Get(Guid id)
         {
-            var image = _imageRepository.Get(id);
+            var image = _imageRepository.GetAsync(id);
 
             if (image == null)
             {
                 throw new ObjectNotFoundException($"Image by id: {id} not found!");
             }
 
-            return image;
+            return image.Result;
         }
 
         public ImageEntity TrySave(ImageEntity image)
@@ -42,8 +42,7 @@ namespace NotSocialNetwork.Services.Systems
 
             IsImageAlreadyExist(image);
 
-            _imageRepository.Add(image);
-            _imageRepository.Commit();
+            _imageRepository.AddAsync(image);
 
             return image;
         }
@@ -63,7 +62,7 @@ namespace NotSocialNetwork.Services.Systems
 
         public Guid TryDelete(Guid id)
         {
-            _imageRepository.Delete(id);
+            _imageRepository.DeleteAsync(id);
 
             return id;
         }

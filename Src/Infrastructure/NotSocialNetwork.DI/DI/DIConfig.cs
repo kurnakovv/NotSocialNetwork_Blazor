@@ -38,15 +38,15 @@ namespace NotSocialNetwork.DI.DIConfig
 
         private static void ConfigureUseCasesUser(IServiceCollection services)
         {
-            services.AddTransient<IAddableUser, AddUser>();
-            services.AddTransient<IEditableUser, EditUser>();
+            services.AddTransient<IAddableUserAsync, AddUser>();
+            services.AddTransient<IEditableUserAsync, EditUser>();
             services.AddTransient<IGetableUser, GetUser>();
         }
 
         private static void ConfigureUseCasesPublication(IServiceCollection services)
         {
-            services.AddTransient<IAddablePublication, AddPublication>();
-            services.AddTransient<IEditablePublication, EditPublication>();
+            services.AddTransient<IAddablePublicationAsync, AddPublication>();
+            services.AddTransient<IEditablePublicationAsync, EditPublication>();
             services.AddTransient<IGetablePublication, GetPublication>();
         }
 

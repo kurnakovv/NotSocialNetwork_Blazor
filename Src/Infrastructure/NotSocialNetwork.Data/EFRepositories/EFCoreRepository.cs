@@ -57,6 +57,7 @@ namespace NotSocialNetwork.Data.EFRepositories
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var oldEntity = await GetAsync(entity.Id);
+
             _appDbContext.Entry(oldEntity).CurrentValues.SetValues(entity);
             await _appDbContext.SaveChangesAsync();
 

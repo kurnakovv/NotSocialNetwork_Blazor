@@ -6,15 +6,16 @@ using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.UseCases.Publication
 {
-    public class AddPublication : IAddablePublication
+    public class AddPublication : IAddablePublicationAsync
     {
         public AddPublication(
             IGetablePublication getablePublication,
             IGetableUser getableUser,
-            IRepository<PublicationEntity> publicationRepository,
+            IRepositoryAsync<PublicationEntity> publicationRepository,
             IImageRepositorySystem imageRepositorySystem)
         {
             _getablePublication = getablePublication;
@@ -25,10 +26,10 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         private readonly IGetablePublication _getablePublication;
         private readonly IGetableUser _getableUser;
-        private readonly IRepository<PublicationEntity> _publicationRepository;
+        private readonly IRepositoryAsync<PublicationEntity> _publicationRepository;
         private readonly IImageRepositorySystem _imageRepositorySystem;
 
-        public PublicationEntity Add(PublicationEntity publication)
+        public async Task<PublicationEntity> AddAsync(PublicationEntity publication)
         {
             if (IsPublicationAlreadyExist(publication) == true)
             {
@@ -42,8 +43,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
                 SaveImages(publication);
             }
 
-            _publicationRepository.Add(publication);
-            _publicationRepository.Commit();
+            await _publicationRepository.AddAsync(publication);
 
             return publication;
         }

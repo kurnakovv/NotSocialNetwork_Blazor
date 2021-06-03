@@ -5,6 +5,7 @@ using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.User;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Successes
@@ -20,11 +21,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         };
 
         [Fact]
-        public void Add_AddUser_User()
+        public async Task AddAsync_AddUser_User()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
 
             var addUser = new AddUser(
@@ -33,7 +34,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
                                     imageRepositorySystem.Object);
 
             // Act
-            var result = addUser.Add(_user);
+            var result = await addUser.AddAsync(_user);
 
             // Assert
             Assert.NotNull(result);

@@ -5,6 +5,7 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.UseCases.Publication;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Unsuccesses
@@ -18,11 +19,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         };
 
         [Fact]
-        public void Update_UpdateInvalidPublication_ObjectNotFoundException()
+        public async Task UpdateAsync_UpdateInvalidPublication_ObjectNotFoundException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var editPublication = new EditPublication(
                                             getablePublication.Object,
                                             publicationRepository.Object);
@@ -31,18 +32,18 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
                                 .Throws(new ObjectNotFoundException($"Publication by Id: {_publication.Id} not found."));
 
             // Act
-            Action act = () => editPublication.Update(_publication);
+            Func<Task> act = async () => await editPublication.UpdateAsync(_publication);
 
             // Assert
-            Assert.Throws<ObjectNotFoundException>(act);
+            await Assert.ThrowsAsync<ObjectNotFoundException>(act);
         }
 
         [Fact]
-        public void Delete_DeleteInvalidPublication_ObjectNotFoundException()
+        public async Task DeleteAsync_DeleteInvalidPublication_ObjectNotFoundException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var editPublication = new EditPublication(
                                             getablePublication.Object,
                                             publicationRepository.Object);
@@ -51,10 +52,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
                                   .Throws(new ObjectNotFoundException($"Publication by Id: {_publication.Id} not found."));
 
             // Act
-            Action act = () => editPublication.Delete(_publication.Id);
+            Func<Task> act = async () => await editPublication.DeleteAsync(_publication.Id);
 
             // Assert
-            Assert.Throws<ObjectNotFoundException>(act);
+            await Assert.ThrowsAsync<ObjectNotFoundException>(act);
         }
     }
 }

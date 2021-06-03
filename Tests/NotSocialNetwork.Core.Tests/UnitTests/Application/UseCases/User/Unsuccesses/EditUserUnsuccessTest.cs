@@ -5,6 +5,7 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.User;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsuccesses
@@ -20,11 +21,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         };
 
         [Fact]
-        public void Delete_DeleteInvalidUser_ObjectNotFoundException()
+        public async Task DeleteAsync_DeleteInvalidUser_ObjectNotFoundException()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var editUser = new EditUser(
                                     getableUser.Object,
@@ -34,18 +35,18 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
                            .Throws(new ObjectNotFoundException($"User by Id:{_user.Id} not found."));
 
             // Act
-            Action act = () => editUser.Delete(_user.Id);
+            Func<Task> act = async () => await editUser.DeleteAsync(_user.Id);
 
             // Assert
-            Assert.Throws<ObjectNotFoundException>(act);
+            await Assert.ThrowsAsync<ObjectNotFoundException>(act);
         }
 
         [Fact]
-        public void Update_UpdateInvalidUser_ObjectNotFoundException()
+        public async Task UpdateAsync_UpdateInvalidUser_ObjectNotFoundException()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var editUser = new EditUser(
                                     getableUser.Object,
@@ -57,10 +58,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
             _user.Name = "TestName";
 
             // Act
-            Action act = () => editUser.Update(_user);
+            Func<Task> act = async () => await editUser.UpdateAsync(_user);
 
             // Assert
-            Assert.Throws<ObjectNotFoundException>(act);
+            await Assert.ThrowsAsync<ObjectNotFoundException>(act);
         }
     }
 }

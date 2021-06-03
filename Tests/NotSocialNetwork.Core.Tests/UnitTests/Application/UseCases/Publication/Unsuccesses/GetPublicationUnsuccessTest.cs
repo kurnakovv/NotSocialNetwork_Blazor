@@ -7,13 +7,14 @@ using NotSocialNetwork.Application.UseCases.Publication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Unsuccesses
 {
     public class GetPublicationUnsuccessTest
     {
-        private readonly IEnumerable<PublicationEntity> _publications = new List<PublicationEntity>()
+        private readonly List<PublicationEntity> _publications = new List<PublicationEntity>()
         {
             new PublicationEntity()
             {
@@ -45,10 +46,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         };
 
         [Fact]
-        public void Get_GetInvalidPublication_ObjectNotFoundException()
+        public void GetById_GetInvalidPublication_ObjectNotFoundException()
         {
             // Arrange
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var getableUser = new Mock<IGetableUser>();
 
             var getPublication = new GetPublication(
@@ -66,7 +67,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         public void GetAllByAuthorId_GetPublicationsByInvalidAuthorId_ObjectNotFoundException()
         {
             // Arrange
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var getableUser = new Mock<IGetableUser>();
 
             var getPublication = new GetPublication(
@@ -84,7 +85,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         public void GetAllByAuthorId_GetPublicationsIfAuthorHaveNotPublications_ObjectNotFoundException()
         {
             // Arrange
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var getableUser = new Mock<IGetableUser>();
 
             var getPublication = new GetPublication(
@@ -105,7 +106,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         public void GetByPagination_GetPublicationsIfIndexLessZero_InvalidOperationException()
         {
             // Arrange
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var getableUser = new Mock<IGetableUser>();
 
             var getPublication = new GetPublication(
@@ -128,7 +129,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         public void GetByPagination_GetPublicationsIfPublicationsEnded_ObjectNotFoundException()
         {
             // Arrange
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var getableUser = new Mock<IGetableUser>();
 
             var getPublication = new GetPublication(

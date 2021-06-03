@@ -13,12 +13,12 @@ namespace NotSocialNetwork.Services.Systems
     public class ImageFileSystem : IImageFileSystem
     {
         public ImageFileSystem(
-            IRepository<ImageEntity> imageRepository)
+            IRepositoryAsync<ImageEntity> imageRepository)
         {
             _imageRepository = imageRepository;
         }
 
-        private readonly IRepository<ImageEntity> _imageRepository;
+        private readonly IRepositoryAsync<ImageEntity> _imageRepository;
         private static ICollection<string> _imageExtensions
             = new List<string> { ".jpg", ".png", ".jpeg", ".gif" };
 
@@ -35,11 +35,11 @@ namespace NotSocialNetwork.Services.Systems
 
         public Guid Delete(Guid id, string filePath)
         {
-            var file = _imageRepository.Get(id);
+            var file = _imageRepository.GetAsync(id);
 
-            DeleteFileFromFolder(file.Title, filePath);
+            DeleteFileFromFolder(file.Result.Title, filePath);
 
-            return file.Id;
+            return file.Result.Id;
         }
 
         public void TryUpdate(UpdateFileDTO updateFile)

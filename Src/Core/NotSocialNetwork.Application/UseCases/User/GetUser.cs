@@ -7,29 +7,29 @@ using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.UseCases.User
 {
     public class GetUser : IGetableUser
     {
         public GetUser(
-            IRepository<UserEntity> userRepository)
+            IRepositoryAsync<UserEntity> userRepository)
         {
             _userRepository = userRepository;
         }
 
-        private readonly IRepository<UserEntity> _userRepository;
+        private readonly IRepositoryAsync<UserEntity> _userRepository;
 
         public IEnumerable<UserEntity> GetAll()
         {
             return _userRepository.GetAll()
-                        .Include(u => u.Image)
-                            .ToList();
+                            .Include(u => u.Image);
         }
 
         public UserEntity GetByEmail(string email)
         {
-            var user = _userRepository.GetAll()
+            var user = GetAll()
                                .FirstOrDefault(u => u.Email == email);
 
             if (user == null)
@@ -42,7 +42,8 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public UserEntity GetById(Guid id)
         {
-            var user = GetAll().FirstOrDefault(u => u.Id == id);
+            var user = GetAll()
+                            .FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {

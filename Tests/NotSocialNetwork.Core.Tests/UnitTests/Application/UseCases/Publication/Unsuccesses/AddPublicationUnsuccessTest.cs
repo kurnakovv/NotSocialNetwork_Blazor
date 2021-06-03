@@ -9,6 +9,7 @@ using NotSocialNetwork.Application.UseCases.Publication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Unsuccesses
@@ -40,28 +41,28 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         };
 
         [Fact]
-        public void Add_AddInvalidPublication_ObjectAlreadyExistException()
+        public async Task AddAsync_AddInvalidPublication_ObjectAlreadyExistException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
             var getableUser = new Mock<IGetableUser>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
+
+            getablePublication.Setup(gp => gp.GetAll())
+                                  .Returns(_publications);
 
             var addPublication = new AddPublication(
                                         getablePublication.Object,
                                         getableUser.Object,
                                         publicationRepository.Object,
                                         imageRepositorySystem.Object);
-            
-            getablePublication.Setup(gp => gp.GetAll())
-                                  .Returns(_publications);
 
-            // Act
-            Action act = () => addPublication.Add(_publications.ElementAt(0));
+
+            Func<Task> act = async () => await addPublication.AddAsync(_publications.ElementAt(0));
 
             // Assert
-            Assert.Throws<ObjectAlreadyExistException>(act);
+            await Assert.ThrowsAsync<ObjectAlreadyExistException>(act);
         }
     }
 }

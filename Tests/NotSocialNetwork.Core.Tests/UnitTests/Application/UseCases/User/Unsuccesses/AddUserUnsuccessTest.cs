@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.UseCases.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsuccesses
@@ -33,11 +34,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         };
 
         [Fact]
-        public void Add_AddInvalidUser_ObjectAlreadyExistException()
+        public async Task AddAsync_AddInvalidUser_ObjectAlreadyExistException()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
 
             var addUser = new AddUser(
@@ -49,10 +50,10 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
                            .Returns(_users);
 
             // Act
-            Action act = () => addUser.Add(_users.ElementAt(0));
+            Func<Task> act = async () => await addUser.AddAsync(_users.ElementAt(0));
 
             // Assert
-            Assert.Throws<ObjectAlreadyExistException>(act);
+            await Assert.ThrowsAsync<ObjectAlreadyExistException>(act);
         }
     }
 }

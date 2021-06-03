@@ -6,6 +6,7 @@ using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.Publication;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication.Successes
@@ -19,12 +20,12 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
         };
 
         [Fact]
-        public void Add_AddPublication_Publication()
+        public async Task AddAsync_AddPublication_Publication()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
             var getableUser = new Mock<IGetableUser>();
-            var publicationRepository = new Mock<IRepository<PublicationEntity>>();
+            var publicationRepository = new Mock<IRepositoryAsync<PublicationEntity>>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
 
             var addPublication = new AddPublication(
@@ -34,7 +35,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Publication
                                         imageRepositorySystem.Object);
 
             // Act
-            var result = addPublication.Add(_publication);
+            var result = await addPublication.AddAsync(_publication);
 
             // Assert
             Assert.NotNull(result);

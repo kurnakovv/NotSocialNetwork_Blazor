@@ -1,11 +1,10 @@
 ﻿using NotSocialNetwork.Application.Entities;
-using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.Interfaces.UseCases.User
 {
-    public interface IEditableUser
+    public interface IAddableUserAsync
     {
-        UserEntity Update(UserEntity user);
-        UserEntity Delete(Guid id);
+        Task<UserEntity> AddAsync(UserEntity user);
     }
 }

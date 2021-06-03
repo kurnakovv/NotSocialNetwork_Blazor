@@ -2,38 +2,37 @@
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.UseCases.Publication
 {
-    public class EditPublication : IEditablePublication
+    public class EditPublication : IEditablePublicationAsync
     {
         public EditPublication(
             IGetablePublication getablePublication,
-            IRepository<PublicationEntity> publicationRepository)
+            IRepositoryAsync<PublicationEntity> publicationRepository)
         {
             _getablePublication = getablePublication;
             _publicationRepository = publicationRepository;
         }
 
         private readonly IGetablePublication _getablePublication;
-        private readonly IRepository<PublicationEntity> _publicationRepository;
+        private readonly IRepositoryAsync<PublicationEntity> _publicationRepository;
 
-        public PublicationEntity Update(PublicationEntity publication)
+        public async Task<PublicationEntity> UpdateAsync(PublicationEntity publication)
         {
             _getablePublication.GetById(publication.Id);
 
-            _publicationRepository.Update(publication);
-            _publicationRepository.Commit();
+            await _publicationRepository.UpdateAsync(publication);
 
             return publication;
         }
 
-        public PublicationEntity Delete(Guid id)
+        public async Task<PublicationEntity> DeleteAsync(Guid id)
         {
             var publication = _getablePublication.GetById(id);
 
-            _publicationRepository.Delete(publication.Id);
-            _publicationRepository.Commit();
+            await _publicationRepository.DeleteAsync(id);
 
             return publication;
         }

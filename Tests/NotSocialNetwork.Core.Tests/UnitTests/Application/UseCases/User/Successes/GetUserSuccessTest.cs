@@ -5,13 +5,14 @@ using NotSocialNetwork.Application.UseCases.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Successes
 {
     public class GetUserSuccessTest
     {
-        private readonly IEnumerable<UserEntity> _users = new List<UserEntity>()
+        private readonly List<UserEntity> _users = new List<UserEntity>()
         {
             new UserEntity()
             {
@@ -33,15 +34,15 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         public void GetAll_GetAllUsers_Users()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
-            var userService = new GetUser(
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
+            var getUser = new GetUser(
                                     userRepository.Object);
 
             userRepository.Setup(r => r.GetAll())
                               .Returns(_users.AsQueryable());
 
             // Act
-            var result = userService.GetAll();
+            var result = getUser.GetAll();
 
             // Assert
             Assert.NotNull(result);
@@ -54,20 +55,20 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         public void GetById_GetUser_User()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
-            var userService = new GetUser(
+            var getUser = new GetUser(
                                     userRepository.Object);
 
             userRepository.Setup(r => r.GetAll())
                               .Returns(_users.AsQueryable());
 
             // Act
-            var result = userService.GetById(_users.ElementAt(0).Id);
-
+            var result = getUser.GetById(_users.ToList().ElementAt(0).Id);
+            
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(_users.ElementAt(0), result);
+            Assert.Equal(_users.ToList().ElementAt(0), result);
             Assert.Equal(_users.ElementAt(0).Id, result.Id);
             Assert.Equal(_users.ElementAt(0).Name, result.Name);
         }
@@ -76,16 +77,17 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         public void GetByEmail_GetUser_User()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
-            var userService = new GetUser(
+            var getUser = new GetUser(
                                     userRepository.Object);
+            var usersQueryable = _users.AsQueryable();
 
             userRepository.Setup(r => r.GetAll())
-                              .Returns(_users.AsQueryable());
+                              .Returns(usersQueryable);
 
             // Act
-            var result = userService.GetByEmail(_users.ElementAt(0).Email);
+            var result = getUser.GetByEmail(_users.ElementAt(0).Email);
 
             // Assert
             Assert.NotNull(result);
@@ -96,16 +98,16 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         public void GetByPagination_GetUsers_Users()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
-            var userService = new GetUser(
+            var getUser = new GetUser(
                                     userRepository.Object);
 
             userRepository.Setup(r => r.GetAll())
                               .Returns(_users.AsQueryable());
 
             // Act
-            var result = userService.GetByPagination(0);
+            var result = getUser.GetByPagination(0);
 
             // Assert
             Assert.NotNull(result);

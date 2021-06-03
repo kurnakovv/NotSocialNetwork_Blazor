@@ -4,6 +4,7 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.User;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Successes
@@ -19,11 +20,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         };
 
         [Fact]
-        public void Update_UpdateUser_User()
+        public async Task UpdateAsync_UpdateUser_User()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var editUser = new EditUser(
                                     getableUser.Object,
@@ -35,7 +36,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
             _user.Name = "TestName";
 
             // Act
-            var result = editUser.Update(_user);
+            var result = await editUser.UpdateAsync(_user);
 
             // Assert
             Assert.NotNull(result);
@@ -45,11 +46,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
         }
 
         [Fact]
-        public void Delete_DeleteUser_User()
+        public async Task DeleteAsync_DeleteUser_User()
         {
             // Arrange
             var getableUser = new Mock<IGetableUser>();
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var userService = new EditUser(
                                     getableUser.Object,
@@ -59,7 +60,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Succes
                                           .Returns(_user);
 
             // Act
-            var result = userService.Delete(_user.Id);
+            var result = await userService.DeleteAsync(_user.Id);
 
             // Assert
             Assert.NotNull(result);

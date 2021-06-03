@@ -12,7 +12,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
 {
     public class GetUserUnsuccessTest
     {
-        private readonly IEnumerable<UserEntity> _users = new List<UserEntity>()
+        private readonly List<UserEntity> _users = new List<UserEntity>()
         {
             new UserEntity()
             {
@@ -42,7 +42,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         public void GetById_GetInvalidUser_ObjectNotFoundException()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
             var getUser = new GetUser(
                                     userRepository.Object);
 
@@ -57,7 +57,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         public void GetByEmail_GetInvalidUser_ObjectNotFoundException()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var getUser = new GetUser(
                                     userRepository.Object);
@@ -73,7 +73,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         public void GetByPagination_GetUsersIfIndexLessZero_InvalidOperationException()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var getUser = new GetUser(
                                     userRepository.Object);
@@ -91,7 +91,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
         public void GetByPagination_GetUsersIfUsersEnded_ObjectNotFoundException()
         {
             // Arrange
-            var userRepository = new Mock<IRepository<UserEntity>>();
+            var userRepository = new Mock<IRepositoryAsync<UserEntity>>();
 
             var getUser = new GetUser(
                                     userRepository.Object);
@@ -99,7 +99,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.User.Unsucc
             int bigIndex = 10;
 
             userRepository.Setup(r => r.GetAll())
-                                               .Returns(_users.AsQueryable());
+                              .Returns(_users.AsQueryable());
 
             // Act
             Action act = () => getUser.GetByPagination(bigIndex);

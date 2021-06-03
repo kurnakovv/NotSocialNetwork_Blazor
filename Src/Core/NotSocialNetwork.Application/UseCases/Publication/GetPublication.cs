@@ -14,24 +14,24 @@ namespace NotSocialNetwork.Application.UseCases.Publication
     public class GetPublication : IGetablePublication
     {
         public GetPublication(
-            IRepository<PublicationEntity> publicationRepository,
+            IRepositoryAsync<PublicationEntity> publicationRepository,
             IGetableUser getableUser)
         {
             _publicationRepository = publicationRepository;
             _getableUser = getableUser;
         }
 
-        private readonly IRepository<PublicationEntity> _publicationRepository;
+        private readonly IRepositoryAsync<PublicationEntity> _publicationRepository;
         private readonly IGetableUser _getableUser;
 
         public IEnumerable<PublicationEntity> GetAll()
         {
             return _publicationRepository.GetAll()
-                       .Include(p => p.Images)
-                       .Include(p => p.Author)
-                           .ThenInclude(u => u.Image);
+                             .Include(p => p.Images)
+                             .Include(p => p.Author)
+                                 .ThenInclude(u => u.Image);
         }
-        
+
         public PublicationEntity GetById(Guid id)
         {
             var publication = GetAll().FirstOrDefault(p => p.Id == id);
@@ -96,7 +96,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         private bool IsInvalidIndex(int index)
         {
-            if(index < 0)
+            if (index < 0)
             {
                 return true;
             }

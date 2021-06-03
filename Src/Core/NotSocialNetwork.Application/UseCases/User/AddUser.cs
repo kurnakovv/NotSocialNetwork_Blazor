@@ -4,14 +4,15 @@ using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.Application.UseCases.User
 {
-    public class AddUser : IAddableUser
+    public class AddUser : IAddableUserAsync
     {
         public AddUser(
             IGetableUser getableUser,
-            IRepository<UserEntity> userRepository,
+            IRepositoryAsync<UserEntity> userRepository,
             IImageRepositorySystem imageRepositorySystem)
         {
             _getableUser = getableUser;
@@ -20,10 +21,10 @@ namespace NotSocialNetwork.Application.UseCases.User
         }
 
         private readonly IGetableUser _getableUser;
-        private readonly IRepository<UserEntity> _userRepository;
+        private readonly IRepositoryAsync<UserEntity> _userRepository;
         private readonly IImageRepositorySystem _imageRepositorySystem;
 
-        public UserEntity Add(UserEntity user)
+        public async Task<UserEntity> AddAsync(UserEntity user)
         {
             if (IsUserAlreadyExist(user))
             {
@@ -32,8 +33,7 @@ namespace NotSocialNetwork.Application.UseCases.User
 
             SaveImage(user);
 
-            _userRepository.Add(user);
-            _userRepository.Commit();
+            await _userRepository.AddAsync(user);
 
             return user;
         }
