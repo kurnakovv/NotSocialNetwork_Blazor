@@ -7,6 +7,7 @@ using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Endpoints.Publication.Edit
 {
@@ -16,7 +17,7 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Edit
     public class PublicationController : ControllerBase
     {
         public PublicationController(
-            IEditablePublication editablePublication,
+            IEditablePublicationAsync editablePublication,
             IGetablePublication getablePublication,
             IMapper mapper)
         {
@@ -25,7 +26,7 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Edit
             _mapper = mapper;
         }
 
-        private readonly IEditablePublication _editablePublication;
+        private readonly IEditablePublicationAsync _editablePublication;
         private readonly IGetablePublication _getablePublication;
         private readonly IMapper _mapper;
 
@@ -41,7 +42,7 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Edit
             Summary = "Update.",
             Description = "Update publication."
         )]
-        public ActionResult<PublicationDTO> Update(UpdatePublicationDTO publication)
+        public async Task<ActionResult<PublicationDTO>> Update(UpdatePublicationDTO publication)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Edit
 
 
 
-                _editablePublication.Update(publicationEntity);
+                await _editablePublication.UpdateAsync(publicationEntity);
 
                 return Ok(publication);
             }
@@ -77,11 +78,11 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Edit
             Summary = "Delete by id.",
             Description = "Delete publication by id."
         )]
-        public ActionResult<PublicationDTO> Delete(Guid id)
+        public async Task<ActionResult<PublicationDTO>> Delete(Guid id)
         {
             try
             {
-                var publication = _editablePublication.Delete(id);
+                var publication = await _editablePublication.DeleteAsync(id);
 
                 return Ok(publication);
             }

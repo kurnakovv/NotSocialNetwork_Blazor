@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Edit.Successes
@@ -56,10 +57,10 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
         };
 
         [Fact]
-        public void Update_UpdatePublication_OkObjectResult()
+        public async Task Update_UpdatePublication_OkObjectResult()
         {
             // Arrange
-            var editablePublication = new Mock<IEditablePublication>();
+            var editablePublication = new Mock<IEditablePublicationAsync>();
             var getablePublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
@@ -72,7 +73,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                                                 mapper.Object);
 
             // Act
-            var result = publicationController.Update(_updatePublicationDTO);
+            var result = await publicationController.Update(_updatePublicationDTO);
 
             // Assert
             Assert.NotNull(publicationController);
@@ -81,10 +82,10 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
         }
 
         [Fact]
-        public void Delete_DeleteUserById_OkObjectResult()
+        public async Task Delete_DeleteUserById_OkObjectResult()
         {
             // Arrange
-            var editablePublication = new Mock<IEditablePublication>();
+            var editablePublication = new Mock<IEditablePublicationAsync>();
             var getablePublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
@@ -97,7 +98,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                                                 mapper.Object);
 
             // Act
-            var result = publicationController.Delete(_publicationEntities.ElementAt(0).Id);
+            var result = await publicationController.Delete(_publicationEntities.ElementAt(0).Id);
 
             // Assert
             Assert.NotNull(publicationController);

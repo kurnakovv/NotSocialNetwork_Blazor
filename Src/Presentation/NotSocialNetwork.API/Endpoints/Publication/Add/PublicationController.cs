@@ -7,6 +7,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Endpoints.Publication.Add
 {
@@ -16,14 +17,14 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Add
     public class PublicationController : ControllerBase
     {
         public PublicationController(
-            IAddablePublication addablePublication,
+            IAddablePublicationAsync addablePublication,
             IMapper mapper)
         {
             _addablePublication = addablePublication;
             _mapper = mapper;
         }
 
-        private readonly IAddablePublication _addablePublication;
+        private readonly IAddablePublicationAsync _addablePublication;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -39,14 +40,14 @@ namespace NotSocialNetwork.API.Endpoints.Publication.Add
             Summary = "Add.",
             Description = "Add publication."
         )]
-        public ActionResult<AddPublicationDTO> Add(AddPublicationDTO publication)
+        public async Task<ActionResult<AddPublicationDTO>> Add(AddPublicationDTO publication)
         {
             try
             {
                 var publicationEntity =
                     _mapper.Map<PublicationEntity>(publication);
 
-                _addablePublication.Add(publicationEntity);
+                await _addablePublication.AddAsync(publicationEntity);
 
                 return Ok(publication);
             }

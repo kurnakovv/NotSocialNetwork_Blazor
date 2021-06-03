@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Endpoints.User.Edit
 {
@@ -17,14 +18,14 @@ namespace NotSocialNetwork.API.Endpoints.User.Edit
     public class UserController : ControllerBase
     {
         public UserController(
-            IEditableUser editableUser,
+            IEditableUserAsync editableUser,
             IMapper mapper)
         {
             _editableUser = editableUser;
             _mapper = mapper;
         }
 
-        private readonly IEditableUser _editableUser;
+        private readonly IEditableUserAsync _editableUser;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -39,11 +40,11 @@ namespace NotSocialNetwork.API.Endpoints.User.Edit
             Summary = "Update.",
             Description = "Update user."
         )]
-        public ActionResult<UserDTO> Update(UserEntity user)
+        public async Task<ActionResult<UserDTO>> Update(UserEntity user)
         {
             try
             {
-                _editableUser.Update(user);
+                await _editableUser.UpdateAsync(user);
 
                 var userDTO = _mapper.Map<UserDTO>(user);
 
@@ -67,11 +68,11 @@ namespace NotSocialNetwork.API.Endpoints.User.Edit
             Summary = "Delete by id.",
             Description = "Delete user by id."
         )]
-        public ActionResult<UserDTO> Delete(Guid id)
+        public async Task<ActionResult<UserDTO>> Delete(Guid id)
         {
             try
             {
-                var user = _editableUser.Delete(id);
+                var user = await _editableUser.DeleteAsync(id);
 
                 var userDTO = _mapper.Map<UserDTO>(user);
 

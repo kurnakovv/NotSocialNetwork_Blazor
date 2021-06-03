@@ -6,6 +6,7 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Get.Successes

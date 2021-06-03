@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Register.Successes
@@ -42,16 +43,16 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Regis
         };
 
         [Fact]
-        public void Add_AddUser_OkObjectResult()
+        public async Task Add_AddUser_OkObjectResult()
         {
             // Arrange
-            var addableUser = new Mock<IAddableUser>();
+            var addableUser = new Mock<IAddableUserAsync>();
             var mapper = new Mock<IMapper>();
             var imageRepositorySystem = new Mock<IImageRepositorySystem>();
             var jwtSystem = new Mock<IJwtSystem>();
 
 
-            addableUser.Setup(au => au.Add(_user))
+            addableUser.Setup(au => au.AddAsync(_user).Result)
                 .Returns(_user);
             mapper.Setup(m => m.Map<UserEntity>(_userDTO)).Returns(_user);
             mapper.Setup(m => m.Map<RegistrationResponseDTO>(_user)).Returns(_registrationResponseDTO);
@@ -62,7 +63,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Regis
                                         jwtSystem.Object);
 
             // Act
-            var result = userController.Register(_userDTO);
+            var result = await userController.Register(_userDTO);
 
             // Assert
             Assert.NotNull(userController);

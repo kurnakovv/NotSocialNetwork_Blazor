@@ -5,6 +5,7 @@ using NotSocialNetwork.API.Endpoints.User.Edit;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Edit.Successes
@@ -23,13 +24,13 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Edit.
         };
 
         [Fact]
-        public void Update_UpdateUser_OkObjectResult()
+        public async Task Update_UpdateUser_OkObjectResult()
         {
             // Arrange
-            var editableUser = new Mock<IEditableUser>();
+            var editableUser = new Mock<IEditableUserAsync>();
             var mapper = new Mock<IMapper>();
 
-            editableUser.Setup(eu => eu.Update(_user))
+            editableUser.Setup(eu => eu.UpdateAsync(_user).Result)
                 .Returns(_user);
 
             var userController = new UserController(
@@ -37,7 +38,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Edit.
                                         mapper.Object);
 
             // Act
-            var result = userController.Update(_user);
+            var result = await userController.Update(_user);
 
             // Assert
             Assert.NotNull(userController);
@@ -46,13 +47,13 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Edit.
         }
 
         [Fact]
-        public void Delete_DeleteUserById_OkObjectResult()
+        public async Task Delete_DeleteUserById_OkObjectResult()
         {
             // Arrange
-            var editableUser = new Mock<IEditableUser>();
+            var editableUser = new Mock<IEditableUserAsync>();
             var mapper = new Mock<IMapper>();
 
-            editableUser.Setup(eu => eu.Delete(_user.Id))
+            editableUser.Setup(eu => eu.DeleteAsync(_user.Id).Result)
                 .Returns(_user);
 
             var userController = new UserController(
@@ -60,7 +61,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.User.Edit.
                                         mapper.Object);
 
             // Act
-            var result = userController.Delete(_user.Id);
+            var result = await userController.Delete(_user.Id);
 
             // Assert
             Assert.NotNull(userController);

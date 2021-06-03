@@ -6,6 +6,7 @@ using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Add.Successes
@@ -26,10 +27,10 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
         };
 
         [Fact]
-        public void Add_AddPublication_OkObjectResult()
+        public async Task Add_AddPublication_OkObjectResult()
         {
             // Arrange
-            var addablePublication = new Mock<IAddablePublication>();
+            var addablePublication = new Mock<IAddablePublicationAsync>();
             var mapper = new Mock<IMapper>();
 
             var publicationController = new PublicationController(
@@ -37,7 +38,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                                                 mapper.Object);
 
             // Act
-            var result = publicationController.Add(_addPublicationDTO);
+            var result = await publicationController.Add(_addPublicationDTO);
 
             // Assert
             Assert.NotNull(publicationController);

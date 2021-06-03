@@ -8,6 +8,7 @@ using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Threading.Tasks;
 
 namespace NotSocialNetwork.API.Endpoints.User.Register
 {
@@ -17,7 +18,7 @@ namespace NotSocialNetwork.API.Endpoints.User.Register
     public class UserController : ControllerBase
     {
         public UserController(
-            IAddableUser addableUser,
+            IAddableUserAsync addableUser,
             IMapper mapper,
             IJwtSystem jwtSystem)
         {
@@ -26,7 +27,7 @@ namespace NotSocialNetwork.API.Endpoints.User.Register
             _jwtSystem = jwtSystem;
         }
 
-        private readonly IAddableUser _addableUser;
+        private readonly IAddableUserAsync _addableUser;
         private readonly IMapper _mapper;
         private readonly IJwtSystem _jwtSystem;
 
@@ -44,13 +45,13 @@ namespace NotSocialNetwork.API.Endpoints.User.Register
             Summary = "Register.",
             Description = "Register user."
         )]
-        public ActionResult<RegistrationResponseDTO> Register(RegistrationUserDTO registrationUserDTO)
+        public async Task<ActionResult<RegistrationResponseDTO>> Register(RegistrationUserDTO registrationUserDTO)
         {
             try
             {
                 var userEntity = _mapper.Map<UserEntity>(registrationUserDTO);
 
-                _addableUser.Add(userEntity);
+                await _addableUser.AddAsync(userEntity);
 
                 var registrationResponseDTO = _mapper.Map<RegistrationResponseDTO>(userEntity);
 
