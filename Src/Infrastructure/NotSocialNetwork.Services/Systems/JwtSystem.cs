@@ -11,14 +11,22 @@ namespace NotSocialNetwork.Services.Systems
 {
     public class JwtSystem : IJwtSystem
     {
+        private byte[] _securityKey = Encoding.ASCII.GetBytes(JwtConfig.SECRET);
+        private DateTime _expirationDate = DateTime.UtcNow.AddDays(2);
+        private readonly JwtSecurityTokenHandler _jwtTokenHandler = new JwtSecurityTokenHandler();
+
         public string GenerateToken(UserEntity user)
         {
-            var secret = JwtConfig.SECRET;
-            byte[] securityKey = Encoding.ASCII.GetBytes(secret);
-            var expirationDate = DateTime.UtcNow.AddDays(2);
+            var securityTokenDescriptor = InitSecurityTokenDescriptor(user);
 
-            var jwtTokenHandler = new JwtSecurityTokenHandler();
-            
+            var securityToken = _jwtTokenHandler.CreateToken(securityTokenDescriptor);
+            var token = _jwtTokenHandler.WriteToken(securityToken);
+
+            return token;
+        }
+
+        private SecurityTokenDescriptor InitSecurityTokenDescriptor(UserEntity user)
+        {
             var securityTokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -27,17 +35,14 @@ namespace NotSocialNetwork.Services.Systems
                     new Claim("email", user.Email),
                 }),
 
-                Expires = expirationDate,
+                Expires = _expirationDate,
 
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(securityKey),
+                    new SymmetricSecurityKey(_securityKey),
                     SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var securityToken = jwtTokenHandler.CreateToken(securityTokenDescriptor);
-            var token = jwtTokenHandler.WriteToken(securityToken);
-
-            return token;
+            return securityTokenDescriptor;
         }
     }
 }
