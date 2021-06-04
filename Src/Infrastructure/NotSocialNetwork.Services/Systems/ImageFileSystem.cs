@@ -20,7 +20,7 @@ namespace NotSocialNetwork.Services.Systems
         }
 
         private readonly IRepositoryAsync<ImageEntity> _imageRepository;
-        private static ICollection<string> _imageExtensions
+        private readonly ICollection<string> _imageExtensions
             = new List<string> { ".jpg", ".png", ".jpeg", ".gif" };
 
         public async Task TrySaveAsync(ImageEntity file, string pathToSave)
