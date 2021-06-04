@@ -39,11 +39,6 @@ namespace NotSocialNetwork.API.Endpoints.Authentication.Login
         {
             try
             {
-                if (ModelState.IsValid == false)
-                {
-                    return BadRequest("The entered data is not valid.");
-                }
-
                 var user = _getableUser.GetByEmail(login.Email);
 
                 var token = _jwtSystem.GenerateToken(user);
