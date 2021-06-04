@@ -101,5 +101,31 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result.Result);
         }
+
+        [Fact]
+        public void GetAllByAuthorId_GetAllByAuthorId_Publications_OkObjectResult()
+        {
+            // Arrange
+            var getablePublication = new Mock<IGetablePublication>();
+            var mapper = new Mock<IMapper>();
+
+            getablePublication.Setup(gp => gp.GetAllByAuthorId(_publicationEntities.ElementAt(0).Author.Id))
+                .Returns(_publicationEntities);
+
+            mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
+                .Returns(_publicationsDTO.ElementAt(0));
+
+            var publicationController = new PublicationController(
+                                                getablePublication.Object,
+                                                mapper.Object);
+
+            // Act
+            var result = publicationController.GetAllByAuthor(_publicationEntities.ElementAt(0).Author.Id);
+
+            // Assert
+            Assert.NotNull(publicationController);
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
     }
 }
