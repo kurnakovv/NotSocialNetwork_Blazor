@@ -12,4 +12,4 @@ This is the layer that stores all the application BL, interfaces, entities, etc.
 * Entities - Database entities
 * Exceptions - Self-written exceptions (usually for UI layer)
 * Interfaces - Interfaces for the entire application
-* Services - BL
+* UseCases - BL

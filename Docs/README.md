@@ -39,6 +39,7 @@
 <div style="float:right;">
 
 Frontend:
+* Blazor Server - v5.0
 * Html - v5.0
 * Css - v3.0
 * Scss
@@ -51,7 +52,6 @@ Backend:
 * .Net - v5.0
 * EntityFrameworkCore - v5.0
 * Web API - v5.0
-* Blazor Server - v5.0
 * Swagger - v5.6.3
 * xUnit - v2.4.1
 * Moq - v4.16.1
@@ -64,6 +64,7 @@ Backend:
 ## Versions
 
 * v1.0.0
+* v1.1.0
 
 ## How to start
 
