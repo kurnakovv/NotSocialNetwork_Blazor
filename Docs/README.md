@@ -65,6 +65,7 @@ Backend:
 
 * v1.0.0
 * v1.1.0
+* v1.1.1
 
 ## How to start
 
@@ -104,6 +105,46 @@ docker-compose up
 * Choose NotSocialNetwork.API (start) and NotSocialNetwork.UI (start), as shown in the screenshot:
 ![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
+
+</details>
+
+<details>
+    <summary>Terminal.</summary>
+
+### 1 Install .net 5 https://dotnet.microsoft.com/download/dotnet/5.0
+### 2 Create certificate (Edit "YourPassword" to your password)
+
+```
+dotnet dev-certs https --clean
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\NotSocialNetwork.API.pfx -p YourPassword
+dotnet dev-certs https --clean
+```
+
+### 3 Edit path in Src\Presentation\NotSocialNetwork.UI\Helpers\HttpHelper
+
+``` CS
+public class HttpHelper
+{
+    internal const string APIAddress = "https://localhost:5001/api/";
+```
+
+### 4 Run projects
+
+NotSocialNetwork.API
+```
+dotnet run -p .\Src\Presentation\NotSocialNetwork.API\NotSocialNetwork.API.csproj
+```
+NotSocialNetwork.UI
+```
+dotnet run -p .\Src\Presentation\NotSocialNetwork.UI\NotSocialNetwork.UI.csproj
+```
+
+| Application 	    | URL |
+|------------------ | -------------------------------------- |
+| NotSocialNetwork.API  | https://localhost:5001/swagger/index.html |
+| NotSocialNetwork.API  | http://localhost:5000/swagger/index.html |
+| NotSocialNetwork.UI  | https://localhost:5003 |
+| NotSocialNetwork.UI  | http://localhost:5002 |
 
 </details>
 
