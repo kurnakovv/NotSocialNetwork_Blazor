@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using NotSocialNetwork.API;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,6 +16,8 @@ namespace NotSocialNetwork.Presentation.Tests.Integrations.API.Controllers
 
         private readonly HttpClient _client;
 
+        // Note: This test doesn't work if we use InMemoryDatabase
+        //       or if database doesn't contains data.
         [Theory]
         [InlineData("api/publication")]
         public async Task Get_GetJsonFile_JsonFile(string url)
