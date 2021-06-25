@@ -1,0 +1,24 @@
+﻿@page "/publication"
+@using NotSocialNetwork.Application.DTOs
+@inject HttpClient Http
+
+<h3>Publications</h3>
+
+@if (publications != null)
+{
+    @foreach (var publication in publications)
+    {
+        <h1>@publication.Text</h1>
+    }
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+
+@code {
+    IEnumerable<PublicationDTO> publications;
+    protected override async Task OnInitializedAsync() =>
+        publications = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>("api/AdminPublication/index=0");
+}
