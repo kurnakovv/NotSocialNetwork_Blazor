@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotSocialNetwork.API.Endpoints.Publication.Get;
+using NotSocialNetwork.API.Endpoints.Admin.Publication.Get;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
 using Xunit;
 
-namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Get.Unsuccesses
+namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Admin.Publication.Get.Unsuccesses
 {
-    public class PublicationControllerUnsuccessTest
+    public class AdminPublicationControllerUnsuccessTest
     {
         private readonly PublicationEntity _publication = new PublicationEntity()
         {
@@ -24,7 +24,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                         getPublication.Object,
                                         mapper.Object);
             var validIndex = 0;
@@ -33,7 +33,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                               .Throws(new ObjectNotFoundException("No more publications."));
 
             // Act
-            var result = publicationController.Get(validIndex);
+            var result = adminPublicationController.Get(validIndex);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -46,7 +46,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                         getPublication.Object,
                                         mapper.Object);
             var invalidIndex = -1;
@@ -55,7 +55,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                               .Throws(new InvalidOperationException("Invalid index."));
 
             // Act
-            var result = publicationController.Get(invalidIndex);
+            var result = adminPublicationController.Get(invalidIndex);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result.Result);
@@ -68,7 +68,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                         getPublication.Object,
                                         mapper.Object);
 
@@ -76,7 +76,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                               .Throws(new ObjectNotFoundException("Publication not found."));
 
             // Act
-            var result = publicationController.Get(_publication.Id);
+            var result = adminPublicationController.Get(_publication.Id);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -89,7 +89,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                         getPublication.Object,
                                         mapper.Object);
 
@@ -97,7 +97,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                               .Throws(new ObjectNotFoundException("Author dont have a publications."));
 
             // Act
-            var result = publicationController.GetAllByAuthor(_publication.Author.Id);
+            var result = adminPublicationController.GetAllByAuthor(_publication.Author.Id);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);

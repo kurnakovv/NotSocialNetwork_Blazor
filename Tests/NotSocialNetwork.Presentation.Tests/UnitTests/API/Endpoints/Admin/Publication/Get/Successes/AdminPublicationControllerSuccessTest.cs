@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotSocialNetwork.API.Endpoints.Publication.Edit;
+using NotSocialNetwork.API.Endpoints.Admin.Publication.Get;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Edit.Successes
+namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Admin.Publication.Get.Successes
 {
-    public class PublicationControllerSuccessTest
+    public class AdminPublicationControllerSuccessTest
     {
         private static UserEntity _author = new UserEntity()
         {
@@ -50,58 +49,80 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             },
         };
 
-        private static UpdatePublicationDTO _updatePublicationDTO = new UpdatePublicationDTO()
-        {
-            Id = _publicationEntities.ElementAt(0).Id,
-            Text = "Update text",
-        };
-
         [Fact]
-        public async Task Update_UpdatePublication_OkObjectResult()
+        public void Get_GetAllPublications_OkObjectResult()
         {
             // Arrange
-            var editablePublication = new Mock<IEditablePublicationAsync>();
             var getablePublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            getablePublication.Setup(ep => ep.GetById(_publicationEntities.ElementAt(0).Id))
+            getablePublication.Setup(gp => gp.GetAll())
+                .Returns(_publicationEntities);
+
+            mapper.Setup(p => p.Map<IEnumerable<PublicationDTO>>(_publicationEntities))
+                .Returns(_publicationsDTO);
+
+            var adminPublicationController = new AdminPublicationController(
+                                            getablePublication.Object,
+                                            mapper.Object);
+
+            // Act
+            var results = adminPublicationController.Get();
+
+            // Assert
+            Assert.NotNull(adminPublicationController);
+            Assert.NotNull(results);
+            Assert.IsType<OkObjectResult>(results.Result);
+        }
+
+        [Fact]
+        public void Get_GetPublicationById_OkObjectResult()
+        {
+            // Arrange
+            var getablePublication = new Mock<IGetablePublication>();
+            var mapper = new Mock<IMapper>();
+
+            getablePublication.Setup(gp => gp.GetById(_publicationEntities.ElementAt(0).Id))
                 .Returns(_publicationEntities.ElementAt(0));
 
-            var publicationController = new PublicationController(
-                                                editablePublication.Object,
+            mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
+                .Returns(_publicationsDTO.ElementAt(0));
+
+            var adminPublicationController = new AdminPublicationController(
                                                 getablePublication.Object,
                                                 mapper.Object);
 
             // Act
-            var result = await publicationController.Update(_updatePublicationDTO);
+            var result = adminPublicationController.Get(_publicationEntities.ElementAt(0).Id);
 
             // Assert
-            Assert.NotNull(publicationController);
+            Assert.NotNull(adminPublicationController);
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
-        public async Task Delete_DeletePublicationById_OkObjectResult()
+        public void GetAllByAuthorId_GetAllByAuthorId_Publications_OkObjectResult()
         {
             // Arrange
-            var editablePublication = new Mock<IEditablePublicationAsync>();
             var getablePublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            getablePublication.Setup(ep => ep.GetById(_publicationEntities.ElementAt(0).Id))
-                .Returns(_publicationEntities.ElementAt(0));
+            getablePublication.Setup(gp => gp.GetAllByAuthorId(_publicationEntities.ElementAt(0).Author.Id))
+                .Returns(_publicationEntities);
 
-            var publicationController = new PublicationController(
-                                                editablePublication.Object,
+            mapper.Setup(m => m.Map<PublicationDTO>(_publicationEntities.ElementAt(0)))
+                .Returns(_publicationsDTO.ElementAt(0));
+
+            var adminPublicationController = new AdminPublicationController(
                                                 getablePublication.Object,
                                                 mapper.Object);
 
             // Act
-            var result = await publicationController.Delete(_publicationEntities.ElementAt(0).Id);
+            var result = adminPublicationController.GetAllByAuthor(_publicationEntities.ElementAt(0).Author.Id);
 
             // Assert
-            Assert.NotNull(publicationController);
+            Assert.NotNull(adminPublicationController);
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result.Result);
         }

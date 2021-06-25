@@ -8,7 +8,6 @@ using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Get.Successes

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotSocialNetwork.API.Endpoints.Publication.Edit;
+using NotSocialNetwork.API.Endpoints.Admin.Publication.Edit;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
@@ -11,9 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Edit.Successes
+namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Admin.Publication.Edit.Successes
 {
-    public class PublicationControllerSuccessTest
+    public class AdminPublicationControllerSuccessTest
     {
         private static UserEntity _author = new UserEntity()
         {
@@ -67,16 +67,16 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             getablePublication.Setup(ep => ep.GetById(_publicationEntities.ElementAt(0).Id))
                 .Returns(_publicationEntities.ElementAt(0));
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                                 editablePublication.Object,
                                                 getablePublication.Object,
                                                 mapper.Object);
 
             // Act
-            var result = await publicationController.Update(_updatePublicationDTO);
+            var result = await adminPublicationController.Update(_updatePublicationDTO);
 
             // Assert
-            Assert.NotNull(publicationController);
+            Assert.NotNull(adminPublicationController);
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result.Result);
         }
@@ -92,16 +92,16 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             getablePublication.Setup(ep => ep.GetById(_publicationEntities.ElementAt(0).Id))
                 .Returns(_publicationEntities.ElementAt(0));
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                                 editablePublication.Object,
                                                 getablePublication.Object,
                                                 mapper.Object);
 
             // Act
-            var result = await publicationController.Delete(_publicationEntities.ElementAt(0).Id);
+            var result = await adminPublicationController.Delete(_publicationEntities.ElementAt(0).Id);
 
             // Assert
-            Assert.NotNull(publicationController);
+            Assert.NotNull(adminPublicationController);
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result.Result);
         }

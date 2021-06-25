@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotSocialNetwork.API.Endpoints.Publication.Edit;
+using NotSocialNetwork.API.Endpoints.Admin.Publication.Edit;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publication.Edit.Unsuccesses
+namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Admin.Publication.Edit.Unsuccesses
 {
-    public class PublicationControllerUnsuccessTest
+    public class AdminPublicationControllerUnsuccessTest
     {
         private static UpdatePublicationDTO _updatePublicationDTO = new UpdatePublicationDTO();
-        
+
         [Fact]
         public async Task Update_UpdateIfPublicationNotFound_NotFound404()
         {
@@ -22,7 +22,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                                 editPublication.Object,
                                                 getPublication.Object,
                                                 mapper.Object);
@@ -31,7 +31,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                                .Throws(new ObjectNotFoundException("Publication not found."));
 
             // Act
-            var result = await publicationController.Update(_updatePublicationDTO);
+            var result = await adminPublicationController.Update(_updatePublicationDTO);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -45,7 +45,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
             var getPublication = new Mock<IGetablePublication>();
             var mapper = new Mock<IMapper>();
 
-            var publicationController = new PublicationController(
+            var adminPublicationController = new AdminPublicationController(
                                                 editPublication.Object,
                                                 getPublication.Object,
                                                 mapper.Object);
@@ -54,7 +54,7 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
                                .Throws(new ObjectNotFoundException("Publication not found."));
 
             // Act
-            var result = await publicationController.Delete(_updatePublicationDTO.Id);
+            var result = await adminPublicationController.Delete(_updatePublicationDTO.Id);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
