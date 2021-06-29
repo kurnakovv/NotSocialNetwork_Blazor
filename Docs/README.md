@@ -101,7 +101,7 @@ docker-compose up
 
 * In the main root of the project open properties
 * Choose Multiple startup projects
-* Choose NotSocialNetwork.API (start) and NotSocialNetwork.UI (start), as shown in the screenshot:
+* Choose NotSocialNetwork.API (start) and NotSocialNetwork.BlazorServer.Server (start), as shown in the screenshot:
 ![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
 
