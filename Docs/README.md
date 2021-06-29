@@ -10,8 +10,6 @@
 
 ## Table of contents
 * [Architecture](#architecture)
-* [Diagram](#diagram)
-* [Projects](#projects)
 * [Technologies](#technologies)
 * [Versions](#versions)
 * [How to start](#how-to-start)
@@ -40,6 +38,7 @@
 
 Frontend:
 * Blazor Server - v5.0
+* Blazor WebAssembly - v5.0
 * Html - v5.0
 * Css - v3.0
 * Scss
@@ -117,15 +116,15 @@ docker-compose up
 ```
 dotnet dev-certs https --clean
 dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\NotSocialNetwork.API.pfx -p YourPassword
-dotnet dev-certs https --clean
+dotnet dev-certs https --trust
 ```
 
-### 3 Edit path in Src\Presentation\NotSocialNetwork.UI\Helpers\HttpHelper
+### 3 Edit path in Src\Presentation\NotSocialNetwork.WebShared\Helpers\HttpHelper
 
 ``` CS
 public class HttpHelper
 {
-    internal const string APIAddress = "https://localhost:5001/api/";
+    internal const string API_ADDRESS = "https://localhost:5001/api/";
 ```
 
 ### 4 Run projects
@@ -134,17 +133,16 @@ NotSocialNetwork.API
 ```
 dotnet run -p .\Src\Presentation\NotSocialNetwork.API\NotSocialNetwork.API.csproj
 ```
-NotSocialNetwork.UI
+NotSocialNetwork.BlazorServer.Server
 ```
-dotnet run -p .\Src\Presentation\NotSocialNetwork.UI\NotSocialNetwork.UI.csproj
+dotnet run -p .\Src\Presentation\NotSocialNetwork.BlazorServer.Server\NotSocialNetwork.BlazorServer.Server.csproj
 ```
 
 | Application 	    | URL |
 |------------------ | -------------------------------------- |
 | NotSocialNetwork.API  | https://localhost:5001/swagger/index.html |
-| NotSocialNetwork.API  | http://localhost:5000/swagger/index.html |
-| NotSocialNetwork.UI  | https://localhost:5003 |
-| NotSocialNetwork.UI  | http://localhost:5002 |
+| NotSocialNetwork.BlazorWasm.WebUI  | https://localhost:3001/BlazorClient |
+| NotSocialNetwork.BlazorWasm.WebUIAdmin  | https://localhost:3001/Admin |
 
 </details>
 
