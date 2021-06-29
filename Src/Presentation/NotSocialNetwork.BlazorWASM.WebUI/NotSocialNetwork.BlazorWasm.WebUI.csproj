@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <StaticWebAssetBasePath>Admin</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>BlazorClient</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\NotSocialNetwork.Application\NotSocialNetwork.Application.csproj" />
     <ProjectReference Include="..\NotSocialNetwork.WebShared\NotSocialNetwork.WebShared.csproj" />
   </ItemGroup>
 

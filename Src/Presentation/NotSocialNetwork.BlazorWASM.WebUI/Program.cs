@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NotSocialNetwork.WebShared.Helpers;
 
-namespace NotSocialNetwork.BlazorWasm.WebUIAdmin
+namespace NotSocialNetwork.BlazorWasm.WebUI
 {
     public class Program
     {
