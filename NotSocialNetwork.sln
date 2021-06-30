@@ -44,9 +44,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.BlazorWasm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.WebShared", "Src\Presentation\NotSocialNetwork.WebShared\NotSocialNetwork.WebShared.csproj", "{DB617538-43C2-432B-9F45-45AF45BC5DCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.BlazorServer.Server", "Src\Presentation\NotSocialNetwork.BlazorServer.Server\NotSocialNetwork.BlazorServer.Server.csproj", "{186C3D32-B006-488F-8597-8C4D09E3F994}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.BlazorServer.Server", "Src\Presentation\NotSocialNetwork.BlazorServer.Server\NotSocialNetwork.BlazorServer.Server.csproj", "{186C3D32-B006-488F-8597-8C4D09E3F994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotSocialNetwork.BlazorWasm.WebUI", "Src\Presentation\NotSocialNetwork.BlazorWasm.WebUI\NotSocialNetwork.BlazorWasm.WebUI.csproj", "{6C2100F8-707D-443D-8555-4F808E2AFB50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotSocialNetwork.BlazorWasm.WebUI", "Src\Presentation\NotSocialNetwork.BlazorWasm.WebUI\NotSocialNetwork.BlazorWasm.WebUI.csproj", "{6C2100F8-707D-443D-8555-4F808E2AFB50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

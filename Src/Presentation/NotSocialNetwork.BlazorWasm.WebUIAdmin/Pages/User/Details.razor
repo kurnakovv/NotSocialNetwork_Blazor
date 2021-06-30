@@ -1,0 +1,37 @@
+﻿@page "/User/Details/{Id:guid}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+@if (user != null)
+{
+    <h1>User @Id</h1>
+    <h3>@nameof(user.Email)</h3>
+    <p>@user.Email</p>
+    <h3>@nameof(user.Name)</h3>
+    <p>@user.Name</p>
+    <h3>@nameof(user.Image)</h3>
+    <img src="../userImages/@user.Image.Title" style="width:300px;height:300px" />
+
+    <br />
+    <a href="/Admin/User/Edit/@user.Id" class="btn btn-outline-primary">Edit</a>
+    <a href="/Admin/User/Delete/@user.Id" class="btn btn-outline-danger">Delete</a>
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private UserDTO user;
+
+    protected override async Task OnInitializedAsync() =>
+        user = await GetUser();
+
+    private async Task<UserDTO> GetUser()
+    {
+        return await Http.GetFromJsonAsync<UserDTO>($"api/AdminUser/{Id}");
+    }
+}

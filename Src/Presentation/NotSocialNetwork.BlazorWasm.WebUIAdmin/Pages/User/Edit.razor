@@ -1,0 +1,53 @@
+﻿@page "/User/Edit/{Id:guid}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>User @Id</h1>
+
+@if (user != null)
+{
+    <EditForm Model="user" OnValidSubmit="@UpdateUserWithExit">
+        <h3>@nameof(UserDTO.Email)</h3>
+        <InputText @bind-Value="user.Email"
+                   type="Email" placeholder="Email" class="form-control" />
+        <h3>@nameof(UserDTO.Name)</h3>
+        <InputText @bind-Value="user.Name"
+                   type="text" placeholder="Email" class="form-control" />
+        <h3>@nameof(UserDTO.Image)</h3>
+        <img src="../userImages/@user.Image.Title" style="width:300px;height:300px" />
+        <br />
+        <button type="submit" class="btn btn-outline-primary">
+            Edit
+        </button>
+    </EditForm>
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private UserDTO user;
+
+    protected override async Task OnInitializedAsync() =>
+        user = await GetUser();
+
+    private async Task<UserDTO> GetUser()
+    {
+        return await Http.GetFromJsonAsync<UserDTO>($"api/AdminUser/{Id}");
+    }
+
+    private async Task UpdateUser()
+    {
+        await Http.PutAsJsonAsync<UserDTO>("api/AdminUser", user);
+    }
+
+    private async Task UpdateUserWithExit()
+    {
+        await UpdateUser();
+        NavigationManager.NavigateTo("User");
+    }
+}

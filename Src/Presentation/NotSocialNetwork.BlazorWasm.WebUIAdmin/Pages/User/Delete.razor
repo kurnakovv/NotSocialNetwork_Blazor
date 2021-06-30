@@ -1,0 +1,47 @@
+﻿@page "/User/Delete/{Id:guid}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+@if (user != null)
+{
+    <h1>Are you sure what you want delete user by Id: @Id?</h1>
+    <h3>@nameof(user.Email)</h3>
+    <p>@user.Email</p>
+    <h3>@nameof(user.Name)</h3>
+    <p>@user.Name</p>
+    <h3>@nameof(user.Image)</h3>
+    <img src="../userImages/@user.Image.Title" style="width:300px;height:300px" />
+
+    <br />
+    <button type="submit" class="btn btn-outline-danger" @onclick="DeleteUserWithExit">Delete</button>
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private UserDTO user;
+
+    protected override async Task OnInitializedAsync() =>
+        user = await GetUser();
+
+    private async Task<UserDTO> GetUser()
+    {
+        return await Http.GetFromJsonAsync<UserDTO>($"api/AdminUser/{Id}");
+    }
+
+    private async Task DeleteUser()
+    {
+        await Http.DeleteAsync($"api/AdminUser/?id={Id}");
+    }
+
+    private async Task DeleteUserWithExit()
+    {
+        await DeleteUser();
+        NavigationManager.NavigateTo("User");
+    }
+}
