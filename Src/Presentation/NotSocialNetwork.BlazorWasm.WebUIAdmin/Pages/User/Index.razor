@@ -1,0 +1,89 @@
+﻿@page "/User"
+@inject HttpClient Http
+
+<h1>Users</h1>
+
+@if (users != null &&
+  currentIndex != 0)
+{
+    <button class="btn btn-outline-warning" @onclick="GetPreviousUsers">Get previous users</button>
+}
+@if (users != null &&
+  users.Count() == 10)
+{
+    <button class="btn btn-outline-success" @onclick="GetNextUsers">Get more users</button>
+}
+
+<table class="table">
+    <tr>
+        <th>@nameof(UserDTO.Id)</th>
+        <th>@nameof(UserDTO.Email)</th>
+        <th>@nameof(UserDTO.Name)</th>
+        <th>@nameof(UserDTO.Image)</th>
+    </tr>
+    @if (users != null)
+    {
+        @foreach (var user in users)
+        {
+            <tr>
+                <th>@user.Id</th>
+                <th>@user.Email</th>
+                <th>@user.Name</th>
+                <th><img src="../userImages/@user.Image.Title" style="width:100px;height:100px" /></th>
+
+                <th><a href="/Admin/User/Details/@user.Id" class="btn btn-outline-primary">Details</a></th>
+                <th><a href="/Admin/User/Edit/@user.Id" class="btn btn-outline-primary">Edit</a></th>
+                <th><a href="/Admin/User/Delete/@user.Id" class="btn btn-outline-danger">Delete</a></th>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <th>
+                <h1>Loading...</h1>
+            </th>
+        </tr>
+    }
+</table>
+
+@if (users != null &&
+  currentIndex != 0)
+{
+    <button class="btn btn-outline-warning" @onclick="GetPreviousUsers">Get previous users</button>
+}
+@if (users != null &&
+  users.Count() == 10)
+{
+    <button class="btn btn-outline-success" @onclick="GetNextUsers">Get more users</button>
+}
+
+
+@code {
+    private int currentIndex = 0;
+    private IEnumerable<UserDTO> users;
+
+    protected override async Task OnInitializedAsync() =>
+        users = await GetUsers();
+
+    private async Task<IEnumerable<UserDTO>> GetUsers()
+    {
+        users = await Http.GetFromJsonAsync<IEnumerable<UserDTO>>($"api/AdminUser/index={currentIndex}");
+
+        return users;
+    }
+
+    private async Task GetNextUsers()
+    {
+        currentIndex++;
+
+        users = await GetUsers();
+    }
+
+    private async Task GetPreviousUsers()
+    {
+        currentIndex--;
+
+        users = await GetUsers();
+    }
+}
