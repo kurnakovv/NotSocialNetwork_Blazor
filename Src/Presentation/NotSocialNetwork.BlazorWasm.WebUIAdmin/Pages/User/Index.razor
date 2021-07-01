@@ -3,6 +3,8 @@
 
 <h1>Users</h1>
 
+<h3 style="color:red">@errorMessage</h3>
+
 @if (users != null &&
   currentIndex != 0)
 {
@@ -47,6 +49,7 @@
     }
 </table>
 
+<h3 style="color:red">@errorMessage</h3>
 @if (users != null &&
   currentIndex != 0)
 {
@@ -61,6 +64,7 @@
 
 @code {
     private int currentIndex = 0;
+    private string errorMessage = string.Empty;
     private IEnumerable<UserDTO> users;
 
     protected override async Task OnInitializedAsync() =>
@@ -68,9 +72,27 @@
 
     private async Task<IEnumerable<UserDTO>> GetUsers()
     {
-        users = await Http.GetFromJsonAsync<IEnumerable<UserDTO>>($"api/AdminUser/index={currentIndex}");
+        try
+        {
+            users = await Http.GetFromJsonAsync<IEnumerable<UserDTO>>($"api/AdminUser/index={currentIndex}");
 
-        return users;
+            return users;
+        }
+        catch(HttpRequestException ex)
+        {
+            if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                await GetPreviousUsers();
+                errorMessage = "No more users...";
+
+                return users;
+            }
+            else
+            {
+                errorMessage = ex.Message;
+                return users;
+            }
+        }
     }
 
     private async Task GetNextUsers()

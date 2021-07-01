@@ -3,13 +3,15 @@
 
 <h1>Publications</h1>
 
+<h3 style="color:red">@errorMessage</h3>
+
 @if (publications != null &&
-     currentIndex != 0)
+    currentIndex != 0)
 {
     <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
 }
 @if (publications != null &&
-     publications.Count() == 10)
+    publications.Count() == 10)
 {
     <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
 }
@@ -47,13 +49,14 @@
     }
 </table>
 
+<h3 style="color:red">@errorMessage</h3>
 @if (publications != null &&
-     currentIndex != 0)
+    currentIndex != 0)
 {
     <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
 }
 @if (publications != null &&
-     publications.Count() == 10)
+    publications.Count() == 10)
 {
     <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
 }
@@ -61,6 +64,7 @@
 
 @code {
     private int currentIndex = 0;
+    private string errorMessage = string.Empty;
     private IEnumerable<PublicationDTO> publications;
 
     protected override async Task OnInitializedAsync() =>
@@ -68,9 +72,27 @@
 
     private async Task<IEnumerable<PublicationDTO>> GetPublications()
     {
-        publications = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>($"api/AdminPublication/index={currentIndex}");
+        try
+        {
+            publications = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>($"api/AdminPublication/index={currentIndex}");
 
-        return publications;
+            return publications;
+        }
+        catch (HttpRequestException ex)
+        {
+            if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                await GetPreviousPublications();
+                errorMessage = "No more publications...";
+
+                return publications;
+            }
+            else
+            {
+                errorMessage = ex.Message;
+                return publications;
+            }
+        }
     }
 
     private async Task GetNextPublications()
