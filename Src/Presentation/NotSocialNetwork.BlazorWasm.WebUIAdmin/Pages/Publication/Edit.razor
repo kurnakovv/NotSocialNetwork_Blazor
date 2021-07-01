@@ -1,0 +1,51 @@
+﻿@page "/Publication/Edit/{Id:guid}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Publication @Id</h1>
+
+@if (publication != null)
+{
+    <EditForm Model="publication" OnValidSubmit="@UpdatePublicationWithExit">
+        <h3>@nameof(PublicationDTO.Text)</h3>
+        <InputText @bind-Value="publication.Text"
+                   type="text" placeholder="Text" class="form-control" />
+        <h3>Author publication</h3>
+        <img src="../userImages/@publication.Author.Image.Title" style="width:300px;height:300px" />
+        <br />
+        <button type="submit" class="btn btn-outline-primary">
+            Edit
+        </button>
+        <a href="Publication" class="btn btn-outline-primary">Cancel</a>
+    </EditForm>
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private PublicationDTO publication;
+
+    protected override async Task OnInitializedAsync() =>
+        publication = await GetPublication();
+
+    private async Task<PublicationDTO> GetPublication()
+    {
+        return await Http.GetFromJsonAsync<PublicationDTO>($"api/AdminPublication/{Id}");
+    }
+
+    private async Task UpdatePublication()
+    {
+        await Http.PutAsJsonAsync<PublicationDTO>("api/AdminPublication", publication);
+    }
+
+    private async Task UpdatePublicationWithExit()
+    {
+        await UpdatePublication();
+        NavigationManager.NavigateTo("Publication");
+    }
+}

@@ -12,13 +12,14 @@
                    type="Email" placeholder="Email" class="form-control" />
         <h3>@nameof(UserDTO.Name)</h3>
         <InputText @bind-Value="user.Name"
-                   type="text" placeholder="Email" class="form-control" />
+                   type="text" placeholder="Name" class="form-control" />
         <h3>@nameof(UserDTO.Image)</h3>
         <img src="../userImages/@user.Image.Title" style="width:300px;height:300px" />
         <br />
         <button type="submit" class="btn btn-outline-primary">
             Edit
         </button>
+        <a href="User" class="btn btn-outline-primary">Cancel</a>
     </EditForm>
 }
 else

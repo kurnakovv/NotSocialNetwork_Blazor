@@ -1,0 +1,46 @@
+﻿@page "/Publication/Delete/{Id:guid}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Are you sure what you want delete publication by id: @Id?</h1>
+
+@if (publication != null)
+{
+    <h3>@nameof(PublicationDTO.Text)</h3>
+    <p>@publication.Text</p>
+    <h3>Author publication</h3>
+    <img src="../userImages/@publication.Author.Image.Title" style="width:300px;height:300px" />
+    <br />
+    <button type="submit" class="btn btn-outline-danger" @onclick="DeletePublicationWithExit">Delete</button>
+    <a href="Publication" class="btn btn-outline-primary">Cancel</a>
+}
+else
+{
+    <h1>Loading...</h1>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private PublicationDTO publication;
+
+    protected override async Task OnInitializedAsync() =>
+        publication = await GetPublication();
+
+    private async Task<PublicationDTO> GetPublication()
+    {
+        return await Http.GetFromJsonAsync<PublicationDTO>($"api/AdminPublication/{Id}");
+    }
+
+    private async Task DeletePublication()
+    {
+        await Http.DeleteAsync($"api/AdminPublication/?id={Id}");
+    }
+
+    private async Task DeletePublicationWithExit()
+    {
+        await DeletePublication();
+        NavigationManager.NavigateTo("Publication");
+    }
+}

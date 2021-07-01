@@ -16,8 +16,4 @@
     <ProjectReference Include="..\NotSocialNetwork.WebShared\NotSocialNetwork.WebShared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Publication\" />
-  </ItemGroup>
-
 </Project>
