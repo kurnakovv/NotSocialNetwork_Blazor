@@ -1,0 +1,89 @@
+﻿@page "/Publication"
+@inject HttpClient Http
+
+<h1>Publications</h1>
+
+@if (publications != null &&
+     currentIndex != 0)
+{
+    <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
+}
+@if (publications != null &&
+     publications.Count() == 10)
+{
+    <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
+}
+
+<table class="table">
+    <tr>
+        <th>@nameof(PublicationDTO.Id)</th>
+        <th>@nameof(PublicationDTO.Text)</th>
+        <th>Author name</th>
+        <th>Author image</th>
+    </tr>
+    @if (publications != null)
+    {
+        @foreach (var publication in publications)
+        {
+            <tr>
+                <th>@publication.Id</th>
+                <th>@publication.Text</th>
+                <th><a href="User/Details/@publication.Author.Id">@publication.Author.Name</a></th>
+                <th><img src="../userImages/@publication.Author.Image.Title" style="width:100px;height:100px" /></th>
+
+                <th><a href="Publication/Details/@publication.Id" class="btn btn-outline-primary">Details</a></th>
+                <th><a href="Publication/Edit/@publication.Id" class="btn btn-outline-primary">Edit</a></th>
+                <th><a href="Publication/Delete/@publication.Id" class="btn btn-outline-danger">Delete</a></th>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <th>
+                <h1>Loading...</h1>
+            </th>
+        </tr>
+    }
+</table>
+
+@if (publications != null &&
+     currentIndex != 0)
+{
+    <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
+}
+@if (publications != null &&
+     publications.Count() == 10)
+{
+    <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
+}
+
+
+@code {
+    private int currentIndex = 0;
+    private IEnumerable<PublicationDTO> publications;
+
+    protected override async Task OnInitializedAsync() =>
+        publications = await GetPublications();
+
+    private async Task<IEnumerable<PublicationDTO>> GetPublications()
+    {
+        publications = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>($"api/AdminPublication/index={currentIndex}");
+
+        return publications;
+    }
+
+    private async Task GetNextPublications()
+    {
+        currentIndex++;
+
+        publications = await GetPublications();
+    }
+
+    private async Task GetPreviousPublications()
+    {
+        currentIndex--;
+
+        publications = await GetPublications();
+    }
+}
