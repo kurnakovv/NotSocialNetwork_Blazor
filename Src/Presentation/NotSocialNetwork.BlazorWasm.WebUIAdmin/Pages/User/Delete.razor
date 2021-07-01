@@ -32,7 +32,15 @@ else
 
     private async Task<UserDTO> GetUser()
     {
-        return await Http.GetFromJsonAsync<UserDTO>($"api/AdminUser/{Id}");
+        try
+        {
+            return await Http.GetFromJsonAsync<UserDTO>($"api/AdminUser/{Id}");
+        }
+        catch (HttpRequestException)
+        {
+            NavigationManager.NavigateTo("User");
+            return null;
+        }
     }
 
     private async Task DeleteUser()
