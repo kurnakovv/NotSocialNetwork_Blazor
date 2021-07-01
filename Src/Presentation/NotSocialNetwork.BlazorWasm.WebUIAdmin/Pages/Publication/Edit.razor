@@ -35,7 +35,15 @@ else
 
     private async Task<PublicationDTO> GetPublication()
     {
-        return await Http.GetFromJsonAsync<PublicationDTO>($"api/AdminPublication/{Id}");
+        try
+        {
+            return await Http.GetFromJsonAsync<PublicationDTO>($"api/AdminPublication/{Id}");
+        }
+        catch (HttpRequestException)
+        {
+            NavigationManager.NavigateTo("Publication");
+            return null;
+        }
     }
 
     private async Task UpdatePublication()
