@@ -3,6 +3,7 @@ using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Systems;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,6 +15,7 @@ namespace NotSocialNetwork.Services.Systems
         private byte[] _securityKey = Encoding.ASCII.GetBytes(JwtConfig.SECRET);
         private DateTime _expirationDate = DateTime.UtcNow.AddDays(2);
         private readonly JwtSecurityTokenHandler _jwtTokenHandler = new JwtSecurityTokenHandler();
+        private ICollection<Claim> _claims = new List<Claim>();
 
         public string GenerateToken(UserEntity user)
         {
@@ -27,13 +29,11 @@ namespace NotSocialNetwork.Services.Systems
 
         private SecurityTokenDescriptor InitSecurityTokenDescriptor(UserEntity user)
         {
+            AddClaims(user);
+
             var securityTokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("id", user.Id.ToString()),
-                    new Claim("email", user.Email),
-                }),
+                Subject = new ClaimsIdentity(_claims),
 
                 Expires = _expirationDate,
 
@@ -43,6 +43,20 @@ namespace NotSocialNetwork.Services.Systems
             };
 
             return securityTokenDescriptor;
+        }
+
+        private void AddClaims(UserEntity user)
+        {
+            CleanClaims();
+
+            _claims.Add(new Claim("id", user.Id.ToString()));
+            _claims.Add(new Claim("email", user.Email));
+            _claims.Add(new Claim("role", user.Role));
+        }
+
+        private void CleanClaims()
+        {
+            _claims = new List<Claim>();
         }
     }
 }

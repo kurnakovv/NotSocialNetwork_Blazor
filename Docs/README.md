@@ -180,6 +180,7 @@ using (var scope = host.Services.CreateScope())
     var services = scope.ServiceProvider;
     var appDbContext = services.GetRequiredService<AppDbContext>();
     DefaultImagesInit.AddTestImage(appDbContext);
+    DefaultUsersInit.AddAdmin(appDbContext);
 }
 
 #region Memory data (Hide if using real database)

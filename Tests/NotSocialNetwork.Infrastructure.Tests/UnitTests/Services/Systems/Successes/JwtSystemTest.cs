@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using NotSocialNetwork.Application.Configs;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Services.Systems;
 using Xunit;
 
@@ -9,6 +10,7 @@ namespace NotSocialNetwork.Infrastructure.Tests.UnitTests.Services.Systems
         private readonly UserEntity _user = new UserEntity()
         {
             Email = "user@example.com",
+            Role = RoleConfig.DEFAULT_USER,
         };
 
         [Fact]

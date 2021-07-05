@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
@@ -10,9 +12,9 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.API.Endpoints.Admin.User.Get
 {
-    // TODO: Add access only for admin.
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = RoleConfig.ADMINISTRATOR)]
     public class AdminUserController : ControllerBase
     {
         public AdminUserController(

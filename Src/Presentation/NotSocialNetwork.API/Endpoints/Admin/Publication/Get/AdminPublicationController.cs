@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
@@ -11,9 +12,9 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.API.Endpoints.Admin.Publication.Get
 {
-    // TODO: Add access only for admin.
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = RoleConfig.ADMINISTRATOR)]
     public class AdminPublicationController : ControllerBase
     {
         public AdminPublicationController(
@@ -32,7 +33,6 @@ namespace NotSocialNetwork.API.Endpoints.Admin.Publication.Get
         /// </summary>
         /// <returns>Publications.</returns>
         [HttpGet("index={index}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<PublicationDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -67,7 +67,6 @@ namespace NotSocialNetwork.API.Endpoints.Admin.Publication.Get
         /// <param name="id">Publication id.</param>
         /// <returns>Publication.</returns>
         [HttpGet("{id}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(
@@ -97,7 +96,6 @@ namespace NotSocialNetwork.API.Endpoints.Admin.Publication.Get
         /// <param name="authorId">Author id</param>
         /// <returns>Publications</returns>
         [HttpGet("author={authorId}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(PublicationDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [SwaggerOperation(

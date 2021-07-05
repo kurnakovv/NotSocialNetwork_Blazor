@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using NotSocialNetwork.Application.Configs;
+using NotSocialNetwork.Application.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace NotSocialNetwork.DBContexts
         private static readonly ImageEntity _imageEntity2 = new ImageEntity() { Title = "https://img.freepik.com/free-vector/multicolored-abstract-background_23-2148463672.jpg" };
         private static readonly ImageEntity _imageEntity3 = new ImageEntity() { Title = "https://images.ctfassets.net/hrltx12pl8hq/37lqQySBsACiSCc4i4oCue/4149c19142eee853780c0d650566227f/shutterstock_574261726_thumb.jpg" };
 
-        private static readonly UserEntity _userEntity1 = new UserEntity() { Name = "Maksim", Email = "maksim@gmail.com", DateOfBirth = DateTime.Now, Image = _imageEntity1 };
-        private static readonly UserEntity _userEntity2 = new UserEntity() { Name = "Ivan", Email = "ivan@gmail.com", DateOfBirth = DateTime.Now, Image = _imageEntity1 };
+        private static readonly UserEntity _userEntity1 = new UserEntity() { Name = "Maksim", Email = "maksim@gmail.com", DateOfBirth = DateTime.Now, Image = _imageEntity1, Role = RoleConfig.DEFAULT_USER };
+        private static readonly UserEntity _userEntity2 = new UserEntity() { Name = "Ivan", Email = "ivan@gmail.com", DateOfBirth = DateTime.Now, Image = _imageEntity1, Role = RoleConfig.DEFAULT_USER };
 
         public static void AddTestData(AppDbContext appDbContext)
         {

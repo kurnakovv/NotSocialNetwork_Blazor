@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\Infrastructure\NotSocialNetwork.DBContexts\NotSocialNetwork.DBContexts.csproj" />
     <ProjectReference Include="..\..\Infrastructure\NotSocialNetwork.DI\NotSocialNetwork.DI.csproj" />
     <ProjectReference Include="..\..\Infrastructure\NotSocialNetwork.Mapping\NotSocialNetwork.Mapping.csproj" />
+    <ProjectReference Include="..\NotSocialNetwork.WebShared\NotSocialNetwork.WebShared.csproj" />
   </ItemGroup>
 
 </Project>

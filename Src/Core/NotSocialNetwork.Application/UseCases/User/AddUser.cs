@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using NotSocialNetwork.Application.Configs;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Systems;
@@ -30,6 +31,8 @@ namespace NotSocialNetwork.Application.UseCases.User
             {
                 throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
             }
+
+            user.Role = RoleConfig.DEFAULT_USER;
 
             await SaveImage(user);
 

@@ -11,6 +11,7 @@ using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.DBContexts;
 using NotSocialNetwork.DI.DIConfig;
 using NotSocialNetwork.Mapping.AutoMapper;
+using NotSocialNetwork.WebShared.Helpers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -34,7 +35,7 @@ namespace NotSocialNetwork.API
                 options.AddPolicy(name: CONFIG_NAME,
                                   builder =>
                                   {
-                                      builder.WithOrigins("https://localhost:5001");
+                                      builder.WithOrigins(HttpHelper.API_ADDRESS);
                                       builder.AllowAnyMethod();
                                       builder.AllowAnyHeader();
                                       builder.AllowAnyOrigin();
