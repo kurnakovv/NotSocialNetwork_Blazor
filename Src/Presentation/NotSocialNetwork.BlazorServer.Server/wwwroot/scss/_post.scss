@@ -1,0 +1,49 @@
+$WindowColor: #e3f0e331;
+$DefaultFontSize: 20px;
+
+.post {
+    background-color: $WindowColor;
+
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        margin: 45px 0px;
+        padding: 15px;
+    }
+
+    &__header {
+        font-size: 25px;
+        font-weight: 600;
+
+        .authoricon {
+            margin: 0 10px 15px 0;
+        }
+
+        .authorname {
+            text-align: center;
+
+        }
+    }
+
+    // &__main {}
+    &__footer {
+        margin: 15px 0 0 0;
+
+        button:hover {
+            text-decoration: underline;
+            opacity: 1;
+        }
+    }
+
+    &__delete-button {
+        font-size: 12px;
+        opacity: 0.6;
+        background-color: transparent;
+    }
+
+    &__textcontainer {
+        font-size: $DefaultFontSize;
+    }
+}

@@ -1,0 +1,24 @@
+@import "../css/main.css";
+.user-info__body {
+  display: flex;
+  align-items: center;
+}
+.user-info__logo {
+  background-color: #e3f0e331;
+  padding: 5px 5px;
+}
+.user-info__logo img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  height: 300px;
+}
+.user-info__info {
+  display: flex;
+  flex-flow: column nowrap;
+  padding-left: 20px;
+}
+.user-info__block {
+  padding: 10px 5px;
+  margin: 10px 0;
+  background-color: #e3f0e331;
+}

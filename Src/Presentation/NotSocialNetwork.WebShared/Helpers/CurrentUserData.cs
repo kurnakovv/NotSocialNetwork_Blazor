@@ -15,14 +15,14 @@ namespace NotSocialNetwork.WebShared.Helpers
     /// during session instead of persistent fetching from cookies.
     /// However, it is recommended to change the data on a long-term basis through cookies.
     /// </remarks>
-    internal static class CurrentUserData
+    public static class CurrentUserData
     {
-        internal static Guid Id { get; set; }
-        internal static string Token { get; set; }
-        internal static string Email { get; set; }
+        public static Guid Id { get; set; }
+        public static string Token { get; set; }
+        public static string Email { get; set; }
 
-        internal static bool IsAuthorized { get; set; }
-        internal static bool IsNightTheme { get; set; }
+        public static bool IsAuthorized { get; set; }
+        public static bool IsNightTheme { get; set; }
 
         /// <summary>
         /// Configures new global values for user data.
@@ -30,7 +30,7 @@ namespace NotSocialNetwork.WebShared.Helpers
         /// <param name="newID"></param>
         /// <param name="newToken"></param>
         /// <param name="newEmail"></param>
-        internal static void SetNewData(Guid newID, string newToken, string newEmail)
+        public static void SetNewData(Guid newID, string newToken, string newEmail)
         {
             Id = newID;
             Token = newToken;

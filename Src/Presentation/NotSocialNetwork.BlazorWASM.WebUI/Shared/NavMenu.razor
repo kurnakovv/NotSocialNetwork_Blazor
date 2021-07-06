@@ -1,32 +1,42 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">NotSocialNetwork.BlazorWasm.WebUI</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-    </ul>
-</div>
+﻿
+<nav class="navmenu">
+    <div class="navmenu__header">
+        <button class="open-button" @onclick="HideOrShowNavmenu">
+            <img src="../css/images/SettingsIcon.png" alt="SettingsIcon" width="50" height="40">
+        </button>
+    </div>
+    <div class="navmenu__body @_displayOfNavmenu">
+        @if (CurrentUserData.IsAuthorized)
+        {
+            <a class="button nav-reference" href="Account">Аккаунт</a>
+            <button type="button" class="button" @onclick="ExitFromAuthorized">Выйти</button>
+        }
+        else
+        {
+            <a class="button nav-reference" href="Login">Войти</a>
+            <a class="button nav-reference" href="Registration">Регистрация</a>
+        }
+        <button class="button" @onclick="SetNightTheme">Переключить тему</button>
+    </div>
+</nav>
 
 @code {
-    private bool collapseNavMenu = true;
+    [Parameter] public EventCallback SetNightTheme { get; set; }
+    [Parameter] public EventCallback ExitFromAuthorized { get; set; }
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    string _displayOfNavmenu = CssStyles.DisplayNone;
 
-    private void ToggleNavMenu()
+
+    void HideOrShowNavmenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        if (_displayOfNavmenu == "")
+        {
+            _displayOfNavmenu = CssStyles.DisplayNone;
+        }
+        else
+        {
+            _displayOfNavmenu = "";
+        }
+        StateHasChanged();
     }
 }

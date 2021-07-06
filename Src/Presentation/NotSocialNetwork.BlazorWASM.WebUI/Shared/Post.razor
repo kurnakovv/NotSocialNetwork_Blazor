@@ -1,0 +1,111 @@
+﻿@inject ILocalStorageService localStorage
+@inject NavigationManager NavNanager
+
+@foreach (var post in Posts)
+{
+    if (string.IsNullOrWhiteSpace(post.Author.Image.Title) == false)
+    {
+        _imageUrl.Clear();
+        _imageUrl.Append($"../userImages/{post.Author.Image.Title}");
+    }
+    else
+    {
+        _imageUrl.Clear();
+        _imageUrl.Append("../userImages/Icons_User.png");
+    }
+
+    <div class="post">
+        <div class="post__body">
+            <div class="post__header">
+                <img class="authoricon" src="../userImages/@_imageUrl" height="70"
+                     alt="AuthorIcon">
+                <span class="authorname">@post.Author.Name</span>
+            </div>
+            <div class="post__main">
+                <div class="post__textcontainer">
+                    <p>
+                        @post.Text
+                    </p>
+                </div>
+            </div>
+            @if (_emailOfCurrentUser == post.Author.Email)
+            {
+                <div class="post__footer">
+                    <button class='post__delete-button' @onclick="() => DeletePost(post.Id)" type='button'>Удалить пост</button>
+                </div>
+            }
+        </div>
+    </div>
+}
+@if (string.IsNullOrWhiteSpace(Message) == false)
+{
+    <Popap Message="@Message" />
+}
+
+@code {
+    [Parameter] public List<PublicationDTO> Posts { get; set; }
+    [Parameter] public HttpClient Http { get; set; }
+    [Parameter] public string Message { get; set; }
+
+    string _emailOfCurrentUser;
+    StringBuilder _imageUrl = new("../userImages/Icons_User.png");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _emailOfCurrentUser = await CookieHelper.GetEmailAtCookies(localStorage);
+            StateHasChanged();
+        }
+    }
+
+    async Task DeletePost(Guid postId)
+    {
+        try
+        {
+            HttpHelper.SetJwtHeader(Http, await CookieHelper.GetToken(localStorage));
+
+            var result = await Http.DeleteAsync($"{HttpHelper.API_ADDRESS}api/publication/?id={postId}");
+
+            if (result.IsSuccessStatusCode)
+            {
+                Posts.RemoveAll(post => post.Id == postId);
+                StateHasChanged();
+            }
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    Message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    NavNanager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.BadRequest:
+                    Message = "Что-то пошло не так, попробуйте изменить пост.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    Message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    Message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    Message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    Message = "Сервер вернул неизвестный статус код. \n" +
+                    "Если не затруднит, обратитесь к одному из разработчиков " +
+                    "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            Message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                    "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+}

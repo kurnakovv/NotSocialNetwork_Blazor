@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NotSocialNetwork.WebShared.Helpers
+﻿namespace NotSocialNetwork.WebShared.Helpers
 {
-    // TODO: Add css styles.
-    public class CssStyles
+    /// <summary>
+    /// Contains the names of commonly used css classes.
+    /// </summary>
+    public static class CssStyles
     {
+        public const string DarkBackgroundClass = "dark-theme";
+        public const string DarkFooterClass = "dark-footer";
+
+        /// <summary>
+        /// Adjusts the site logo for a dark theme.
+        /// </summary>
+        public const string DarkTitleClass = "dark-logo";
+        public const string DisplayNone = "display-none";
     }
 }

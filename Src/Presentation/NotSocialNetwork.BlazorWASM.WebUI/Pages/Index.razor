@@ -1,7 +1,101 @@
 ﻿@page "/"
+@inject HttpClient Http
+@inject ILocalStorageService localStorage
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<SubmitPostBox Http="Http" LocalStorage="localStorage" />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if (posts.Any())
+{
+    <Post Http="Http" Posts="posts" Message="@message" />
+    if (posts.Count % 10 == 0)
+    {
+        _paginationNumber++;
+        <div class="button-container">
+            <button class="button button-container__button" @onclick="LoadMorePosts">Показать ещё</button>
+        </div>
+    }
+}
+else
+{
+    <Popap Message="@message"/>
+}
+
+@code{
+    List<PublicationDTO> posts;
+
+    int _paginationNumber;
+    string _emailOfCurrentUser;
+    string message;
+
+    #region ClassVariables
+
+    string _submitPostBoxDarkClass = "";
+    string _postDarkClass = "";
+
+    #endregion
+
+
+    #region RenderMethods
+
+    protected async override Task OnInitializedAsync()
+    {
+        // Do not change the ad logic for the posts variable.
+        // otherwise, when the page is rendered, it will be reset to zero.
+        posts = new List<PublicationDTO>();
+
+        await GetPostsAsync();
+    }
+
+    #endregion
+
+
+    async Task GetPostsAsync(int paginationNumber = 0)
+    {
+        try
+        {
+            posts.AddRange(
+                await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ($"{HttpHelper.API_ADDRESS}api/publication/index={paginationNumber}"));
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, пока что постов нет...";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Сервер не понимает нас, возможно мы расстались. \n" +
+                                "Попробуйте повторить попытку позже.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+
+    async Task LoadMorePosts()
+    {
+        await GetPostsAsync(_paginationNumber);
+
+        StateHasChanged();
+    }
+}

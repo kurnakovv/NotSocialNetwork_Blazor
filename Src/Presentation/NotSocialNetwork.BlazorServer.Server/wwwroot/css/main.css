@@ -1,0 +1,273 @@
+@import "../css/NullStyle.css";
+.header__body {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blocklogo {
+  background: url("../css/images/TitleIconBlack.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  height: 50px;
+  width: 170px;
+}
+
+.dark-logo {
+  background: url(../css/images/TitleIconWhite.png) 0 0/100% 100% no-repeat;
+  width: 170px;
+  height: 50px;
+}
+
+.footer-body {
+  font-size: 17px;
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.footer {
+  background-color: #c8dcaa;
+}
+.footer__about {
+  font-size: 19px;
+}
+.footer__refcontainer {
+  display: flex;
+  margin-top: 6px;
+}
+.footer__refcontainer a {
+  color: #8080b3;
+}
+.footer__refcontainer a::after {
+  content: " ";
+  white-space: pre;
+}
+.footer__refcontainer a::before {
+  content: " ";
+  white-space: pre;
+}
+
+.dark-footer {
+  background-color: #026302;
+  color: wheat;
+}
+.dark-footer a {
+  color: aquamarine;
+}
+
+.form {
+  background-color: rgba(193, 209, 193, 0.349);
+}
+.form__text {
+  background-color: transparent;
+  resize: none;
+  padding: 7px;
+  height: 47px;
+  font-size: 16px;
+  overflow: hidden;
+}
+.form__submitbutton {
+  padding: 5px;
+  background-color: gray;
+  color: white;
+  font-size: 24px;
+}
+.form__submitbutton:hover {
+  background-color: #3c8c3c;
+}
+
+.post {
+  background-color: #e3f0e331;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+.post__body {
+  display: flex;
+  flex-direction: column;
+  margin: 45px 0px;
+  padding: 15px;
+}
+.post__header {
+  font-size: 25px;
+  font-weight: 600;
+}
+.post__header .authoricon {
+  margin: 0 10px 15px 0;
+}
+.post__header .authorname {
+  text-align: center;
+}
+.post__footer {
+  margin: 15px 0 0 0;
+}
+.post__footer button:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+.post__delete-button {
+  font-size: 12px;
+  opacity: 0.6;
+  background-color: transparent;
+}
+.post__textcontainer {
+  font-size: 20px;
+}
+
+body {
+  font-family: arial;
+  display: flex;
+  flex-direction: column;
+  background-color: #e3f0e3;
+  font-size: 20px;
+  min-height: 100vh;
+}
+
+.main {
+  flex-grow: 1;
+}
+.main__body {
+  display: flex;
+}
+.main__content {
+  padding: 0 50px;
+  width: 100%;
+}
+
+.navmenu {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  background-color: rgba(193, 209, 193, 0.349);
+}
+.navmenu__header {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.navmenu__body {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+}
+
+.nav-reference {
+  padding: 10px 15px;
+  margin: 0 0 7px 0;
+  font-size: 20px;
+  color: black;
+}
+
+.button {
+  padding: 10px 15px;
+  font-size: 20px;
+  background-color: transparent;
+}
+.button:hover {
+  background-color: #3c8c3c;
+  color: white;
+}
+
+.open-button {
+  background-color: transparent;
+}
+
+.submitpostbox {
+  background-color: #e3f0e331;
+}
+.submitpostbox__body {
+  padding: 10px;
+}
+.submitpostbox__form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+.submitpostbox__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.submitpostbox__container textarea {
+  flex-grow: 1;
+}
+.submitpostbox__container button {
+  display: none;
+}
+.submitpostbox__container:hover {
+  height: 10em;
+}
+.submitpostbox__container:hover button {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.button-container {
+  text-align: center;
+}
+.button-container__button {
+  padding: 7px 15px;
+  margin: 13px;
+  border: 1px solid #3c8c3c;
+}
+
+.popap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.562);
+}
+.popap__body {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 40%;
+  height: 40%;
+  color: wheat;
+  background-color: #639666;
+  justify-content: space-around;
+}
+.popap__body .button {
+  color: wheat;
+}
+.popap__main {
+  text-align: center;
+}
+
+.popap-none {
+  display: none;
+}
+
+.dark-theme {
+  background-color: #0d4e0d;
+  color: wheat;
+}
+.dark-theme button {
+  color: wheat;
+}
+.dark-theme input {
+  color: wheat;
+}
+.dark-theme a {
+  color: wheat;
+}
+.dark-theme textarea {
+  color: wheat;
+}
+.dark-theme textarea::-moz-placeholder {
+  color: wheat;
+}
+.dark-theme textarea:-ms-input-placeholder {
+  color: wheat;
+}
+.dark-theme textarea::placeholder {
+  color: wheat;
+}

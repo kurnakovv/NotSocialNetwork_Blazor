@@ -1,0 +1,146 @@
+﻿@page "/Account"
+
+@inject HttpClient Http
+@inject ILocalStorageService localStorage
+@inject NavigationManager NavManager
+
+<link href="/css/Account.css" rel="stylesheet">
+
+<div class="user-info__body">
+    <div class="user-info__logo">
+        <img src="@authorAvatarPath" alt="UserAvatar" />
+    </div>
+    <div class="user-info__info">
+        <div class="user-info__block">
+            <span>@currentUser.Name</span>
+        </div>
+        <div class="user-info__block">
+            <span>@currentUser.Email</span>
+        </div>
+    </div>
+</div>
+
+<Post Posts="posts.ToList()" Http="Http" />
+
+<Popap Message="@message" />
+
+
+@code{
+    string message;
+
+    IEnumerable<PublicationDTO> posts;
+    UserDTO currentUser;
+    string authorAvatarPath;
+
+
+    #region RenderMethods
+
+    protected async override Task OnInitializedAsync()
+    {
+        // Do not change the ad logic for the posts variable.
+        // otherwise, when the page is rendered, it will be reset to zero.
+        posts = new List<PublicationDTO>();
+        currentUser = new();
+
+        await GetCurrentUserAsync();
+        await GetPostsOfCurrentUserAsync();
+    }
+
+    #endregion
+
+
+    async Task GetPostsOfCurrentUserAsync()
+    {
+        try
+        {
+            posts = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>
+                ($"{HttpHelper.API_ADDRESS}api/publication/author={CurrentUserData.Id}");
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    // ¯\_(ツ)_/¯
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    NavManager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.BadRequest:
+                    NavManager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+
+    /// <summary>
+    /// Searches for and retrieves user data according to <c>CurrentUserData.Id</c>.
+    /// If the API does not return a user, it will be redirected to the login page.
+    /// </summary>
+    /// <returns></returns>
+    async Task GetCurrentUserAsync()
+    {
+        try
+        {
+            currentUser = await HttpHelper.GetUserAsync(Http, CurrentUserData.Id);
+
+            authorAvatarPath = new($"../userImages/{currentUser.Image.Title}");
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, пока что постов нет...";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    NavManager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    NavManager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    NavManager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    message = "Сервер вернул неизвестный статус код. \n" +
+                        "Если не затруднит, обратитесь к одному из разработчиков " +
+                        "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+}

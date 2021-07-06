@@ -1,0 +1,175 @@
+﻿@page "/Registration"
+
+@inject HttpClient Http
+@inject ILocalStorageService localStorage
+@inject NavigationManager NavNanager
+
+@using System.IO
+
+<head>
+    <title>NotSocialNetwork - Login</title>
+    <link href="/css/Registration.css" rel="stylesheet">
+</head>
+
+<EditForm Model="newUserDTO" OnValidSubmit="@SendNewUser"
+          action="#" class="main-container-form">
+    <div class="form-container">
+        <InputText @bind-Value="newUserDTO.Name"
+                   class="form-container--input" placeholder="Никнейм" />
+    </div>
+    <div class="form-container">
+        <InputText @bind-Value="newUserDTO.Email"
+                   type="Email" class="form-container--input" placeholder="Email" />
+    </div>
+    <div class="form-container">
+        <InputDate TValue="DateTimeOffset" @bind-Value="newUserDTO.DateOfBirth"
+                   placeholder="Ваш день рождения"
+                   class="form-container--input" />
+    </div>
+    <div class="form-container">
+        <label for="file" class="form-container__file-title">@_lableFileText</label>
+        <InputFile id="file" class="form-container__file" OnChange="@AddAvatar" accept=".png, .jpeg, .jpg" />
+    </div>
+    <div class="form-container">
+        <button type="submit" class="button">
+            Зарегистрироваться
+        </button>
+    </div>
+</EditForm>
+
+<Popap Message="@message" />
+
+@code{
+    string message;
+    string _lableFileText = "Выбрать аватар (необязательно)";
+
+    /// <summary>
+    /// ~20 MB.
+    /// </summary>
+    const long _MAX_FILE_SIZE = 20971520;
+
+    InputFileChangeEventArgs loadedFileArgs;
+    RegistrationUserDTO newUserDTO = new();
+
+
+    bool CheckFileSize(IBrowserFile file)
+    {
+        if (file.Size > _MAX_FILE_SIZE)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    void AddAvatar(InputFileChangeEventArgs inputFile)
+    {
+        loadedFileArgs = inputFile;
+        _lableFileText = inputFile.File.Name;
+    }
+
+    /// <summary>
+    /// Saves the avatar file (if present in loadedFileArgs) and generates a new name for it.
+    /// </summary>
+    /// <returns>The name of the saved file.</returns>
+    async Task<string> SaveAvatar()
+    {
+        string newFileName = Guid.NewGuid().ToString();
+
+        if (CheckFileSize(loadedFileArgs.File))
+        {
+            await using FileStream fs = new($@"..\userImages\{newFileName}{_lableFileText}", FileMode.Create);
+            await loadedFileArgs.File.OpenReadStream(_MAX_FILE_SIZE).CopyToAsync(fs);
+
+            return $"{newFileName}{_lableFileText}";
+        }
+        return "";
+    }
+
+    /// <summary>
+    /// Submits data from the form to create a new user.
+    /// If successful, sets this user's data to cookie and CurrentUserData.
+    /// </summary>
+    /// <returns></returns>
+    async Task SendNewUser()
+    {
+        try
+        {
+            if (UserValidityCheck(newUserDTO) is false)
+            {
+                message = "Проверьте корректность введённых значений в полях!";
+            }
+
+            if (loadedFileArgs != null)
+            {
+                newUserDTO.Image = new();
+                string imageTitle = await SaveAvatar();
+
+                if (string.IsNullOrEmpty(imageTitle) == false)
+                {
+                    newUserDTO.Image.Title = imageTitle;
+                }
+            }
+
+            var result = await Http.PostAsJsonAsync($"{HttpHelper.API_ADDRESS}api/user", newUserDTO);
+
+            if (result.IsSuccessStatusCode == false)
+            {
+                message = "Что-то пошло не так, возможно вы " +
+                            "ввели данные уже существующего пользователя.";
+                return;
+            }
+
+            var responseData = await result.Content.ReadFromJsonAsync<RegistrationResponseDTO>();
+
+            var user = await HttpHelper.GetUserAsync(Http, responseData.Id, responseData.Token);
+
+
+            await CookieHelper.SetNewUserCookies
+                (localStorage, user.Id, responseData.Token, user.Email);
+
+            CurrentUserData.SetNewData(user.Id, responseData.Token, user.Email);
+            CurrentUserData.IsAuthorized = true;
+
+            message = "Вы были успешно зарегистрированы!";
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    message = "Упс, сервер не нашёл, куда вас поместить. Попробуйте позже.";
+                    break;
+                case HttpStatusCode.BadRequest:
+                    message = "Что-то пошло не так, возможно вы " +
+                            "ввели данные уже существующего пользователя.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                        "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+
+    private bool UserValidityCheck(RegistrationUserDTO newUserDTO)
+    {
+        if (newUserDTO != null && string.IsNullOrWhiteSpace(newUserDTO.Email) == false &&
+            string.IsNullOrWhiteSpace(newUserDTO.Name) == false)
+        {
+            return true;
+        }
+        return false;
+    }
+}

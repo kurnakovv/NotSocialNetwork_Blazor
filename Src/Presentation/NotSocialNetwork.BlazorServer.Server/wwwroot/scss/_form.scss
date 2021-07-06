@@ -1,0 +1,27 @@
+$WindowColor: #e3f0e331;
+
+.form {
+	background-color: rgba(193, 209, 193, 0.349);
+
+	&__text {
+		background-color: transparent;
+		resize: none;
+
+		padding: 7px;
+		height: 47px;
+		font-size: 16px;
+		overflow: hidden;
+	}
+
+	&__submitbutton {
+		padding: 5px;
+		background-color: gray;
+
+		color: white;
+		font-size: 24px;
+	}
+
+	&__submitbutton:hover {
+		background-color: $ButtonColor;
+	}
+}

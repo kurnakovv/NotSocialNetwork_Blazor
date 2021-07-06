@@ -1,0 +1,33 @@
+@import "../css/main.css";
+
+$WindowColor: #e3f0e331;
+
+.user-info {
+	&__body {
+		display: flex;
+		align-items: center;
+	}
+
+	&__logo {
+		background-color: $WindowColor;
+		padding: 5px 5px;
+
+		img {
+			object-fit: contain;
+			height: 300px;
+		}
+	}
+
+	&__info {
+		display: flex;
+		flex-flow: column nowrap;
+
+		padding-left: 20px;
+	}
+
+	&__block {
+		padding: 10px 5px;
+		margin: 10px 0;
+		background-color: $WindowColor;
+	}
+}

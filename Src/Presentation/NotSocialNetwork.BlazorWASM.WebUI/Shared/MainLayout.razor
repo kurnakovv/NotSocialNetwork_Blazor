@@ -1,17 +1,124 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
+@inject ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+@inject HttpClient Http 
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<header class="header @_headerDarkClass">
+    <div class="header__body">
+        <a class="header__ref" href="" title="Home">
+            <div class="blocklogo @_titleDarkClass"></div>
+        </a>
     </div>
+</header>
 
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>
+<main class="main @_mainDarkClass">
+    <div class="main__body">
+        <NavMenu ExitFromAuthorized="ExitFromAuthorized" SetNightTheme="EditNightTheme" />
 
-        <div class="content px-4">
+        <div class="main__content">
             @Body
         </div>
     </div>
-</div>
+</main>
+
+<footer class="footer @_footerDarkClass">
+    <div class="footer-body">
+        <div class="footer__about">
+            <span> Site by Ulyanov Ivan & Kurnakov Maksim. </span>
+        </div>
+        <RefContainer />
+    </div>
+</footer>
+
+@code{
+    #region ClassVariables
+
+    string _headerDarkClass = "";
+    string _mainDarkClass = "";
+    string _footerDarkClass = "";
+
+    string _titleDarkClass = "";
+
+    #endregion
+
+
+    #region RenderingMethods
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            CurrentUserData.IsNightTheme = await CookieHelper.GetNightThemeCookies(localStorage);
+
+            FindCurrentUser();
+            SetBackgroundStyles(CurrentUserData.IsNightTheme);
+
+            StateHasChanged();
+        }
+    }
+
+    #endregion
+
+
+    void SetBackgroundStyles(bool cookieOfNightThemeValue)
+    {
+        if (cookieOfNightThemeValue)
+        {
+            _headerDarkClass = CssStyles.DarkBackgroundClass;
+            _mainDarkClass = CssStyles.DarkBackgroundClass;
+            _footerDarkClass = CssStyles.DarkFooterClass;
+
+            _titleDarkClass = CssStyles.DarkTitleClass;
+        }
+        else
+        {
+            _headerDarkClass = ""; _mainDarkClass = "";
+            _footerDarkClass = ""; _titleDarkClass = "";
+        }
+        StateHasChanged();
+    }
+
+    async void EditNightTheme()
+    {
+        bool newValueOfNightTheme = await CookieHelper.EditNightThemeCookies(localStorage);
+
+        SetBackgroundStyles(newValueOfNightTheme);
+    }
+
+    async void FindCurrentUser()
+    {
+        try
+        {
+            var userId = await CookieHelper.GetCurrentId(localStorage);
+            var userToken = await CookieHelper.GetToken(localStorage);
+
+            if (string.IsNullOrEmpty(userId.ToString()) == false &&
+                string.IsNullOrEmpty(userToken) == false)
+            {
+                var currentUser = await HttpHelper.GetUserAsync(Http, userId, userToken);
+
+                CurrentUserData.SetNewData(userId, userToken, currentUser.Email);
+                CurrentUserData.IsAuthorized = true;
+            }
+        }
+        catch (HttpRequestException)
+        {
+            CurrentUserData.IsAuthorized = false;
+        }
+        catch (Exception)
+        {
+            CurrentUserData.IsAuthorized = false;
+        }
+    }
+
+    async void ExitFromAuthorized()
+    {
+        CurrentUserData.SetNewData(new Guid(), "", "");
+        await CookieHelper.SetNewUserCookies(localStorage, new Guid(), "", "");
+
+        CurrentUserData.IsAuthorized = false;
+
+        StateHasChanged();
+        NavigationManager.NavigateTo("");
+    }
+}

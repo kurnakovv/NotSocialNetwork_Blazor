@@ -1,0 +1,91 @@
+﻿@inject NavigationManager NavNanager
+
+<div class="submitpostbox">
+    <div class="submitpostbox__body">
+        <EditForm Model="newPost" OnValidSubmit="SubmitNewPost" class="submitpostbox__form form">
+            <div class='submitpostbox__container'>
+                <textarea @bind="newPost.Text" rows="1" placeholder="Есть новости?" class="form__text"
+                          id="text"></textarea>
+                <button class="form__submitbutton" type="submit">Отправить!</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+<Popap Message="@Message" />
+
+@code {
+    [Parameter] public HttpClient Http { get; set; }
+    [Parameter] public ILocalStorageService LocalStorage { get; set; }
+    [Parameter] public string Message { get; set; }
+
+    AddPublicationDTO newPost = new();
+
+    async Task SubmitNewPost()
+    {
+        try
+        {
+            // TODO: Add a function to add an image to the post.
+            if (newPost != null && string.IsNullOrWhiteSpace(newPost.Text) is false)
+            {
+                newPost.AuthorId = CurrentUserData.Id;
+                newPost.Images = new List<ImageEntity>();
+
+                HttpHelper.SetJwtHeader(Http, CurrentUserData.Token);
+
+                var responce = await Http.PostAsJsonAsync<AddPublicationDTO>
+                ($"{HttpHelper.API_ADDRESS}api/publication", newPost);
+
+                if (responce.IsSuccessStatusCode)
+                {
+                    Message = "Пост успешно загружен! Пожалуйста, перезагрузите страницу.";
+                }
+                else if (responce.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    NavNanager.NavigateTo("login");
+                }
+                else
+                {
+                    Message = "Произошла внутренняя ошибка сервера, попробуйте позже.";
+                }
+            }
+        }
+        catch (HttpRequestException httpReqEx)
+        {
+            switch (httpReqEx.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    Message = "Упс, сервер не нашёл, куда отправить пост. Попробуйте перезайти.";
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    NavNanager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    NavNanager.NavigateTo("login");
+                    break;
+                case HttpStatusCode.BadRequest:
+                    Message = "Что-то пошло не так, попробуйте изменить пост.";
+                    break;
+                case HttpStatusCode.Conflict:
+                    Message = "Сервер борется со злом внутри, оставьте его в покое.";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    Message = "Сервер отказался выполнять запрос, это БУНД!";
+                    break;
+                case HttpStatusCode.Gone:
+                    Message = "Попытка общения с мёртвым закончилась полным провалом...";
+                    break;
+                default:
+                    Message = "Сервер вернул неизвестный статус код. \n" +
+                    "Если не затруднит, обратитесь к одному из разработчиков " +
+                    "по ссылкам внизу страницы.";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            Message = "Произошла ошибка, которую разработчикам было лень обрабатывать. \n" +
+                    "Если не затруднит, обратитесь к одному из них по ссылкам внизу страницы.";
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@import "../css/main.css";
+
+.main-container-form {
+
+	.form-container {
+		display: flex;
+		justify-content: center;
+
+		margin: 15px 0;
+
+		:hover {
+			box-shadow: 0px 0px 20px 0.7px rgb(0 0 0 / 10%);
+		}
+
+		:focus {
+			color: black;
+			background-color: rgba(255, 239, 120, 0.7);
+		}
+
+		input {
+			flex-grow: 1;
+			font-size: 30px;
+			padding: 10px;
+			margin: 0% 15%;
+
+			background-color: rgba(255, 239, 120, 0.267);
+		}
+
+		&__file {
+			display: none;
+		}
+		&__file-title{
+			display: block;
+
+			text-align: center;
+			flex-grow: 1;
+			font-size: 30px;
+			padding: 10px;
+			margin: 0% 15%;
+
+			background-color: rgba(255, 239, 120, 0.267);
+		}
+	}
+}
+
+.form-container--submitButton {
+	padding: 15px 25px;
+	font-size: 30px;
+
+	background-color: rgba(255, 239, 120, 1);
+}
