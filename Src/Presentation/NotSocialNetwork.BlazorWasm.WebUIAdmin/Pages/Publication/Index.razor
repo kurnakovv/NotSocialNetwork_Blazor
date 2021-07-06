@@ -1,5 +1,6 @@
 ﻿@page "/Publication"
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <h1>Publications</h1>
 
@@ -86,6 +87,11 @@
                 errorMessage = "No more publications...";
 
                 return publications;
+            }
+            else if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized || ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                NavigationManager.NavigateTo("/BlazorClient/Login");
+                return null;
             }
             else
             {
