@@ -1,18 +1,19 @@
 ﻿@page "/Publication"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService localStorage
 
 <h1>Publications</h1>
 
 <h3 style="color:red">@errorMessage</h3>
 
 @if (publications != null &&
-    currentIndex != 0)
+   currentIndex != 0)
 {
     <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
 }
 @if (publications != null &&
-    publications.Count() == 10)
+   publications.Count() == 10)
 {
     <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
 }
@@ -52,12 +53,12 @@
 
 <h3 style="color:red">@errorMessage</h3>
 @if (publications != null &&
-    currentIndex != 0)
+   currentIndex != 0)
 {
     <button class="btn btn-outline-warning" @onclick="GetPreviousPublications">Get previous publications</button>
 }
 @if (publications != null &&
-    publications.Count() == 10)
+   publications.Count() == 10)
 {
     <button class="btn btn-outline-success" @onclick="GetNextPublications">Get more publications</button>
 }
@@ -75,6 +76,9 @@
     {
         try
         {
+            var token = await CookieHelper.GetToken(localStorage);
+            HttpHelper.SetJwtHeader(Http, token);
+
             publications = await Http.GetFromJsonAsync<IEnumerable<PublicationDTO>>($"api/AdminPublication/index={currentIndex}");
 
             return publications;

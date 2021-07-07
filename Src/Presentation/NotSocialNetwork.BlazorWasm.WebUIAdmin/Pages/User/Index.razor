@@ -1,6 +1,7 @@
 ﻿@page "/User"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService localStorage
 
 <h1>Users</h1>
 
@@ -75,6 +76,9 @@
     {
         try
         {
+            var token = await CookieHelper.GetToken(localStorage);
+            HttpHelper.SetJwtHeader(Http, token);
+
             users = await Http.GetFromJsonAsync<IEnumerable<UserDTO>>($"api/AdminUser/index={currentIndex}");
 
             return users;
