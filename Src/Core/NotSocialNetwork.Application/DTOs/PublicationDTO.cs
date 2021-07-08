@@ -8,7 +8,7 @@ namespace NotSocialNetwork.Application.DTOs
     {
         public Guid Id { get; set; }
         public UserEntity Author { get; set; }
-        public string Text { get; set; } // TODO: Convert string to file.
+        public string Text { get; set; }
         public IEnumerable<string> ImagePaths { get; set; }
     }
 }

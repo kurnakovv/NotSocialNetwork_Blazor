@@ -13,6 +13,7 @@
 * [Technologies](#technologies)
 * [Versions](#versions)
 * [How to start](#how-to-start)
+* [How to work with project](#how-to-work-with-project)
 * [Team](#team)
 * [Status](#status)
 * [Contacts](#contacts)
@@ -212,6 +213,68 @@ dotnet ef database update -p .\Src\Infrastructure\NotSocialNetwork.DBContexts\ -
 
 </details>
 
+## How to work with project
+
+<details>
+    <summary>How to add new project.</summary>
+
+> For example we can add new Framework in project
+
+```
+dotnet new projectType -o Src/Infrastructure/NotSocialNetwork.YourProjectName
+```
+
+```
+dotnet sln add Src/Infrastructure/NotSocialNetwork.YourProjectName
+```
+
+</details>
+
+<details>
+    <summary>How to add new blazor UI.</summary>
+
+> For example we can add new Identity project
+
+### 1 Add new project by instruction "How to add new project"
+### 2 Add new method in Src/Presentation/NotSocialNetwork.BlazorServer.Server/Startup.cs
+
+``` csharp
+private void ConnectIdentityApp(IApplicationBuilder app)
+{
+    app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/Identity"), identity =>
+    {
+        identity.UseBlazorFrameworkFiles("/Identity");
+        identity.UseStaticFiles();
+
+        identity.UseRouting();
+        identity.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapFallbackToFile("Identity/{*path:nonfile}", "Identity/index.html");
+        });
+    });
+}
+
+```
+
+### 3 Connect in Configure method
+### 4 Add name in csproj
+``` xml
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <StaticWebAssetBasePath>Identity</StaticWebAssetBasePath> <!-->Here<!-->
+  </PropertyGroup>
+```
+### 5 Add base in index.html
+``` html
+<base href="/Identity/" />
+```
+
+> Now you can call project by https://localhost:----/Identity
+
+</details>
 
 ## Team
 <img src="https://avatars.githubusercontent.com/u/66691708" width="100" height="100"/> | [![KurnakovMaksim](https://avatars.githubusercontent.com/u/59327306?v=3&s=100)](https://github.com/KurnakovMaksim)
