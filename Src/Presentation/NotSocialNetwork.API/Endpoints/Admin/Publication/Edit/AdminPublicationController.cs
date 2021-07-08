@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NotSocialNetwork.Application.Configs;
 using NotSocialNetwork.Application.DTOs;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using Swashbuckle.AspNetCore.Annotations;
@@ -47,15 +48,9 @@ namespace NotSocialNetwork.API.Endpoints.Admin.Publication.Edit
         {
             try
             {
-                // TODO: Add automapper for update.
-
-                //var publicationEntity =
-                //    _mapper.Map<PublicationEntity>(publication);
-
-                var publicationEntity = _getablePublication.GetById(publication.Id);
-                publicationEntity.Text = publication.Text;
-
-
+                var publicationEntityOld = _getablePublication.GetById(publication.Id);
+                var publicationEntity =
+                    _mapper.Map<UpdatePublicationDTO, PublicationEntity>(publication, publicationEntityOld);
 
                 await _editablePublication.UpdateAsync(publicationEntity);
 
