@@ -106,6 +106,12 @@ docker-compose up
 ![MultipleStartupProjects](ImgForReadme/StartProject/MultipleStartupProjects.png)
 * Start project
 
+| Application 	    | URL |
+|------------------ | -------------------------------------- |
+| NotSocialNetwork.API  | https://localhost:44353/swagger/index.html |
+| NotSocialNetwork.BlazorWasm.WebUI  | https://localhost:44316/BlazorClient |
+| NotSocialNetwork.BlazorWasm.WebUIAdmin  | https://localhost:44316/Admin |
+
 </details>
 
 <details>
