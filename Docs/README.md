@@ -4,7 +4,11 @@
 
 </div>
 
+## Blazor Client
 ![MainPage](ImgForReadme/MainImages/MainPageInUI.png)
+
+## Admin
+![MainPage](ImgForReadme/MainImages/AdminPanel.png)
 
 > NotSocialNetwork - This is the place where people can publish their interesting posts.
 
