@@ -45,9 +45,9 @@ namespace NotSocialNetwork.API
             services.AddControllers();
 
             // In-memory database.
-            //ConfigureInMemoryDatabase(services);
+            ConfigureInMemoryDatabase(services);
             // Real database.
-            ConfigureProductionServices(services);
+            //ConfigureProductionServices(services);
             // Real database for docker.
             //ConfigureProductionServicesForDocker(services);
 
