@@ -61,6 +61,7 @@ Backend:
 * Moq - v4.16.1
 * JWT - v6.10.1
 * Docker
+* FluentValidation - v10.3.0
 
 </div>
 
