@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NotSocialNetwork.Application.Entities
 {
-    public class PublicationEntity : BaseEntity, IPublication
+    public class PublicationEntity : BaseEntity
     {
         public ICollection<ImageEntity> Images { get; set; } = new List<ImageEntity>();
         public UserEntity Author { get; set; }
