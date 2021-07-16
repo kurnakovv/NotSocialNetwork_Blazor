@@ -27,7 +27,7 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public async Task<UserEntity> AddAsync(UserEntity user)
         {
-            CheckUserValid(user);
+            CheckUserIsValid(user);
 
             user.Role = RoleConfig.DEFAULT_USER;
             await SaveImage(user);
@@ -36,7 +36,7 @@ namespace NotSocialNetwork.Application.UseCases.User
             return user;
         }
 
-        private void CheckUserValid(UserEntity user)
+        private void CheckUserIsValid(UserEntity user)
         {
             if (IsUserAlreadyExist(user))
             {

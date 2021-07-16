@@ -31,7 +31,7 @@ namespace NotSocialNetwork.Application.UseCases.User
             var user = GetAll()
                            .FirstOrDefault(u => u.Email == email);
 
-            CheckUserValid(user, $"User by email: {email} not found.");
+            CheckUserIsValid(user, $"User by email: {email} not found.");
 
             return user;
         }
@@ -41,21 +41,21 @@ namespace NotSocialNetwork.Application.UseCases.User
             var user = GetAll()
                            .FirstOrDefault(u => u.Id == id);
 
-            CheckUserValid(user, $"User by Id: {id} not found.");
+            CheckUserIsValid(user, $"User by Id: {id} not found.");
 
             return user;
         }
 
         public IEnumerable<UserEntity> GetByPagination(int index)
         {
-            CheckIndexValid(index);
-            var users = GetUsers(index);
-            CheckUsersCountValid(users);
+            CheckIndexIsValid(index);
+            var users = GetUsersByPagination(index);
+            CheckUsersCountIsValid(users);
 
             return users;
         }
 
-        private void CheckUserValid(UserEntity user, string exceptionMessage)
+        private void CheckUserIsValid(UserEntity user, string exceptionMessage)
         {
             if (user == null)
             {
@@ -63,7 +63,7 @@ namespace NotSocialNetwork.Application.UseCases.User
             }
         }
 
-        private void CheckIndexValid(int index)
+        private void CheckIndexIsValid(int index)
         {
             if (IsInvalidIndex(index))
             {
@@ -71,7 +71,7 @@ namespace NotSocialNetwork.Application.UseCases.User
             }
         }
 
-        private IEnumerable<UserEntity> GetUsers(int index)
+        private IEnumerable<UserEntity> GetUsersByPagination(int index)
         {
             var countOfSkipItems = index * PaginationConfig.MAX_ITEMS;
             var users = GetAll()
@@ -81,7 +81,7 @@ namespace NotSocialNetwork.Application.UseCases.User
             return users;
         }
 
-        private void CheckUsersCountValid(IEnumerable<UserEntity> users)
+        private void CheckUsersCountIsValid(IEnumerable<UserEntity> users)
         {
             if (IsEmptyUsersCount(users))
             {
