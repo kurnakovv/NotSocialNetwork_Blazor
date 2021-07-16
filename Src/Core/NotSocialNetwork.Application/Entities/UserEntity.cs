@@ -3,7 +3,7 @@ using System;
 
 namespace NotSocialNetwork.Application.Entities
 {
-    public class UserEntity : BaseEntity, IUser
+    public class UserEntity : BaseEntity
     {
         public string Name { get; set; }
         public string Email { get; set; }
