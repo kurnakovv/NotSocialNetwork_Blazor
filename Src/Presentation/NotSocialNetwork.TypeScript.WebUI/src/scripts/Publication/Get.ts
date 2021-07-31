@@ -28,3 +28,5 @@ function setRow(publication: IPublication): HTMLTableRowElement{
 
     return tr;
 }
+
+export default GetPublications();
