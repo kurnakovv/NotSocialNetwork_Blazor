@@ -12,6 +12,7 @@ export async function Login(email: string) {
         setDataInLocalStorage(loginResponse);
 
         console.log("Welcome " + email + "!");
+        window.location.replace("index.html");
     }else{
         return console.log("Something went wrong...");
     }

@@ -57,6 +57,7 @@ function Login(email) {
                     loginResponse = _a.sent();
                     setDataInLocalStorage(loginResponse);
                     console.log("Welcome " + email + "!");
+                    window.location.replace("index.html");
                     return [3 /*break*/, 4];
                 case 3: return [2 /*return*/, console.log("Something went wrong...")];
                 case 4: return [2 /*return*/];
