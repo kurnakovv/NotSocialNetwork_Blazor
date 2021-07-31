@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="loginForm">
+        <input id="email" type="text" placeholder="Enter your email" />
+        <input type="submit" value="Log in" />
+    </form>
+    <script> var exports = {};</script>
+    <script src="../scripts/User/Login.js"></script>
+    <script>
+        document.forms["loginForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const loginForm = document.forms["loginForm"];
+            const email = loginForm.elements["email"].value;
+
+            Login(email);
+        });
+    </script>
+</body>
+
+</html>
