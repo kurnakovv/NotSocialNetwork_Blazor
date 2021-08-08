@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { GetPublications } from './components/Publication/GetPublications';
+import { ShortPublication } from './components/Publication/ShortPublication';
 import { Navbar } from './components/Navbar';
 
 class App extends React.Component<any, any> {
@@ -27,10 +28,13 @@ class App extends React.Component<any, any> {
     return (
       <div className="App">
         <header className="App-header">
-        <Navbar></Navbar>
-          <GetPublications 
+        <Navbar />
+        <ShortPublication />
+        <ShortPublication />
+        <ShortPublication />
+          {/* <GetPublications 
             publications={this.state.publications}
-          />
+          /> */}
         </header>
       </div>
     );

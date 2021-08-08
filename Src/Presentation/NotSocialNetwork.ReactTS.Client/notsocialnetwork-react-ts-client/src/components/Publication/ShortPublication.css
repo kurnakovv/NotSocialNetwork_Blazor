@@ -1,0 +1,54 @@
+.Container{
+    border: solid 0.1em;
+    border-color: #61dafb;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    margin-top: 100px;
+    text-align: center;
+    height: auto;
+    overflow: hidden;
+    background-color: #808080;
+}
+
+.Header{
+    display: flex;
+}
+
+.UserLogo{
+    border-radius: 100px;
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.UserName{
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.MainImage{
+    width: 500px;
+    height: auto;
+}
+
+.Panel{
+    display: flex;
+    list-style: none;
+    margin-left: -5px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.RightButton{
+    margin-right: 15px;
+}
+
+ .LeftButton{
+    margin-left: 130%;
+}
