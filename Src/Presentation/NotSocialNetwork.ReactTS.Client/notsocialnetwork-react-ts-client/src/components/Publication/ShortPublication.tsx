@@ -4,6 +4,7 @@ import UnfavoriteImg from "../../img/unfavorite.png";
 import FavoriteImg from "../../img/favorite.png";
 import CommentsImg from "../../img/comments.png";
 import BookmarkImg from "../../img/bookmark.png";
+import Button from "../Button";
 
 export class ShortPublication extends React.Component {
     render() {
@@ -20,7 +21,7 @@ export class ShortPublication extends React.Component {
                             <li className="RightButton"><img width={30} height={30} src={UnfavoriteImg}/></li>
                             <li className="RightButton"><img width={30} height={30} src={CommentsImg} /></li>
                             <li className="RightButton"><img width={30} height={30} src={BookmarkImg} /></li>
-                            <li className="LeftButton"><a className="btn btn-outline-info">More</a></li>
+                            <li className="LeftButton"><Button text="More" reference="/"/></li>
                         </ul>
                     </div>
                     <div className="PublicationText">

@@ -1,5 +1,6 @@
 import React from "react";
 import Search from "../Search/index";
+import Button from "../Button/index";
 import logo from '../../logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
@@ -27,8 +28,14 @@ export class Navbar extends React.Component {
                             </li>
                         </ul>
                             <Search />
-                            <a className="btn btn-outline-info" href="/Login">Login</a>
-                            <a className="btn btn-outline-info" href="/Register">Register</a>
+                            <Button 
+                                text="Login"
+                                reference="/Login"
+                            />
+                            <Button 
+                                text="Register"
+                                reference="/Register"
+                            />
                         </div>
                     </div>
                 </nav>
