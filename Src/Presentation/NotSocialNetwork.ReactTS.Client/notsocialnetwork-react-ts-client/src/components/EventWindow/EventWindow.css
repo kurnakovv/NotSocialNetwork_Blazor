@@ -1,0 +1,21 @@
+.EventWindow {
+    background-color: #808080;
+    width: 200px;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid #61dafb;
+    margin-top: 25px;
+    margin-left: 25px;
+    border-radius: 10px;
+    visibility: visible;
+}
+
+.WindowImg {
+    margin-bottom: 10px;
+}
+
+.ExitButton {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 155px;
+}

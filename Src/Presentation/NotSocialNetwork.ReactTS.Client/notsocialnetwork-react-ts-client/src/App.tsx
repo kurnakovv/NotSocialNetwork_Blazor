@@ -3,6 +3,8 @@ import './App.css';
 import { GetPublications } from './components/Publication/GetPublications';
 import { ShortPublication } from './components/Publication/ShortPublication';
 import { Navbar } from './components/Navbar';
+import EventWindow from './components/EventWindow';
+import FavoriteImg from "./img/favorite.png";
 
 class App extends React.Component<any, any> {
     constructor(props: any) {
@@ -29,6 +31,9 @@ class App extends React.Component<any, any> {
       <div className="App">
         <header className="App-header">
         <Navbar />
+        <EventWindow 
+          img={FavoriteImg}
+        />
         <ShortPublication />
         <ShortPublication />
         <ShortPublication />
