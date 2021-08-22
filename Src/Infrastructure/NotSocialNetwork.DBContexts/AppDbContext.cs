@@ -13,6 +13,13 @@ namespace NotSocialNetwork.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            SetRules(modelBuilder);
+            SetPublicationAuthor(modelBuilder);
+            SetManyToManyForFavorites(modelBuilder);
+        }
+
+        private void SetRules(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<UserEntity>(user =>
             {
                 user.Property(u => u.Name)
@@ -42,6 +49,35 @@ namespace NotSocialNetwork.DBContexts
                     .IsRequired()
                     .HasMaxLength(100);
             });
+        }
+
+        private void SetPublicationAuthor(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PublicationEntity>()
+                .HasOne(p => p.Author)
+                .WithMany();
+        }
+
+        private void SetManyToManyForFavorites(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(p => p.Favorites)
+                .WithMany(u => u.Favorites)
+                .UsingEntity<FavoritesEntity>(
+                        j => j
+                            .HasOne(f => f.Publication)
+                            .WithMany(p => p.FavoritesEntities)
+                            .HasForeignKey(f => f.PublicationId)
+                            .OnDelete(DeleteBehavior.Restrict),
+                        j => j
+                            .HasOne(f => f.User)
+                            .WithMany(p => p.FavoritesEntities)
+                            .HasForeignKey(f => f.UserId)
+                            .OnDelete(DeleteBehavior.Restrict),
+                        j =>
+                        {
+                            j.HasKey(f => new { f.PublicationId, f.UserId });
+                        });
         }
     }
 }

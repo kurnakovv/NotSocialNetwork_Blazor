@@ -1,5 +1,6 @@
 ﻿using NotSocialNetwork.Application.Entities.Abstract;
 using System;
+using System.Collections.Generic;
 
 namespace NotSocialNetwork.Application.Entities
 {
@@ -10,5 +11,7 @@ namespace NotSocialNetwork.Application.Entities
         public DateTimeOffset DateOfBirth { get; set; }
         public ImageEntity Image { get; set; }
         public string Role { get; set; }
+        public ICollection<PublicationEntity> Favorites { get; set; }
+        public List<FavoritesEntity> FavoritesEntities { get; set; }
     }
 }
