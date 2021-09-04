@@ -23,6 +23,7 @@ namespace NotSocialNetwork.Application.UseCases.User
         public IEnumerable<UserEntity> GetAll()
         {
             return _userRepository.GetAll()
+                            .Include(u => u.Favorites)
                             .Include(u => u.Image);
         }
 

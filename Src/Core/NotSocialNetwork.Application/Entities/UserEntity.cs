@@ -11,7 +11,7 @@ namespace NotSocialNetwork.Application.Entities
         public DateTimeOffset DateOfBirth { get; set; }
         public ImageEntity Image { get; set; }
         public string Role { get; set; }
-        public ICollection<PublicationEntity> Favorites { get; set; }
+        public ICollection<PublicationEntity> Favorites { get; set; } = new List<PublicationEntity>();
         public List<FavoritesEntity> FavoritesEntities { get; set; }
     }
 }
