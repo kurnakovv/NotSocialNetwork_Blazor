@@ -20,7 +20,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
         };
 
         [Fact]
-        public void GetPublicationsWithFavoritesAsync_GetPublicationsByAuthorIdIfAuthorDontHaveFavorites_FavoritesNotFoundException()
+        public void GetPublicationsWithFavorites_GetPublicationsByAuthorIdIfAuthorDontHaveFavorites_FavoritesNotFoundException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
@@ -34,14 +34,14 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
                           .Returns(_author);
 
             // Act
-            Action act = () => getFavorite.GetPublicationsWithFavoritesAsync(_author.Id);
+            Action act = () => getFavorite.GetPublicationsWithFavorites(_author.Id);
 
             // Assert
             Assert.Throws<FavoritesNotFoundException>(act);
         }
 
         [Fact]
-        public void GetAuthorCountAsync_GetPublicationCountIfPublicationDontHaveFavorites_FavoritesNotFoundException()
+        public void GetAuthorCount_GetPublicationCountIfPublicationDontHaveFavorites_FavoritesNotFoundException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
@@ -55,14 +55,14 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
                                   .Returns(_publications.FirstOrDefault());
 
             // Act
-            Action act = () => getFavorite.GetAuthorCountAsync(_publications.FirstOrDefault().Id);
+            Action act = () => getFavorite.GetAuthorCount(_publications.FirstOrDefault().Id);
 
             // Assert
             Assert.Throws<FavoritesNotFoundException>(act);
         }
 
         [Fact]
-        public void GetAuthorsAsync_GetAuthorsIfPublicationDontHaveFavorites_FavoritesNotFoundException()
+        public void GetAuthors_GetAuthorsIfPublicationDontHaveFavorites_FavoritesNotFoundException()
         {
             // Arrange
             var getablePublication = new Mock<IGetablePublication>();
@@ -76,7 +76,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
                                   .Returns(_publications.FirstOrDefault());
 
             // Act
-            Action act = () => getFavorite.GetAuthorsAsync(_publications.FirstOrDefault().Id);
+            Action act = () => getFavorite.GetAuthors(_publications.FirstOrDefault().Id);
 
             // Assert
             Assert.Throws<FavoritesNotFoundException>(act);

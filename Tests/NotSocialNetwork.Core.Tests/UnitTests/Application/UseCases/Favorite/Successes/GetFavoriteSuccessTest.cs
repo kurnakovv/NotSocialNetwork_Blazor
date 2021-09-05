@@ -51,7 +51,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
 
 
         [Fact]
-        public void GetPublicationsWithFavoritesAsync_GetPublicationsByAuthorId_Publications()
+        public void GetPublicationsWithFavorites_GetPublicationsByAuthorId_Publications()
         {
             // Arrange
             _allPublications.AddRange(_publicationsWithAuthor);
@@ -72,7 +72,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
                                   .Returns(_publicationsWithAuthor);
 
             // Act
-            var result = getFavorite.GetPublicationsWithFavoritesAsync(_author.Id);
+            var result = getFavorite.GetPublicationsWithFavorites(_author.Id);
 
             // Assert
             Assert.NotNull(result);
@@ -82,10 +82,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
         }
 
         [Fact]
-        public void GetAuthorCountAsync_GetAuthorCount_AuthorCount()
+        public void GetAuthorCount_GetAuthorCount_AuthorCount()
         {
             // Arrange
             _allPublications.AddRange(_publicationsWithAuthor);
+            _publicationsWithAuthor.FirstOrDefault().Favorites = new List<UserEntity>();
             _publicationsWithAuthor.FirstOrDefault().Favorites.Add(_author);
             var validPublicationCount = 1;
             var inValidPublicationCount = 0;
@@ -104,7 +105,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
                                         .Returns(new List<UserEntity>() { _author, new UserEntity() });
 
             // Act
-            var result = getFavorite.GetAuthorCountAsync(_publicationsWithAuthor.FirstOrDefault().Id);
+            var result = getFavorite.GetAuthorCount(_publicationsWithAuthor.FirstOrDefault().Id);
 
             // Assert
             Assert.NotEqual(inValidPublicationCount, result);
@@ -112,7 +113,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
         }
 
         [Fact]
-        public void GetAuthorsAsync_GetAuthorsByPublicationId_Authors()
+        public void GetAuthors_GetAuthorsByPublicationId_Authors()
         {
             // Arrange
             _allPublications.AddRange(_publicationsWithAuthor);
@@ -132,7 +133,7 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
                                         .Returns(new List<UserEntity>() { _author, new UserEntity() });
 
             // Act
-            var result = getFavorite.GetAuthorsAsync(_publicationsWithAuthor.FirstOrDefault().Id);
+            var result = getFavorite.GetAuthors(_publicationsWithAuthor.FirstOrDefault().Id);
 
             // Assert
             Assert.NotNull(result);

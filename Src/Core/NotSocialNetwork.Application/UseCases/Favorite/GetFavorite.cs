@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace NotSocialNetwork.Application.UseCases.Favorite
 {
-    public class GetFavorite : IGetableFavoriteAsync
+    public class GetFavorite : IGetableFavorite
     {
         public GetFavorite(
             IGetablePublication getablePublication,
@@ -22,21 +22,21 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
         private readonly IGetablePublication _getablePublication;
         private readonly IGetableUser _getableUser;
 
-        public IEnumerable<PublicationEntity> GetPublicationsWithFavoritesAsync(Guid authorId)
+        public IEnumerable<PublicationEntity> GetPublicationsWithFavorites(Guid authorId)
         {
             var author = _getableUser.GetById(authorId);
             CheckAuthorFavorites(author);
             return author.Favorites;
         }
 
-        public int GetAuthorCountAsync(Guid publicationId)
+        public int GetAuthorCount(Guid publicationId)
         {
             var publication = _getablePublication.GetById(publicationId);
             CheckPublicationFavorites(publication);
             return publication.Favorites.Count();
         }
 
-        public IEnumerable<UserEntity> GetAuthorsAsync(Guid publicationId)
+        public IEnumerable<UserEntity> GetAuthors(Guid publicationId)
         {
             var publication = _getablePublication.GetById(publicationId);
             CheckPublicationFavorites(publication);
