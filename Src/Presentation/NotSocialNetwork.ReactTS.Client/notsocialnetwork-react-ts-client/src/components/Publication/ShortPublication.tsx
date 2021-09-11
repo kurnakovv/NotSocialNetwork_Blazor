@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ShortPublication.css"
 import UnfavoriteImg from "../../img/unfavorite.png";
 import FavoriteImg from "../../img/favorite.png";
