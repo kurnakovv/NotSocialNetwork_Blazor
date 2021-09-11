@@ -78,7 +78,13 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
                 Publication = new PublicationDTO()
                 {
                     Id = publication.Id,
-                    Author = author,
+                    Author = new UserDTO()
+                    {
+                        Id = author.Id,
+                        Email = author.Email,
+                        Image = author.Image,
+                        Name = author.Name
+                    },
                     Text = publication.Text,
                     ImagePaths = publication.Images.Select(i => i.Title).ToList(),
                 },

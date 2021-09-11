@@ -25,12 +25,24 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
         {
             new PublicationDTO()
             {
-                Author = _author,
+                Author = new UserDTO()
+                {
+                    Id = _author.Id,
+                    Email = _author.Email,
+                    Image = _author.Image,
+                    Name = _author.Name
+                },
                 Text = "Some text1",
             },
             new PublicationDTO()
             {
-                Author = _author,
+                Author = new UserDTO()
+                {
+                    Id = _author.Id,
+                    Email = _author.Email,
+                    Image = _author.Image,
+                    Name = _author.Name
+                },
                 Text = "Some text2",
             },
         };
@@ -39,12 +51,12 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Publicatio
         {
             new PublicationEntity()
             {
-                Author = _publicationsDTO.ElementAt(0).Author,
+                Author = _author,
                 Text = _publicationsDTO.ElementAt(0).Text,
             },
             new PublicationEntity()
             {
-                Author = _publicationsDTO.ElementAt(1).Author,
+                Author = _author,
                 Text = _publicationsDTO.ElementAt(1).Text,
             },
         };
