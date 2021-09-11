@@ -2,7 +2,7 @@
 
 namespace NotSocialNetwork.Application.Exceptions
 {
-    public class FavoritesNotFoundException : ArgumentNullException
+    public class FavoritesNotFoundException : InvalidOperationException
     {
         public FavoritesNotFoundException(string message) : base(message) { }
     }
