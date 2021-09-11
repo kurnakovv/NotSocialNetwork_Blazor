@@ -10,29 +10,27 @@ interface IPublication {
     text: string,
 }
 
-interface IProps{
+interface IProps {
     publications: Array<IPublication>;
 }
 
-export class GetPublications extends React.Component<IProps> {
-    render() {
-        return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Text</th>
+export const GetPublications: React.FC<IProps> = ({ publications }) => {
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Text</th>
+                </tr>
+            </thead>
+            <tbody>
+                {publications && publications.map(publication => {
+                    return <tr>
+                        <td>{publication.id}</td>
+                        <td>{publication.text}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {this.props.publications && this.props.publications.map(publication => {
-                        return <tr>
-                            <td>{publication.id}</td>
-                            <td>{publication.text}</td>
-                        </tr>
-                    })}
-                </tbody>
-            </table>
-        );
-    }
+                })}
+            </tbody>
+        </table>
+    );
 }

@@ -1,15 +1,15 @@
 import React from "react";
 import './Button.css';
 
-interface IButtonProps{
+interface IButtonProps {
     text: string;
     reference: string;
 }
 
-export default class Button extends React.Component<IButtonProps> {
-    render(){
-        return <>
-            <a className="Button" href={this.props.reference}>{this.props.text}</a>
-        </>
-    }
+const Button: React.FC<IButtonProps> = ({ text, reference }) => {
+    return <>
+        <a className="Button" href={reference}>{text}</a>
+    </>
 }
+
+export default Button
