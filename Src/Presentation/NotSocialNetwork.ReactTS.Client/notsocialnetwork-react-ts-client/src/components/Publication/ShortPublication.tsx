@@ -23,13 +23,11 @@ export class ShortPublication extends React.Component<any, IShortPublicationStat
     }
 
     setIsFavorite(): void{
-        this.setState({isFavorite: !this.state.isFavorite});
-
-        if(this.state.isFavorite){
-            this.setState({favoriteImage: FavoriteImg});
-        } else {
-            this.setState({favoriteImage: UnfavoriteImg});
-        }
+        this.setState({isFavorite: !this.state.isFavorite}, () => {
+            this.state.isFavorite 
+                ? this.setState({favoriteImage: FavoriteImg}) 
+                : this.setState({favoriteImage: UnfavoriteImg});
+        });
     }
 
     render() {
