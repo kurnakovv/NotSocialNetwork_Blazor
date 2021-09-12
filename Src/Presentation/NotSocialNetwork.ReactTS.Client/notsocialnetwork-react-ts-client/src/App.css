@@ -8,8 +8,13 @@
   }
 }
 
-.App-header {
+.App {
   background-color: #282c34;
+  overflow: hidden;
+}
+
+.App-header {
+  
   color: white;
 }
 

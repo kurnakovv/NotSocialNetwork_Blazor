@@ -4,10 +4,9 @@
     text-align: center;
     overflow: hidden;
     border: 1px solid #61dafb;
-    margin-top: 25px;
     margin-left: 25px;
     border-radius: 8px;
-    visibility: visible;
+    position: fixed;
 }
 
 .WindowImg {

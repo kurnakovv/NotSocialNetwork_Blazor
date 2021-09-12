@@ -1,4 +1,7 @@
 .Navbar-main{
     background-color: #6610f2;
     color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
