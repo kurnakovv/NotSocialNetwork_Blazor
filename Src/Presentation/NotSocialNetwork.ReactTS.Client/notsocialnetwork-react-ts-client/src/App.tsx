@@ -8,6 +8,7 @@ import AppContext from "./contexts/AppContext";
 
 const App: React.FC = ({}) => {
   const [publications, setPublications] = React.useState<any[]>([]);
+  const [eventWindowIsVisible, setEventWindowIsVisible] = React.useState(false);
 
   // TODO: Connect ajax + connect data.
   // React.useEffect(() => {
@@ -26,7 +27,8 @@ const App: React.FC = ({}) => {
 
     return (
       <AppContext.Provider value={{
-        eventWindowIsVisible: false,
+        eventWindowIsVisible: eventWindowIsVisible,
+        setEventWindowIsVisible: setEventWindowIsVisible,
       }}>
       <div className="App">
         <header className="App-header">
