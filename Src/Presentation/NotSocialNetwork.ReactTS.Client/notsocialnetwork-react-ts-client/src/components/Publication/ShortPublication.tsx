@@ -5,6 +5,7 @@ import FavoriteImg from "../../img/favorite.png";
 import CommentsImg from "../../img/comments.png";
 import BookmarkImg from "../../img/bookmark.png";
 import Button from "../Button";
+import AppContext from "../../contexts/AppContext";
 
 
 interface IShortPublicationState {
@@ -18,12 +19,16 @@ export const ShortPublication: React.FC = ({ }) => {
         favoriteImage: UnfavoriteImg
     });
 
+    const context = React.useContext(AppContext);
+
     const setIsFavorite = (): void => {
         setShortPublication(prevState => ({ 
             ...prevState,
             isFavorite: !shortPublication.isFavorite,
             favoriteImage: !prevState.isFavorite ? FavoriteImg : UnfavoriteImg, // TODO: Fix now isFavorite is a old state.
          }));
+
+         context.eventWindowIsVisible = true;
     }
 
     return (

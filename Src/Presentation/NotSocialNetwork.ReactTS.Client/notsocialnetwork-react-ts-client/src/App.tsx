@@ -4,6 +4,7 @@ import { ShortPublication } from './components/Publication/ShortPublication';
 import { Navbar } from './components/Navbar';
 import EventWindow from './components/EventWindow';
 import FavoriteImg from "./img/favorite.png";
+import AppContext from "./contexts/AppContext";
 
 const App: React.FC = ({}) => {
   const [publications, setPublications] = React.useState<any[]>([]);
@@ -24,6 +25,9 @@ const App: React.FC = ({}) => {
   //   })
 
     return (
+      <AppContext.Provider value={{
+        eventWindowIsVisible: false,
+      }}>
       <div className="App">
         <header className="App-header">
         <Navbar />
@@ -35,6 +39,7 @@ const App: React.FC = ({}) => {
         <ShortPublication />
         </header>
       </div>
+      </AppContext.Provider>
     );
 }
 
