@@ -4,19 +4,16 @@ import "../EventWindow/EventWindow.css";
 import Button from "../Button";
 import AppContext from "../../contexts/AppContext";
 
-interface IEventWindowProps {
-    img: string;
-}
-
-const EventWindow: React.FC<IEventWindowProps> = ({ img }) => {
+const EventWindow: React.FC = ({}) => {
 
     const context = React.useContext(AppContext);
+    const { eventWindowIsVisible, eventWindowText, eventWindowImg } = context;
 
     return <>
-        <div className="EventWindow" style={{display: context.eventWindowIsVisible ? "" : "none"}}>
+        <div className="EventWindow" style={{display: eventWindowIsVisible ? "" : "none"}}>
             <div className="ExitButton"><Button reference="/" text="X" /></div>
-            <p>Publication added to:</p>
-            <img className="WindowImg" width={25} height={25} src={img} />
+            <p>{eventWindowText}</p>
+            <img className="WindowImg" width={25} height={25} src={eventWindowImg} />
         </div>
     </>
 }
