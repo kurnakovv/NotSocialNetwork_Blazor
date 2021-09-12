@@ -21,15 +21,7 @@ export const ShortPublication: React.FC = ({ }) => {
 
     const context = React.useContext(AppContext);
 
-    const setIsFavorite = (): void => {
-        setShortPublication(prevState => ({ 
-            ...prevState,
-            isFavorite: !shortPublication.isFavorite,
-            favoriteImage: prevState.isFavorite ? FavoriteImg : UnfavoriteImg, // TODO: Fix now isFavorite is a old state.
-         }));
-
-        context.setEventWindowIsVisible(true);
-
+    React.useEffect(() => {
         if(shortPublication.isFavorite) {
             context.setEventWindowText("Publication added to:");
             context.setEventWindowImg(FavoriteImg);
@@ -37,6 +29,24 @@ export const ShortPublication: React.FC = ({ }) => {
             context.setEventWindowText("Publication deleted from:");
             context.setEventWindowImg(UnfavoriteImg);
         }
+    }, [shortPublication.isFavorite])
+
+    const setIsFavorite = (): void => {
+        setShortPublication(prevState => { 
+            return {
+                ...prevState,
+                isFavorite: !shortPublication.isFavorite,
+            }
+         });
+
+        setShortPublication(prevState => { 
+            return {
+                ...prevState,
+                favoriteImage: prevState.isFavorite ? FavoriteImg : UnfavoriteImg, // TODO: Fix now isFavorite is a old state.
+            }
+         });
+
+        context.setEventWindowIsVisible(true);
     }
 
     return (
