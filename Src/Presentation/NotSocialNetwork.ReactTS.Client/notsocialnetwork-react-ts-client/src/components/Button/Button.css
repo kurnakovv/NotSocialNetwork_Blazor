@@ -1,6 +1,8 @@
 .Button{
     transition: 0.2s linear;
-    background-color: none;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    outline:none;
     border: 1px solid #61dafb;
     color: #61dafb;
     text-decoration: none;
