@@ -42,7 +42,7 @@ export const ShortPublication: React.FC = ({ }) => {
         setShortPublication(prevState => { 
             return {
                 ...prevState,
-                favoriteImage: prevState.isFavorite ? FavoriteImg : UnfavoriteImg, // TODO: Fix now isFavorite is a old state.
+                favoriteImage: prevState.isFavorite ? FavoriteImg : UnfavoriteImg,
             }
          });
 
