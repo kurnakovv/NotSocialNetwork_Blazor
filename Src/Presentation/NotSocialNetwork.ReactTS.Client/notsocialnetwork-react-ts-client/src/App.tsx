@@ -1,10 +1,12 @@
 import React from 'react';
+
 import './App.css';
 import { ShortPublication } from './components/Publication/ShortPublication';
 import { Navbar } from './components/Navbar';
 import EventWindow from './components/EventWindow';
 import FavoriteImg from "./img/favorite.png";
 import AppContext from "./contexts/AppContext";
+import axios from 'axios';
 
 const App: React.FC = ({}) => {
   const [publications, setPublications] = React.useState<any[]>([]);
@@ -12,20 +14,19 @@ const App: React.FC = ({}) => {
   const [eventWindowText, setEventWindowText] = React.useState<string>("");
   const [eventWindowImage, setEventWindowImage] = React.useState<string>("");
 
-  // TODO: Connect ajax + connect data.
-  // React.useEffect(() => {
-  //   function fetchPublications() {
-  //     fetch("https://localhost:5001/api/publication/index=0", {
-  //           "method": "GET"
-  //     }).then(response => response.json())
-  //       .then(response => {
-  //         setPublications(prevState => ({
-  //           ...prevState,
-  //           publications: response,
-  //       }))
-  //   }
+  React.useEffect(() => {
+    async function getPublications() {
+      try {
+        const result = await axios.get("https://localhost:5001/api/publication/index=0");
 
-  //   })
+        setPublications(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getPublications();
+  }, [])
 
     return (
       <AppContext.Provider value={{
@@ -40,9 +41,17 @@ const App: React.FC = ({}) => {
         <header className="App-header">
         <Navbar />
         <EventWindow />
-        <ShortPublication />
-        <ShortPublication />
-        <ShortPublication />
+        {
+          publications.map((publication: any) => {
+            return (
+              <ShortPublication 
+                key={publication.id} 
+                text={publication.text}
+                author={publication.author}
+              />
+            )
+          })
+        }
         </header>
       </div>
       </AppContext.Provider>

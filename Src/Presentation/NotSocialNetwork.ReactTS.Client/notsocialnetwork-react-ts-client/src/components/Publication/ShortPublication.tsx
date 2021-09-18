@@ -13,7 +13,7 @@ interface IShortPublicationState {
     favoriteImage: string;
 }
 
-export const ShortPublication: React.FC = ({ }) => {
+export const ShortPublication: React.FC<any> = ({ text, author }) => {
     const [shortPublication, setShortPublication] = React.useState<IShortPublicationState>({
         isFavorite: false,
         favoriteImage: UnfavoriteImg
@@ -54,7 +54,7 @@ export const ShortPublication: React.FC = ({ }) => {
             <div className="Container">
                 <div className="Header">
                     <img className="UserLogo" src="https://media-exp1.licdn.com/dms/image/C560BAQH9Cnv1weU07g/company-logo_200_200/0/1575479070098?e=2159024400&v=beta&t=QM9VSoWVooxDwCONWh22cw0jBBlBPcBOqAxbZIE18jw" />
-                    <p className="UserName">Author name</p>
+                    <p className="UserName">{author.name}</p>
                 </div>
                 <img className="MainImage" src="https://analyticsindiamag.com/wp-content/uploads/2020/10/7d744a684fe03ebc7e8de545f97739dd.jpg" />
                 <div className="Panel">
@@ -66,7 +66,7 @@ export const ShortPublication: React.FC = ({ }) => {
                     </ul>
                 </div>
                 <div className="PublicationText">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting indus</p>
+                    <p>{text}</p>
                 </div>
             </div>
         </>
