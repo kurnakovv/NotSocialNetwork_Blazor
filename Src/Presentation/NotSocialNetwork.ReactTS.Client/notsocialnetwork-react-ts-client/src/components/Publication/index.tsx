@@ -1,20 +1,21 @@
 import React from "react";
-import "./ShortPublication.css"
+import "./Publication.css"
 import UnfavoriteImg from "../../img/unfavorite.png";
 import FavoriteImg from "../../img/favorite.png";
 import CommentsImg from "../../img/comments.png";
 import BookmarkImg from "../../img/bookmark.png";
 import Button from "../Button";
 import AppContext from "../../contexts/AppContext";
+import IPublication from "../../types/Publication.interface";
 
 
-interface IShortPublicationState {
+interface IPublicationState {
     isFavorite: boolean;
     favoriteImage: string;
 }
 
-export const ShortPublication: React.FC<any> = ({ text, author }) => {
-    const [shortPublication, setShortPublication] = React.useState<IShortPublicationState>({
+export const Publication: React.FC<IPublication> = ({ text, author }) => {
+    const [publication, setPublication] = React.useState<IPublicationState>({
         isFavorite: false,
         favoriteImage: UnfavoriteImg
     });
@@ -22,24 +23,24 @@ export const ShortPublication: React.FC<any> = ({ text, author }) => {
     const context = React.useContext(AppContext);
 
     React.useEffect(() => {
-        if(shortPublication.isFavorite) {
+        if(publication.isFavorite) {
             context.setEventWindowText("Publication added to:");
             context.setEventWindowImg(FavoriteImg);
         } else {
             context.setEventWindowText("Publication deleted from:");
             context.setEventWindowImg(UnfavoriteImg);
         }
-    }, [shortPublication.isFavorite])
+    }, [publication.isFavorite])
 
     const setIsFavorite = (): void => {
-        setShortPublication(prevState => { 
+        setPublication(prevState => { 
             return {
                 ...prevState,
-                isFavorite: !shortPublication.isFavorite,
+                isFavorite: !publication.isFavorite,
             }
          });
 
-        setShortPublication(prevState => { 
+        setPublication(prevState => { 
             return {
                 ...prevState,
                 favoriteImage: prevState.isFavorite ? FavoriteImg : UnfavoriteImg,
@@ -59,7 +60,7 @@ export const ShortPublication: React.FC<any> = ({ text, author }) => {
                 <img className="MainImage" src="https://analyticsindiamag.com/wp-content/uploads/2020/10/7d744a684fe03ebc7e8de545f97739dd.jpg" />
                 <div className="Panel">
                     <ul className="Panel">
-                        <li className="RightButton"><img width={30} height={30} onClick={setIsFavorite} src={shortPublication?.favoriteImage} /></li>
+                        <li className="RightButton"><img width={30} height={30} onClick={setIsFavorite} src={publication?.favoriteImage} /></li>
                         <li className="RightButton"><img width={30} height={30} src={CommentsImg} /></li>
                         <li className="RightButton"><img width={30} height={30} src={BookmarkImg} /></li>
                         <li className="LeftButton"><Button text="More" reference="/" /></li>

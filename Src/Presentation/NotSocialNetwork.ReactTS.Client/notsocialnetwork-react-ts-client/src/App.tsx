@@ -1,12 +1,13 @@
 import React from 'react';
 
 import './App.css';
-import { ShortPublication } from './components/Publication/ShortPublication';
+import { Publication } from './components/Publication';
 import { Navbar } from './components/Navbar';
 import EventWindow from './components/EventWindow';
 import AppContext from "./contexts/AppContext";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublications } from './redux/actions/publications';
+import IPublication from './types/Publication.interface';
 
 const App: React.FC = ({}) => {
   const [eventWindowIsVisible, setEventWindowIsVisible] = React.useState<boolean>(false);
@@ -14,7 +15,7 @@ const App: React.FC = ({}) => {
   const [eventWindowImage, setEventWindowImage] = React.useState<string>("");
 
   const dispatch = useDispatch();
-  const publications: any = useSelector((state: any) => state.publications.publications);
+  const publications: IPublication[] = useSelector((state: any) => state.publications.publications);
 
   React.useEffect(() => {
     dispatch(getPublications());
@@ -34,12 +35,14 @@ const App: React.FC = ({}) => {
         <Navbar />
         <EventWindow />
         {
-          publications && publications.map((publication: any) => {
+          publications && publications.map((publication: IPublication) => {
             return (
-              <ShortPublication 
+              <Publication 
                 key={publication.id} 
                 text={publication.text}
                 author={publication.author}
+                id={publication.id}
+                imagePaths={publication.imagePaths}
               />
             )
           })
