@@ -32,7 +32,8 @@ const App: React.FC = ({}) => {
       }}>
       <div className="App">
         <header className="App-header">
-        <Navbar />
+          <Navbar />
+        </header>
         <EventWindow />
         {
           publications && publications.map((publication: IPublication) => {
@@ -47,7 +48,6 @@ const App: React.FC = ({}) => {
             )
           })
         }
-        </header>
       </div>
       </AppContext.Provider>
     );

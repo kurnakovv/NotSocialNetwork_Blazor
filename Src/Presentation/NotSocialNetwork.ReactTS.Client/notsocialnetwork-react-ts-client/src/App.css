@@ -11,11 +11,11 @@
 .App {
   background-color: #282c34;
   overflow: hidden;
+  color: white;
 }
 
 .App-header {
-  
-  color: white;
+  margin-top: 100px;
 }
 
 .App-link {
