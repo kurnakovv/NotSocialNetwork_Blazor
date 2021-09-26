@@ -8,6 +8,7 @@ import AppContext from "./contexts/AppContext";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublications } from './redux/actions/publications';
 import IPublication from './types/Publication.interface';
+import AuthPanel from "./components/AuthPanel";
 
 const App: React.FC = ({}) => {
   const [eventWindowIsVisible, setEventWindowIsVisible] = React.useState<boolean>(false);
@@ -35,6 +36,7 @@ const App: React.FC = ({}) => {
           <Navbar />
         </header>
         <EventWindow />
+        <AuthPanel />
         {
           publications && publications.map((publication: IPublication) => {
             return (
