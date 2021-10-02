@@ -17,6 +17,7 @@ const App: React.FC = ({}) => {
 
   const dispatch = useDispatch();
   const publications: IPublication[] = useSelector((state: any) => state.publications.publications);
+  const isAuthPanelOpen: boolean = useSelector((state: any) => state.authPanel.isAuthPanelOpen);
 
   React.useEffect(() => {
     dispatch(getPublications());
@@ -36,7 +37,7 @@ const App: React.FC = ({}) => {
           <Navbar />
         </header>
         <EventWindow />
-        <AuthPanel />
+        {isAuthPanelOpen && <AuthPanel />}
         {
           publications && publications.map((publication: IPublication) => {
             return (

@@ -1,11 +1,14 @@
 import React from "react";
 import Search from "../Search/index";
-import Button from "../Button/index";
 import logo from '../../logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
+import { useDispatch } from "react-redux";
+import { setIsAuthPanelOpen } from "../../redux/actions/authPanel";
 
 export const Navbar: React.FC = () => {
+    const dispatch = useDispatch();
+
     return <>
         <div className="Navbar-main">
             <nav className="navbar navbar-expand-lg navbar-dark">
@@ -27,14 +30,8 @@ export const Navbar: React.FC = () => {
                             </li>
                         </ul>
                         <Search />
-                        <Button
-                            text="Login"
-                            reference="/Login"
-                        />
-                        <Button
-                            text="Register"
-                            reference="/Register"
-                        />
+                        <button className="Button" onClick={() => dispatch(setIsAuthPanelOpen())}>Login</button>
+                        <button className="Button" onClick={() => dispatch(setIsAuthPanelOpen())}>Register</button>
                     </div>
                 </div>
             </nav>
