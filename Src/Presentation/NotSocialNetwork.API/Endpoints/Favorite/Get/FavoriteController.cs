@@ -61,5 +61,26 @@ namespace NotSocialNetwork.API.Endpoints.Favorite.Get
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpGet("authors={publicationId}")]
+        public ActionResult<IEnumerable<UserDTO>> GetAuthors(Guid publicationId)
+        {
+            try
+            {
+                var publicationsEntity = _getableFavorite.GetAuthors(publicationId);
+
+                var publicationsDTO = _mapper.Map<IEnumerable<UserDTO>>(publicationsEntity);
+
+                return Ok(publicationsDTO);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (FavoritesNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

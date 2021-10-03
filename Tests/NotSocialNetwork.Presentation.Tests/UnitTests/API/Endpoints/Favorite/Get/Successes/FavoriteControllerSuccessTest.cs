@@ -73,5 +73,24 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Favorite.G
             Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equal(0, result.Value);
         }
+
+        [Fact]
+        public void GetAuthors_GetAuthorIfPublicationHave_OkObjectResult()
+        {
+            // Arrange
+            var getableFavorite = new Mock<IGetableFavorite>();
+            var mapper = new Mock<IMapper>();
+
+            var favoriteController = new FavoriteController(
+                                            getableFavorite.Object,
+                                            mapper.Object);
+
+            // Act
+            var result = favoriteController.GetAuthors(Guid.NewGuid());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
     }
 }

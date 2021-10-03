@@ -79,5 +79,51 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Favorite.G
             Assert.NotNull(result);
             Assert.IsType<NotFoundObjectResult>(result.Result);
         }
+
+        [Fact]
+        public void GetAuthors_GetAuthorsIfPublicationsNotFound_NotFound404()
+        {
+            // Arrange
+            var invalidPublicationId = Guid.NewGuid();
+            var getableFavorite = new Mock<IGetableFavorite>();
+            var mapper = new Mock<IMapper>();
+
+            var favoriteController = new FavoriteController(
+                                            getableFavorite.Object,
+                                            mapper.Object);
+
+            getableFavorite.Setup(gf => gf.GetAuthors(invalidPublicationId))
+                                    .Throws(new ObjectNotFoundException("Publication not found."));
+
+            // Act
+            var result = favoriteController.GetAuthors(invalidPublicationId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void GetAuthors_GetAuthorsIfPublicationsHaveNotFavorites_NotFound404()
+        {
+            // Arrange
+            var publicationId = Guid.NewGuid();
+            var getableFavorite = new Mock<IGetableFavorite>();
+            var mapper = new Mock<IMapper>();
+
+            var favoriteController = new FavoriteController(
+                                            getableFavorite.Object,
+                                            mapper.Object);
+
+            getableFavorite.Setup(gf => gf.GetAuthors(publicationId))
+                                    .Throws(new FavoritesNotFoundException("Publication dont have favorites."));
+
+            // Act
+            var result = favoriteController.GetAuthors(publicationId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
     }
 }
