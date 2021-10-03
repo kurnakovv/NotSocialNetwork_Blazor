@@ -2,13 +2,13 @@
 using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
+using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.Favorite;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Successes
@@ -36,11 +36,13 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
             var getUser = new Mock<IGetableUser>();
             var getPublication = new Mock<IGetablePublication>();
             var getFavorite = new Mock<IGetableFavorite>();
+            var repository = new Mock<IRepositoryAsync<PublicationEntity>>();
 
             var likeFavorite = new LikeFavorite(
                                     getUser.Object,
                                     getPublication.Object,
-                                    getFavorite.Object);
+                                    getFavorite.Object,
+                                    repository.Object);
 
             getUser.Setup(gu => gu.GetById(_author.Id))
                        .Returns(_author);
@@ -69,11 +71,13 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
             var getUser = new Mock<IGetableUser>();
             var getPublication = new Mock<IGetablePublication>();
             var getFavorite = new Mock<IGetableFavorite>();
+            var repository = new Mock<IRepositoryAsync<PublicationEntity>>();
 
             var likeFavorite = new LikeFavorite(
                                     getUser.Object,
                                     getPublication.Object,
-                                    getFavorite.Object);
+                                    getFavorite.Object,
+                                    repository.Object);
 
             getUser.Setup(gu => gu.GetById(_author.Id))
                        .Returns(_author);

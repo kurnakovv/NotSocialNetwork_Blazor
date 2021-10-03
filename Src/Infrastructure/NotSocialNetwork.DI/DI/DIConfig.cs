@@ -62,6 +62,7 @@ namespace NotSocialNetwork.DI.DIConfig
         private static void ConfigureUseCasesFavorite(IServiceCollection services)
         {
             services.AddTransient<IGetableFavorite, GetFavorite>();
+            services.AddTransient<ILikeableFavorite, LikeFavorite>();
         }
 
         private static void ConfigureSystems(IServiceCollection services)

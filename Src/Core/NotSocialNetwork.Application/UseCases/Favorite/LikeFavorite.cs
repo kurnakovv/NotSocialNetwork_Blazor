@@ -2,6 +2,7 @@
 using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
+using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
@@ -14,16 +15,19 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
         public LikeFavorite(
             IGetableUser getableUser,
             IGetablePublication getablePublication,
-            IGetableFavorite getableFavorite)
+            IGetableFavorite getableFavorite,
+            IRepositoryAsync<PublicationEntity> repository)
         {
             _getableUser = getableUser;
             _getablePublication = getablePublication;
             _getableFavorite = getableFavorite;
+            _repository = repository;
         }
 
         private readonly IGetableUser _getableUser;
         private readonly IGetablePublication _getablePublication;
         private readonly IGetableFavorite _getableFavorite;
+        private readonly IRepositoryAsync<PublicationEntity> _repository;
 
 
         public FavoriteResultDTO LikeOrUnlike(FavoriteDTO favoriteDTO)
@@ -53,6 +57,7 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
         {
             author.Favorites.Add(publication);
             publication.Favorites.Add(author);
+            _repository.Commit();
 
             return true;
         }
@@ -61,6 +66,7 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
         {
             author.Favorites.Remove(publication);
             publication.Favorites.Remove(author);
+            _repository.Commit();
 
             return false;
         }

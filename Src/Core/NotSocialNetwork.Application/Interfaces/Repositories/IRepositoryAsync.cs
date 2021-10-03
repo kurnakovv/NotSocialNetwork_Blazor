@@ -11,5 +11,6 @@ namespace NotSocialNetwork.Application.Interfaces.Repositories
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<TEntity> DeleteAsync(Guid id);
+        void Commit();
     }
 }
