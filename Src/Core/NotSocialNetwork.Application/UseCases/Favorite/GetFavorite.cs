@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using NotSocialNetwork.Application.DTOs.Favorite;
+using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
@@ -41,6 +42,15 @@ namespace NotSocialNetwork.Application.UseCases.Favorite
             var publication = _getablePublication.GetById(publicationId);
             CheckPublicationFavorites(publication);
             return publication.Favorites;
+        }
+
+        public bool GetIsFavorite(FavoriteDTO favoriteDTO)
+        {
+            var publication = _getablePublication.GetById(favoriteDTO.PublicationId);
+            var user = publication.Favorites.FirstOrDefault(f => f.Id == favoriteDTO.UserId);
+            var isFavorite = user != null ? true : false;
+
+            return isFavorite;
         }
 
         private void CheckAuthorFavorites(UserEntity author)

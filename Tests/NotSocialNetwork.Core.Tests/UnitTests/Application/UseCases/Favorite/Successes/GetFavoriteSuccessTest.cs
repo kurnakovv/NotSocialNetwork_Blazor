@@ -1,8 +1,10 @@
 ﻿using Moq;
+using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
 using NotSocialNetwork.Application.UseCases.Favorite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -47,6 +49,12 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
                 Author = new UserEntity(),
                 Text = "Some text",
             },
+        };
+
+        private static FavoriteDTO _favoriteDTO = new FavoriteDTO() 
+        {
+            PublicationId = Guid.NewGuid(),
+            UserId = Guid.NewGuid(),
         };
 
 
@@ -138,6 +146,62 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Su
             // Assert
             Assert.NotNull(result);
             Assert.Equal(_author, result.FirstOrDefault());
+        }
+
+        [Fact]
+        public void GetIsFavorite_GetIsFavoriteIfPublicationContainFavoriteByAuthorId_True()
+        {
+            // Arrange
+            _publicationsWithAuthor.FirstOrDefault().Favorites.Add(_author);
+
+            var getablePublication = new Mock<IGetablePublication>();
+            var getableUser = new Mock<IGetableUser>();
+
+            var getFavorite = new GetFavorite(
+                                getablePublication.Object,
+                                getableUser.Object);
+
+            getablePublication.Setup(gp => gp.GetById(_publicationsWithAuthor.FirstOrDefault().Id))
+                                  .Returns(_publicationsWithAuthor.FirstOrDefault());
+
+            var favoriteDTO = new FavoriteDTO()
+            {
+                PublicationId = _publicationsWithAuthor.FirstOrDefault().Id,
+                UserId = _author.Id,
+            };
+
+            // Act
+            var result = getFavorite.GetIsFavorite(favoriteDTO);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void GetIsFavorite_GetIsFavoriteIfPublicationHaveNotFavoriteByAuthorId_False()
+        {
+            // Arrange
+            var getablePublication = new Mock<IGetablePublication>();
+            var getableUser = new Mock<IGetableUser>();
+
+            var getFavorite = new GetFavorite(
+                                getablePublication.Object,
+                                getableUser.Object);
+
+            getablePublication.Setup(gp => gp.GetById(_publicationsWithAuthor.FirstOrDefault().Id))
+                                  .Returns(_publicationsWithAuthor.FirstOrDefault());
+
+            var favoriteDTO = new FavoriteDTO()
+            {
+                PublicationId = _publicationsWithAuthor.FirstOrDefault().Id,
+                UserId = Guid.NewGuid(),
+            };
+
+            // Act
+            var result = getFavorite.GetIsFavorite(favoriteDTO);
+
+            // Assert
+            Assert.False(result);
         }
     }
 }

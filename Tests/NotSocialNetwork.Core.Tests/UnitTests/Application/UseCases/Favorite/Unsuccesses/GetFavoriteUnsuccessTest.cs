@@ -1,4 +1,5 @@
 ﻿using Moq;
+using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
@@ -17,6 +18,11 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
         private static List<PublicationEntity> _publications = new List<PublicationEntity>()
         {
             new PublicationEntity(),
+        };
+        private static FavoriteDTO _favoriteDTO = new FavoriteDTO()
+        {
+            PublicationId = Guid.NewGuid(),
+            UserId = Guid.NewGuid()
         };
 
         [Fact]
@@ -80,6 +86,27 @@ namespace NotSocialNetwork.Core.Tests.UnitTests.Application.UseCases.Favorite.Un
 
             // Assert
             Assert.Throws<FavoritesNotFoundException>(act);
+        }
+
+        [Fact]
+        public void GetIsFavorite_GetIsFavoriteIfPublicationNotFound_ObjectNotFoundException()
+        {
+            // Arrange
+            var getablePublication = new Mock<IGetablePublication>();
+            var getableUser = new Mock<IGetableUser>();
+
+            var getFavorite = new GetFavorite(
+                                getablePublication.Object,
+                                getableUser.Object);
+
+            getablePublication.Setup(gp => gp.GetById(_favoriteDTO.PublicationId))
+                                        .Throws(new ObjectNotFoundException("Publication not found"));
+
+            //Act
+            Action act = () => getFavorite.GetIsFavorite(_favoriteDTO);
+
+            // Assert
+            Assert.Throws<ObjectNotFoundException>(act);
         }
     }
 }

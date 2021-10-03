@@ -1,4 +1,5 @@
-﻿using NotSocialNetwork.Application.Entities;
+﻿using NotSocialNetwork.Application.DTOs.Favorite;
+using NotSocialNetwork.Application.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -9,5 +10,6 @@ namespace NotSocialNetwork.Application.Interfaces.UseCases.Favorite
         IEnumerable<PublicationEntity> GetPublicationsWithFavorites(Guid authorId);
         IEnumerable<UserEntity> GetAuthors(Guid publicationId);
         int GetAuthorCount(Guid publicationId);
+        bool GetIsFavorite(FavoriteDTO favoriteDTO);
     }
 }
