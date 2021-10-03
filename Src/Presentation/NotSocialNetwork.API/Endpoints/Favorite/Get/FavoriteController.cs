@@ -23,7 +23,7 @@ namespace NotSocialNetwork.API.Endpoints.Favorite.Get
         private readonly IGetableFavorite _getableFavorite;
         private readonly IMapper _mapper;
 
-        [HttpGet("{authorId}")]
+        [HttpGet("author={authorId}")]
         public ActionResult<IEnumerable<PublicationDTO>> Get(Guid authorId)
         {
             try
@@ -40,6 +40,23 @@ namespace NotSocialNetwork.API.Endpoints.Favorite.Get
                 return NotFound(ex.Message);
             }
             catch(FavoritesNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("authorCount={publicationId}")]
+        public ActionResult<int> GetAuthorCount(Guid publicationId)
+        {
+            try
+            {
+                return Ok(_getableFavorite.GetAuthorCount(publicationId));
+            }
+            catch (FavoritesNotFoundException)
+            {
+                return Ok(0);
+            }
+            catch (ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }

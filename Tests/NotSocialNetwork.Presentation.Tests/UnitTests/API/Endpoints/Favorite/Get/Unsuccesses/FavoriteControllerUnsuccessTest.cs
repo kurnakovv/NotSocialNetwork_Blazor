@@ -56,5 +56,28 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Favorite.G
             Assert.NotNull(result);
             Assert.IsType<NotFoundObjectResult>(result.Result);
         }
+
+        [Fact]
+        public void GetAuthorCount_GetAuthorCountIfPublictionNotFound_NotFound404()
+        {
+            // Arrange
+            var invalidPublicationId = Guid.NewGuid();
+            var getableFavorite = new Mock<IGetableFavorite>();
+            var mapper = new Mock<IMapper>();
+
+            var favoriteController = new FavoriteController(
+                                            getableFavorite.Object,
+                                            mapper.Object);
+
+            getableFavorite.Setup(gf => gf.GetAuthorCount(invalidPublicationId))
+                                    .Throws(new ObjectNotFoundException("Publication not found."));
+
+            // Act
+            var result = favoriteController.GetAuthorCount(invalidPublicationId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
     }
 }
