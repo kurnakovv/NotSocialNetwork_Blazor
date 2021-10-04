@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NotSocialNetwork.API.Endpoints.Favorite.Get;
+using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using System;
@@ -11,6 +12,13 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Favorite.G
 {
     public class FavoriteControllerSuccessTest
     {
+        private static FavoriteDTO _favoriteDTO = new FavoriteDTO()
+        {
+            PublicationId = Guid.NewGuid(),
+            UserId = Guid.NewGuid(),
+        };
+
+
         [Fact]
         public void Get_GetPublicationsWithFavorites_OkObjectResult()
         {
@@ -87,6 +95,25 @@ namespace NotSocialNetwork.Presentation.Tests.UnitTests.API.Endpoints.Favorite.G
 
             // Act
             var result = favoriteController.GetAuthors(Guid.NewGuid());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void GetIsFavorite_GetIsFavoriteIfPublicationContainAuthor_OkObjectResult()
+        {
+            // Arrange
+            var getableFavorite = new Mock<IGetableFavorite>();
+            var mapper = new Mock<IMapper>();
+
+            var favoriteController = new FavoriteController(
+                                            getableFavorite.Object,
+                                            mapper.Object);
+
+            // Act
+            var result = favoriteController.GetIsFavorite(_favoriteDTO);
 
             // Assert
             Assert.NotNull(result);

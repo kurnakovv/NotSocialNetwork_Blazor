@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NotSocialNetwork.Application.DTOs;
+using NotSocialNetwork.Application.DTOs.Favorite;
 using NotSocialNetwork.Application.Exceptions;
 using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using System;
@@ -78,6 +79,19 @@ namespace NotSocialNetwork.API.Endpoints.Favorite.Get
                 return NotFound(ex.Message);
             }
             catch (FavoritesNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPost("isFavorite")]
+        public ActionResult<bool> GetIsFavorite(FavoriteDTO favoriteDTO)
+        {
+            try
+            {
+                return Ok(_getableFavorite.GetIsFavorite(favoriteDTO));
+            }
+            catch(ObjectNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
