@@ -27,6 +27,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
         public IEnumerable<PublicationEntity> GetAll()
         {
             return _publicationRepository.GetAll()
+                             .Include(p => p.Favorites)
                              .Include(p => p.Images)
                              .Include(p => p.Author)
                                  .ThenInclude(u => u.Image);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotSocialNetwork.DBContexts;
 
 namespace NotSocialNetwork.DBContexts.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210821114607_Rules")]
+    partial class Rules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,21 +34,6 @@ namespace NotSocialNetwork.DBContexts.Migrations
                     b.HasIndex("PublicationsId");
 
                     b.ToTable("ImageEntityPublicationEntity");
-                });
-
-            modelBuilder.Entity("NotSocialNetwork.Application.Entities.FavoritesEntity", b =>
-                {
-                    b.Property<Guid>("PublicationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PublicationId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("NotSocialNetwork.Application.Entities.ImageEntity", b =>
@@ -142,25 +129,6 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NotSocialNetwork.Application.Entities.FavoritesEntity", b =>
-                {
-                    b.HasOne("NotSocialNetwork.Application.Entities.PublicationEntity", "Publication")
-                        .WithMany("FavoritesEntities")
-                        .HasForeignKey("PublicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("NotSocialNetwork.Application.Entities.UserEntity", "User")
-                        .WithMany("FavoritesEntities")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Publication");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("NotSocialNetwork.Application.Entities.PublicationEntity", b =>
                 {
                     b.HasOne("NotSocialNetwork.Application.Entities.UserEntity", "Author")
@@ -179,16 +147,6 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("NotSocialNetwork.Application.Entities.PublicationEntity", b =>
-                {
-                    b.Navigation("FavoritesEntities");
-                });
-
-            modelBuilder.Entity("NotSocialNetwork.Application.Entities.UserEntity", b =>
-                {
-                    b.Navigation("FavoritesEntities");
                 });
 #pragma warning restore 612, 618
         }

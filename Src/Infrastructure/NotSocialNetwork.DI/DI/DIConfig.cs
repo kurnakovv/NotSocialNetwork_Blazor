@@ -5,8 +5,10 @@ using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Systems;
+using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
+using NotSocialNetwork.Application.UseCases.Favorite;
 using NotSocialNetwork.Application.UseCases.Publication;
 using NotSocialNetwork.Application.UseCases.User;
 using NotSocialNetwork.Data.EFRepositories;
@@ -40,6 +42,7 @@ namespace NotSocialNetwork.DI.DIConfig
         {
             ConfigureUseCasesUser(services);
             ConfigureUseCasesPublication(services);
+            ConfigureUseCasesFavorite(services);
         }
 
         private static void ConfigureUseCasesUser(IServiceCollection services)
@@ -54,6 +57,12 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IAddablePublicationAsync, AddPublication>();
             services.AddTransient<IEditablePublicationAsync, EditPublication>();
             services.AddTransient<IGetablePublication, GetPublication>();
+        }
+
+        private static void ConfigureUseCasesFavorite(IServiceCollection services)
+        {
+            services.AddTransient<IGetableFavorite, GetFavorite>();
+            services.AddTransient<ILikeableFavorite, LikeFavorite>();
         }
 
         private static void ConfigureSystems(IServiceCollection services)

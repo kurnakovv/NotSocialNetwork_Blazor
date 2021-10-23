@@ -10,5 +10,7 @@ namespace NotSocialNetwork.Application.Entities
         public UserEntity Author { get; set; }
         public Guid AuthorId { get; set; }
         public string Text { get; set; }
+        public ICollection<UserEntity> Favorites { get; set; } = new List<UserEntity>();
+        public List<FavoritesEntity> FavoritesEntities { get; set; }
     }
 }
