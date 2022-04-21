@@ -1,3 +1,5 @@
+![Visitors](http://estruyf-github.azurewebsites.net/api/VisitorHit?user=KurnakovMaksim&repo=NotSocialNetwork&countColor=%237B1E7A)
+
 <div align="center">
 
 <img src="ImgForReadme/MainImages/Logo.png" width="250" />
@@ -61,6 +63,7 @@ Backend:
 * Moq - v4.16.1
 * JWT - v6.10.1
 * Docker
+* FluentValidation - v10.3.0
 
 </div>
 

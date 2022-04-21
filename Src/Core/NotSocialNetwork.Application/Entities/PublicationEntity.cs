@@ -1,21 +1,16 @@
 ﻿using NotSocialNetwork.Application.Entities.Abstract;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace NotSocialNetwork.Application.Entities
 {
-    public class PublicationEntity : BaseEntity, IPublication
+    public class PublicationEntity : BaseEntity
     {
-        public PublicationEntity()
-        {
-            Images = new List<ImageEntity>();
-        }
-
-        public ICollection<ImageEntity> Images { get; set; }
-        [Required]
+        public ICollection<ImageEntity> Images { get; set; } = new List<ImageEntity>();
         public UserEntity Author { get; set; }
         public Guid AuthorId { get; set; }
-        public string Text { get; set; } // Convert from string to file.
+        public string Text { get; set; }
+        public ICollection<UserEntity> Favorites { get; set; } = new List<UserEntity>();
+        public List<FavoritesEntity> FavoritesEntities { get; set; }
     }
 }

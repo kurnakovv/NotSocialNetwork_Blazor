@@ -27,24 +27,27 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public async Task<UserEntity> AddAsync(UserEntity user)
         {
-            if (IsUserAlreadyExist(user))
-            {
-                throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
-            }
+            CheckUserIsValid(user);
 
             user.Role = RoleConfig.DEFAULT_USER;
-
             await SaveImage(user);
-
             await _userRepository.AddAsync(user);
 
             return user;
         }
 
+        private void CheckUserIsValid(UserEntity user)
+        {
+            if (IsUserAlreadyExist(user))
+            {
+                throw new ObjectAlreadyExistException($"User by email: {user.Email} already exists.");
+            }
+        }
+
         private bool IsUserAlreadyExist(UserEntity user)
         {
             if(_getableUser.GetAll().Any(u => u.Email == user.Email) ||
-                _getableUser.GetAll().Any(u => u.Id == user.Id))
+               _getableUser.GetAll().Any(u => u.Id == user.Id))
             {
                 return true;
             }

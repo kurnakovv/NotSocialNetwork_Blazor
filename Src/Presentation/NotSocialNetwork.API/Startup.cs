@@ -14,6 +14,7 @@ using NotSocialNetwork.Mapping.AutoMapper;
 using NotSocialNetwork.WebShared.Helpers;
 using System.Collections.Generic;
 using System.Text;
+using FluentValidation.AspNetCore;
 
 namespace NotSocialNetwork.API
 {
@@ -41,13 +42,15 @@ namespace NotSocialNetwork.API
                                       builder.AllowAnyOrigin();
                                   });
             });
-            services.ConfigureDI();
+
             services.AddControllers();
+            services.AddMvc(setup => { }).AddFluentValidation();
+            services.ConfigureDI();
 
             // In-memory database.
-            ConfigureInMemoryDatabase(services);
+            //ConfigureInMemoryDatabase(services);
             // Real database.
-            //ConfigureProductionServices(services);
+            ConfigureProductionServices(services);
             // Real database for docker.
             //ConfigureProductionServicesForDocker(services);
 

@@ -31,21 +31,22 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         public async Task<PublicationEntity> AddAsync(PublicationEntity publication)
         {
+            CheckPublicationIsValid(publication);
+
+            await TrySaveImages(publication);
+            await _publicationRepository.AddAsync(publication);
+
+            return publication;
+        }
+
+        private void CheckPublicationIsValid(PublicationEntity publication)
+        {
             if (IsPublicationAlreadyExist(publication) == true)
             {
                 throw new ObjectAlreadyExistException($"Publication by Id: {publication.Id} already exists.");
             }
 
-            IsAuthorFound(publication.AuthorId);
-
-            if (IsPublicationContainImages(publication))
-            {
-                await SaveImages(publication);
-            }
-
-            await _publicationRepository.AddAsync(publication);
-
-            return publication;
+            CheckAuthorIsValid(publication.AuthorId);
         }
 
         private bool IsPublicationAlreadyExist(PublicationEntity publication)
@@ -58,7 +59,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             return false;
         }
 
-        private void IsAuthorFound(Guid id)
+        private void CheckAuthorIsValid(Guid id)
         {
             _getableUser.GetById(id);
         }
@@ -74,11 +75,14 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             return false;
         }
 
-        private async Task SaveImages(PublicationEntity publication)
+        private async Task TrySaveImages(PublicationEntity publication)
         {
-            foreach (ImageEntity imageEntity in publication.Images)
+            if (IsPublicationContainImages(publication)) 
             {
-                await _imageRepositorySystem.TrySaveAsync(imageEntity);
+                foreach (ImageEntity imageEntity in publication.Images)
+                {
+                    await _imageRepositorySystem.TrySaveAsync(imageEntity);
+                }
             }
         }
     }

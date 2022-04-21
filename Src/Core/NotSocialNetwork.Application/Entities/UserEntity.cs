@@ -1,19 +1,17 @@
 ﻿using NotSocialNetwork.Application.Entities.Abstract;
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace NotSocialNetwork.Application.Entities
 {
-    public class UserEntity : BaseEntity, IUser
+    public class UserEntity : BaseEntity
     {
-        [Required]
         public string Name { get; set; }
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
-        [Required]
         public DateTimeOffset DateOfBirth { get; set; }
         public ImageEntity Image { get; set; }
         public string Role { get; set; }
+        public ICollection<PublicationEntity> Favorites { get; set; } = new List<PublicationEntity>();
+        public List<FavoritesEntity> FavoritesEntities { get; set; }
     }
 }

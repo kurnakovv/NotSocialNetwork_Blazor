@@ -34,6 +34,21 @@ namespace NotSocialNetwork.DBContexts.Migrations
                     b.ToTable("ImageEntityPublicationEntity");
                 });
 
+            modelBuilder.Entity("NotSocialNetwork.Application.Entities.FavoritesEntity", b =>
+                {
+                    b.Property<Guid>("PublicationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PublicationId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("NotSocialNetwork.Application.Entities.ImageEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -44,7 +59,9 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -64,7 +81,9 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -94,9 +113,11 @@ namespace NotSocialNetwork.DBContexts.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -121,6 +142,25 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("NotSocialNetwork.Application.Entities.FavoritesEntity", b =>
+                {
+                    b.HasOne("NotSocialNetwork.Application.Entities.PublicationEntity", "Publication")
+                        .WithMany("FavoritesEntities")
+                        .HasForeignKey("PublicationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NotSocialNetwork.Application.Entities.UserEntity", "User")
+                        .WithMany("FavoritesEntities")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Publication");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("NotSocialNetwork.Application.Entities.PublicationEntity", b =>
                 {
                     b.HasOne("NotSocialNetwork.Application.Entities.UserEntity", "Author")
@@ -139,6 +179,16 @@ namespace NotSocialNetwork.DBContexts.Migrations
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("NotSocialNetwork.Application.Entities.PublicationEntity", b =>
+                {
+                    b.Navigation("FavoritesEntities");
+                });
+
+            modelBuilder.Entity("NotSocialNetwork.Application.Entities.UserEntity", b =>
+                {
+                    b.Navigation("FavoritesEntities");
                 });
 #pragma warning restore 612, 618
         }

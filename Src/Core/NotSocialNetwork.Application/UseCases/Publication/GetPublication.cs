@@ -27,6 +27,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
         public IEnumerable<PublicationEntity> GetAll()
         {
             return _publicationRepository.GetAll()
+                             .Include(p => p.Favorites)
                              .Include(p => p.Images)
                              .Include(p => p.Author)
                                  .ThenInclude(u => u.Image);
@@ -34,54 +35,72 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         public PublicationEntity GetById(Guid id)
         {
-            var publication = GetAll().FirstOrDefault(p => p.Id == id);
+            var publication = GetAll()
+                                  .FirstOrDefault(p => p.Id == id);
 
-            if (publication == null)
-            {
-                throw new ObjectNotFoundException($"Publication by Id: {id} not found.");
-            }
+            CheckPublicationIsValid(publication, id);
 
             return publication;
         }
 
         public IEnumerable<PublicationEntity> GetAllByAuthorId(Guid authorId)
         {
-            IsAuthorFound(authorId);
+            CheckAuthorIsValid(authorId);
 
-            var publications = GetAll().Where(a => a.Author.Id == authorId);
+            var publications = GetAll()
+                                   .Where(a => a.Author.Id == authorId);
 
-            if (IsEmptyPublicationsCount(publications))
-            {
-                throw new ObjectNotFoundException($"User by id: {authorId} don't have a publications.");
-            }
+            CheckPublicationsCountIsValid(publications, $"User by id: {authorId} don't have a publications.");
 
             return publications;
         }
 
         public IEnumerable<PublicationEntity> GetByPagination(int index)
         {
-            if (IsInvalidIndex(index))
-            {
-                throw new InvalidOperationException("Index cannot be less than 0.");
-            }
-
-            var countOfSkipItems = index * PaginationConfig.MAX_ITEMS;
-
-            var publications = GetAll()
-                                   .Skip(countOfSkipItems)
-                                   .Take(PaginationConfig.MAX_ITEMS);
-
-            if (IsEmptyPublicationsCount(publications))
-            {
-                throw new ObjectNotFoundException("No more publications.");
-            }
+            CheckIndexIsValid(index);
+            var publications = GetPublicationsByPagination(index);
+            CheckPublicationsCountIsValid(publications, "No more publications.");
 
             return publications;
         }
 
-        private void IsAuthorFound(Guid id)
+        private IEnumerable<PublicationEntity> GetPublicationsByPagination(int index)
+        {
+            var countOfSkipItems = index * PaginationConfig.MAX_ITEMS;
+            var publications = GetAll()
+                                   .Skip(countOfSkipItems)
+                                   .Take(PaginationConfig.MAX_ITEMS);
+
+            return publications;
+        }
+
+        private void CheckPublicationIsValid(PublicationEntity publication, Guid id)
+        {
+            if (publication == null)
+            {
+                throw new ObjectNotFoundException($"Publication by Id: {id} not found.");
+            }
+        }
+
+        private void CheckAuthorIsValid(Guid id)
         {
             _getableUser.GetById(id);
+        }
+
+        private void CheckPublicationsCountIsValid(IEnumerable<PublicationEntity> publications, string exceptionMessage)
+        {
+            if (IsEmptyPublicationsCount(publications))
+            {
+                throw new ObjectNotFoundException(exceptionMessage);
+            }
+        }
+
+        private void CheckIndexIsValid(int index)
+        {
+            if (IsInvalidIndex(index))
+            {
+                throw new InvalidOperationException("Index cannot be less than 0.");
+            }
         }
 
         private bool IsEmptyPublicationsCount(IEnumerable<PublicationEntity> publications)

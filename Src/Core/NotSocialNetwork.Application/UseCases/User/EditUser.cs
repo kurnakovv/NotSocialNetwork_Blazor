@@ -21,7 +21,7 @@ namespace NotSocialNetwork.Application.UseCases.User
 
         public async Task<UserEntity> UpdateAsync(UserEntity user)
         {
-            _getableUser.GetById(user.Id);
+            CheckUserIsValid(user.Id);
 
             await _userRepository.UpdateAsync(user);
 
@@ -35,6 +35,11 @@ namespace NotSocialNetwork.Application.UseCases.User
             await _userRepository.DeleteAsync(id);
 
             return user;
+        }
+
+        private void CheckUserIsValid(Guid id)
+        {
+            _getableUser.GetById(id);
         }
     }
 }

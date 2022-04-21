@@ -1,13 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using NotSocialNetwork.Application.DTOs;
 using NotSocialNetwork.Application.Entities;
 using NotSocialNetwork.Application.Interfaces.Facades;
 using NotSocialNetwork.Application.Interfaces.Repositories;
 using NotSocialNetwork.Application.Interfaces.Systems;
+using NotSocialNetwork.Application.Interfaces.UseCases.Favorite;
 using NotSocialNetwork.Application.Interfaces.UseCases.Publication;
 using NotSocialNetwork.Application.Interfaces.UseCases.User;
+using NotSocialNetwork.Application.UseCases.Favorite;
 using NotSocialNetwork.Application.UseCases.Publication;
 using NotSocialNetwork.Application.UseCases.User;
 using NotSocialNetwork.Data.EFRepositories;
+using NotSocialNetwork.EntitiesValidator.Login;
+using NotSocialNetwork.EntitiesValidator.Publication;
+using NotSocialNetwork.EntitiesValidator.User;
 using NotSocialNetwork.Services.Facades;
 using NotSocialNetwork.Services.Systems;
 
@@ -21,6 +28,7 @@ namespace NotSocialNetwork.DI.DIConfig
             ConfigureUseCases(services);
             ConfigureSystems(services);
             ConfigureFacades(services);
+            ConfigureFluentValidations(services);
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
@@ -34,6 +42,7 @@ namespace NotSocialNetwork.DI.DIConfig
         {
             ConfigureUseCasesUser(services);
             ConfigureUseCasesPublication(services);
+            ConfigureUseCasesFavorite(services);
         }
 
         private static void ConfigureUseCasesUser(IServiceCollection services)
@@ -50,6 +59,12 @@ namespace NotSocialNetwork.DI.DIConfig
             services.AddTransient<IGetablePublication, GetPublication>();
         }
 
+        private static void ConfigureUseCasesFavorite(IServiceCollection services)
+        {
+            services.AddTransient<IGetableFavorite, GetFavorite>();
+            services.AddTransient<ILikeableFavorite, LikeFavorite>();
+        }
+
         private static void ConfigureSystems(IServiceCollection services)
         {
             services.AddTransient<IImageFileSystemAsync, ImageFileSystem>();
@@ -60,6 +75,20 @@ namespace NotSocialNetwork.DI.DIConfig
         private static void ConfigureFacades(IServiceCollection services)
         {
             services.AddTransient<IFileFacadeAsync<ImageEntity>, ImageFacade>();
+        }
+
+        private static void ConfigureFluentValidations(IServiceCollection services)
+        {
+            services.AddTransient<IValidator<UserEntity>, UserValidator>();
+            services.AddTransient<IValidator<RegistrationUserDTO>, RegistrationUserDTOValidator>();
+            services.AddTransient<IValidator<UserDTO>, UserDTOValidator>();
+
+            services.AddTransient<IValidator<PublicationEntity>, PublicationValidator>();
+            services.AddTransient<IValidator<AddPublicationDTO>, AddPublicationDTOValidator>();
+            services.AddTransient<IValidator<UpdatePublicationDTO>, UpdatePublicationDTOValidator>();
+            services.AddTransient<IValidator<PublicationDTO>, PublicationDTOValidator>();
+
+            services.AddTransient<IValidator<LoginDTO>, LoginDTOValidator>();
         }
     }
 }

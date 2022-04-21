@@ -21,7 +21,7 @@ namespace NotSocialNetwork.Application.UseCases.Publication
 
         public async Task<PublicationEntity> UpdateAsync(PublicationEntity publication)
         {
-            _getablePublication.GetById(publication.Id);
+            CheckPublicationIsValid(publication.Id);
 
             await _publicationRepository.UpdateAsync(publication);
 
@@ -35,6 +35,11 @@ namespace NotSocialNetwork.Application.UseCases.Publication
             await _publicationRepository.DeleteAsync(id);
 
             return publication;
+        }
+
+        private void CheckPublicationIsValid(Guid id)
+        {
+            _getablePublication.GetById(id);
         }
     }
 }

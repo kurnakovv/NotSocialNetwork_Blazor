@@ -64,6 +64,12 @@ namespace NotSocialNetwork.Data.EFRepositories
             return entity;
         }
 
+        // TODO: Edit to async.
+        public void Commit()
+        {
+            _appDbContext.SaveChanges();
+        }
+
         public void Dispose()
         {
             _appDbContext.DisposeAsync();
